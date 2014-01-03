@@ -58,34 +58,82 @@ public class GUI implements ActionListener, MouseListener{
 	
 	public void dsView(Container pane){
 		dsPanel = new JPanel();
+		JPanel dsPanel0 = new JPanel();
+		JPanel dsPanel1 = new JPanel();
+		JPanel dsPanel2 = new JPanel();
+		dsPanel0.setLayout(new GridBagLayout());
+		dsPanel1.setLayout(new GridBagLayout());
+		dsPanel2.setLayout(new GridBagLayout());
 		dsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx=0;
 		c.gridy=0;
-		c.ipadx=50;
+		c.ipadx=60;
 		c.ipady=20;
 		c.fill = GridBagConstraints.BOTH;
 		Insets cInsets1 = new Insets(0,0,30,10);
-		Insets cInsets2 = new Insets(0,0,50,10);
-		Insets cInsets3 = new Insets(0,0,0,10);
+		Insets cInsets2 = new Insets(0,0,0,0);
 		c.insets=cInsets1;
 		int stage=0;
-		for(int j=1;j<=6;j++){
+		for(int j=1;j<=2;j++){
 			for(int i=1;i<=6;i++){
-				dsPanel.add(new JButton(String.valueOf(stage+i)),c);
+				dsPanel0.add(new JButton(String.valueOf(stage+i)),c);
 				c.gridx++;
 			}
-			if(stage==6){ stage=100; c.insets=cInsets1;}
-			else if(stage==106){ stage=200; c.insets=cInsets1;}
-			else if(stage==200){ stage+=6; c.insets=cInsets3;}
-			else{ stage+=6; c.insets=cInsets2;}
+			stage+=6; 
+			c.insets=cInsets1;
 			c.gridx=0;
 			c.gridy++;
 		}
+		c.ipadx=50;
+		stage=100;
+		for(int j=1;j<=2;j++){
+			for(int i=1;i<=6;i++){
+				dsPanel1.add(new JButton(String.valueOf(stage+i)),c);
+				c.gridx++;
+			}
+			stage+=6; 
+			c.gridx=0;
+			c.gridy++;
+		}
+		stage=200;
+		for(int j=1;j<=2;j++){
+			for(int i=1;i<=6;i++){
+				dsPanel2.add(new JButton(String.valueOf(stage+i)),c);
+				c.gridx++;
+			}
+			stage+=6;
+			c.gridx=0;
+			c.gridy++;
+		}
+		
 		c.gridx = 0;
 		c.gridy = 0;
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.ipadx=0;
+		c.ipady=0;
+		c.insets = cInsets2;
+		//c.anchor = GridBagConstraints.FIRST_LINE_START;
+		dsPanel.add(dsPanel0,c);
+		c.gridy = 1;
+		dsPanel.add(dsPanel1,c);
+		c.gridy = 2;
+		dsPanel.add(dsPanel2,c);
+		c.gridy = 0;
 		pane.add(dsPanel,c);
+		
+		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Plan akademika");
+		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
+		dsPanel.setBorder(stageBorder);
+		stageBorder = BorderFactory.createTitledBorder(border, "Parter");
+		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
+		dsPanel0.setBorder(stageBorder);
+		stageBorder = BorderFactory.createTitledBorder(border, "Piêtro I");
+		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
+		dsPanel1.setBorder(stageBorder);
+		stageBorder = BorderFactory.createTitledBorder(border, "Piêtro II");
+		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
+		dsPanel2.setBorder(stageBorder);
+		
 	}
 	
 	public void showGUI(){
