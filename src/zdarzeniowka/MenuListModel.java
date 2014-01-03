@@ -7,8 +7,13 @@ public class MenuListModel extends DefaultListModel<String>{
 
 	public MenuListModel(){
 		super();
-		addElement("D");
-		addElement("B");
+		addElement("Zarzadzanie uzytkownikami.");
+		addElement("Zarzadzanie sprzetem uzytkownika.");
+		addElement("Zarzadzanie sprzetem sieciowym.");
+		addElement("Wyszukaj sprzet sieciowy.");
+		addElement("Wyszukaj sprzet uzytkownika.");
+		addElement("Wyszukaj uzytkownika.");
+		addElement("Wygeneruj raporty.");
 	}
 
 }

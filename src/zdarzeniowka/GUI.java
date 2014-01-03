@@ -4,39 +4,58 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 public class GUI implements ActionListener{
 	private JFrame frame;
 	private MenuListModel menuListModel;
 	private JList<String> menuList;
-		
+	private JPanel menuPanel, dsPanel;
+	private Border border;
 
 	public void addComponents(Container pane){
+		border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		pane.setLayout(new GridBagLayout());
 		menuView(pane);
 		dsView(pane);
 	}
 	
 	public void menuView(Container pane){
+		menuPanel = new JPanel();
+		menuPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		
 		menuListModel = new MenuListModel();
-		menuList = new JList<>(menuListModel);
-		c.anchor = GridBagConstraints.NORTH;
-		c.gridx = 6;
+		menuList = new JList<String>(menuListModel);
+		menuPanel.add(menuList,c);
+		
+		TitledBorder menuBorder = BorderFactory.createTitledBorder(border, "Menu");
+		menuBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
+		menuPanel.setBorder(menuBorder);
+		
+		c.anchor = GridBagConstraints.FIRST_LINE_END;
+		c.insets = new Insets(10,0,0,0);
+		c.gridheight = 3;
+		c.gridx = 1;
 		c.gridy = 0;
-		c.ipadx = 100;
-		pane.add(menuList, c);
+		pane.add(menuPanel, c);
+
 	}
 	
 	public void dsView(Container pane){
+		dsPanel = new JPanel();
+		dsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx=0;
 		c.gridy=0;
@@ -50,7 +69,7 @@ public class GUI implements ActionListener{
 		int stage=0;
 		for(int j=1;j<=6;j++){
 			for(int i=1;i<=6;i++){
-				pane.add(new JButton(String.valueOf(stage+i)),c);
+				dsPanel.add(new JButton(String.valueOf(stage+i)),c);
 				c.gridx++;
 			}
 			if(stage==6){ stage=100; c.insets=cInsets1;}
@@ -61,7 +80,10 @@ public class GUI implements ActionListener{
 			c.gridy++;
 					
 		}
-		
+		c.gridx = 0;
+		c.gridy = 0;
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		pane.add(dsPanel,c);
 	}
 	
 	public void showGUI(){
