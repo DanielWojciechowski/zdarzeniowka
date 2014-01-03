@@ -6,7 +6,7 @@ public class Starter {
 			@Override
 			public void run() {
 				GUI gui = new GUI();
-				gui.wyswietl();	
+				gui.showGUI();	
 			}
 			});
 
