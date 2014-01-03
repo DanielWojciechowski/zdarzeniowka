@@ -14,6 +14,7 @@ public class MenuListModel extends DefaultListModel<String>{
 		addElement("Wyszukaj sprzet uzytkownika.");
 		addElement("Wyszukaj uzytkownika.");
 		addElement("Wygeneruj raporty.");
+		addElement("Widok pokoi.");
 	}
 
 }

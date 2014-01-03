@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,12 +18,13 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class GUI implements ActionListener{
+public class GUI implements ActionListener, MouseListener{
 	private JFrame frame;
 	private MenuListModel menuListModel;
 	private JList<String> menuList;
 	private JPanel menuPanel, dsPanel;
 	private Border border;
+	private int choice = -1;
 
 	public void addComponents(Container pane){
 		border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
@@ -37,6 +40,7 @@ public class GUI implements ActionListener{
 		
 		menuListModel = new MenuListModel();
 		menuList = new JList<String>(menuListModel);
+		menuList.addMouseListener(this);
 		menuPanel.add(menuList,c);
 		
 		TitledBorder menuBorder = BorderFactory.createTitledBorder(border, "Menu");
@@ -65,7 +69,6 @@ public class GUI implements ActionListener{
 		Insets cInsets2 = new Insets(0,0,50,10);
 		Insets cInsets3 = new Insets(0,0,0,10);
 		c.insets=cInsets1;
-		
 		int stage=0;
 		for(int j=1;j<=6;j++){
 			for(int i=1;i<=6;i++){
@@ -88,9 +91,8 @@ public class GUI implements ActionListener{
 	public void showGUI(){
 		frame = new JFrame("System ewidencyjny sieci komputerowej w DS - AC&DW");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize(new Dimension(650, 540));
+		frame.setPreferredSize((new Dimension(1000, 600)));
 		frame.setLocation(100, 30);
-		
 		addComponents(frame);
 		
 		frame.pack();
@@ -101,5 +103,30 @@ public class GUI implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		choice = 2;
+		System.out.println(choice);
 	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		choice = menuList.getSelectedIndex(); 
+		System.out.println(choice);
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+	
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {}
 }
