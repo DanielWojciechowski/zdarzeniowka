@@ -1,8 +1,10 @@
 package zdarzeniowka;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
+
+import java.awt.Container;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
 
 public class GUI {
 	JFrame frame;
