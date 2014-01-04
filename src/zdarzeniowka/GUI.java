@@ -25,7 +25,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class GUI implements ItemListener{
+public class GUI implements ItemListener, ActionListener{
 	JPanel cardSearchPanel;
 	private JFrame frame;
 	private JTabbedPane tabbedPane;
@@ -101,7 +101,9 @@ public class GUI implements ItemListener{
 		int stage=0;
 		for(int j=1;j<=2;j++){
 			for(int i=1;i<=6;i++){
-				dsPanel0.add(new JButton(String.valueOf(stage+i)),c);
+				JButton b = new JButton(String.valueOf(stage+i));
+				b.addActionListener(this);
+				dsPanel0.add(b,c);
 				c.gridx++;
 			}
 			stage+=6; 
@@ -113,7 +115,9 @@ public class GUI implements ItemListener{
 		stage=100;
 		for(int j=1;j<=2;j++){
 			for(int i=1;i<=6;i++){
-				dsPanel1.add(new JButton(String.valueOf(stage+i)),c);
+				JButton b = new JButton(String.valueOf(stage+i));
+				b.addActionListener(this);
+				dsPanel1.add(b,c);
 				c.gridx++;
 			}
 			stage+=6; 
@@ -123,7 +127,9 @@ public class GUI implements ItemListener{
 		stage=200;
 		for(int j=1;j<=2;j++){
 			for(int i=1;i<=6;i++){
-				dsPanel2.add(new JButton(String.valueOf(stage+i)),c);
+				JButton b = new JButton(String.valueOf(stage+i));
+				b.addActionListener(this);
+				dsPanel2.add(b,c);
 				c.gridx++;
 			}
 			stage+=6;
@@ -141,6 +147,10 @@ public class GUI implements ItemListener{
 		c.gridy = 2;
 		dsPanel.add(dsPanel2,c);
 		c.gridy = 0;
+
+		//pane.add(dsPanel,c);
+		
+
 		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Parter");
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel0.setBorder(stageBorder);
@@ -171,4 +181,23 @@ public class GUI implements ItemListener{
         cl.show(cardSearchPanel, (String)e.getItem());
 		
 	}
+
+	public void showRoomFrame(String buttonText){
+		JFrame roomFrame = new JFrame(buttonText);
+		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		roomFrame.setPreferredSize((new Dimension(200, 300)));
+		roomFrame.setLocation(300, 300);
+		roomFrame.setResizable(false);
+		roomFrame.pack();
+		roomFrame.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton source = (JButton) e.getSource();
+		String buttonText = source.getText();
+		System.out.println(buttonText);
+		showRoomFrame(buttonText);
+	}
+
 }
