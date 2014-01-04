@@ -11,14 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
@@ -32,6 +29,7 @@ public class GUI implements ItemListener, ActionListener{
 	private Border border;
 
 	public void addComponents(Container pane){
+		tabbedPane = new JTabbedPane();
 		tabbedPane = new JTabbedPane();
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -149,8 +147,6 @@ public class GUI implements ItemListener, ActionListener{
 		c.gridy = 0;
 
 		//pane.add(dsPanel,c);
-		
-
 		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Parter");
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel0.setBorder(stageBorder);
@@ -199,5 +195,4 @@ public class GUI implements ItemListener, ActionListener{
 		System.out.println(buttonText);
 		showRoomFrame(buttonText);
 	}
-
 }
