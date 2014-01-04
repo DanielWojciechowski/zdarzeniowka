@@ -77,7 +77,9 @@ public class GUI implements ActionListener, MouseListener{
 		int stage=0;
 		for(int j=1;j<=2;j++){
 			for(int i=1;i<=6;i++){
-				dsPanel0.add(new JButton(String.valueOf(stage+i)),c);
+				JButton b = new JButton(String.valueOf(stage+i));
+				b.addActionListener(this);
+				dsPanel0.add(b,c);
 				c.gridx++;
 			}
 			stage+=6; 
@@ -89,7 +91,9 @@ public class GUI implements ActionListener, MouseListener{
 		stage=100;
 		for(int j=1;j<=2;j++){
 			for(int i=1;i<=6;i++){
-				dsPanel1.add(new JButton(String.valueOf(stage+i)),c);
+				JButton b = new JButton(String.valueOf(stage+i));
+				b.addActionListener(this);
+				dsPanel1.add(b,c);
 				c.gridx++;
 			}
 			stage+=6; 
@@ -99,7 +103,9 @@ public class GUI implements ActionListener, MouseListener{
 		stage=200;
 		for(int j=1;j<=2;j++){
 			for(int i=1;i<=6;i++){
-				dsPanel2.add(new JButton(String.valueOf(stage+i)),c);
+				JButton b = new JButton(String.valueOf(stage+i));
+				b.addActionListener(this);
+				dsPanel2.add(b,c);
 				c.gridx++;
 			}
 			stage+=6;
@@ -121,10 +127,7 @@ public class GUI implements ActionListener, MouseListener{
 		c.gridy = 0;
 		pane.add(dsPanel,c);
 		
-		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Plan akademika");
-		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
-		dsPanel.setBorder(stageBorder);
-		stageBorder = BorderFactory.createTitledBorder(border, "Parter");
+		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Parter");
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel0.setBorder(stageBorder);
 		stageBorder = BorderFactory.createTitledBorder(border, "Piêtro I");
@@ -148,12 +151,23 @@ public class GUI implements ActionListener, MouseListener{
 		frame.setVisible(true);
 		
 	}
+	
+	public void showRoomFrame(String buttonText){
+		JFrame roomFrame = new JFrame(buttonText);
+		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		roomFrame.setPreferredSize((new Dimension(200, 300)));
+		roomFrame.setLocation(300, 300);
+		roomFrame.setResizable(false);
+		roomFrame.pack();
+		roomFrame.setVisible(true);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
-		choice = 2;
-		System.out.println(choice);
+		JButton source = (JButton) e.getSource();
+		String buttonText = source.getText();
+		System.out.println(buttonText);
+		showRoomFrame(buttonText);
 	}
 
 
