@@ -1,5 +1,7 @@
 package zdarzeniowka;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -7,57 +9,79 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class GUI implements ActionListener, MouseListener{
+public class GUI implements ItemListener{
+	JPanel cardSearchPanel;
 	private JFrame frame;
-	private MenuListModel menuListModel;
-	private JList<String> menuList;
-	private JPanel menuPanel, dsPanel;
+	private JTabbedPane tabbedPane;
 	private Border border;
-	private int choice = -1;
 
 	public void addComponents(Container pane){
-		border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+		tabbedPane = new JTabbedPane();
 		pane.setLayout(new GridBagLayout());
-		menuView(pane);
-		dsView(pane);
-	}
-	
-	public void menuView(Container pane){
-		menuPanel = new JPanel();
-		menuPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		
-		menuListModel = new MenuListModel();
-		menuList = new JList<String>(menuListModel);
-		menuList.addMouseListener(this);
-		menuPanel.add(menuList,c);
+		dsView();
+		addingView();
+		searchView();
+		reportView();
 		
-		TitledBorder menuBorder = BorderFactory.createTitledBorder(border, "Menu");
-		menuBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
-		menuPanel.setBorder(menuBorder);
-		
-		c.anchor = GridBagConstraints.FIRST_LINE_END;
-		c.insets = new Insets(10,0,0,0);
-		c.gridheight = 3;
-		c.gridx = 1;
-		c.gridy = 0;
-		pane.add(menuPanel, c);
-
+		pane.add(tabbedPane, c);
 	}
 	
-	public void dsView(Container pane){
-		dsPanel = new JPanel();
+	public void addingView(){
+		JPanel addingPanel = new JPanel();
+		addingPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+	
+		tabbedPane.add("Dodaj", addingPanel);
+	}
+	
+	public void searchView(){
+		JPanel searchPanel = new JPanel();
+		JPanel searchPanel1 = new JPanel();
+		JPanel searchPanel2 = new JPanel();
+		JPanel searchPanel3 = new JPanel();
+		
+		cardSearchPanel = new JPanel(new CardLayout());
+		final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", OPTION3 = "Wyszukaj sprzet sieciowy";		
+		JPanel comboBoxPane = new JPanel(); //use FlowLayout
+        String comboBoxItems[] = { OPTION1, OPTION2, OPTION3};
+        JComboBox<String> cb = new JComboBox<String>(comboBoxItems);
+        cb.setEditable(false);
+        cb.addItemListener(this);
+        comboBoxPane.add(cb);
+        searchPanel.add(comboBoxPane, BorderLayout.PAGE_START);
+        searchPanel.add(cardSearchPanel, BorderLayout.CENTER);
+               
+		tabbedPane.add("Wyszukaj", searchPanel);
+	}
+	
+	public void reportView(){
+		JPanel reportPanel = new JPanel();
+		reportPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+	
+		tabbedPane.add("Raporty", reportPanel);
+	}
+	public void dsView(){
+		JPanel dsPanel = new JPanel();
 		JPanel dsPanel0 = new JPanel();
 		JPanel dsPanel1 = new JPanel();
 		JPanel dsPanel2 = new JPanel();
@@ -106,25 +130,18 @@ public class GUI implements ActionListener, MouseListener{
 			c.gridx=0;
 			c.gridy++;
 		}
-		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.ipadx=0;
 		c.ipady=0;
 		c.insets = cInsets2;
-		//c.anchor = GridBagConstraints.FIRST_LINE_START;
 		dsPanel.add(dsPanel0,c);
 		c.gridy = 1;
 		dsPanel.add(dsPanel1,c);
 		c.gridy = 2;
 		dsPanel.add(dsPanel2,c);
 		c.gridy = 0;
-		pane.add(dsPanel,c);
-		
-		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Plan akademika");
-		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
-		dsPanel.setBorder(stageBorder);
-		stageBorder = BorderFactory.createTitledBorder(border, "Parter");
+		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Parter");
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel0.setBorder(stageBorder);
 		stageBorder = BorderFactory.createTitledBorder(border, "Piêtro I");
@@ -133,48 +150,25 @@ public class GUI implements ActionListener, MouseListener{
 		stageBorder = BorderFactory.createTitledBorder(border, "Piêtro II");
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel2.setBorder(stageBorder);
-		
+		tabbedPane.add("Plan DS", dsPanel);	
 	}
 	
 	public void showGUI(){
 		frame = new JFrame("System ewidencyjny sieci komputerowej w DS - AC&DW");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize((new Dimension(1000, 600)));
-		frame.setLocation(100, 30);
+		frame.setMinimumSize((new Dimension(600, 600))); 
+		frame.setLocation(250, 50);
 		addComponents(frame);
 		
 		frame.pack();
 		frame.setResizable(false);
-		frame.setVisible(true);
+		frame.setVisible(true);		
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		CardLayout cl = (CardLayout)(cardSearchPanel.getLayout());
+        cl.show(cardSearchPanel, (String)e.getItem());
 		
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
-		choice = 2;
-		System.out.println(choice);
-	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		choice = menuList.getSelectedIndex(); 
-		System.out.println(choice);
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {}
-	
-
-	@Override
-	public void mousePressed(MouseEvent e) {}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {}
 }
