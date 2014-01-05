@@ -11,8 +11,8 @@
             <generator class="native" />
         </id>
         
-		 <property name="mac" column="mac" type="string"/>
-		 <property name="ip" column="ip" type="string"/>        
+		 <property name="mac" column="MAC" type="string"/>
+		 <property name="ip" column="IP" type="string"/>        
 		 <property name="configuration" column="configuration" type="boolean"/>       
          <property name="type" column="type" type="character"/>
 		 <property name="otherInfo" column="otherInfo" type="string"/>
