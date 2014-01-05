@@ -11,25 +11,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JList;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class GUI implements ItemListener, ActionListener{
-	JPanel cardSearchPanel;
+	private JPanel cardSearchPanel;
 	private JFrame frame;
 	private JTabbedPane tabbedPane;
 	private Border border;
+	private int choice;
 
 	public void addComponents(Container pane){
 		tabbedPane = new JTabbedPane();
@@ -54,22 +55,96 @@ public class GUI implements ItemListener, ActionListener{
 	}
 	
 	public void searchView(){
+		cardSearchPanel = new JPanel(new CardLayout());
 		JPanel searchPanel = new JPanel();
 		JPanel searchPanel1 = new JPanel();
 		JPanel searchPanel2 = new JPanel();
 		JPanel searchPanel3 = new JPanel();
-		
-		cardSearchPanel = new JPanel(new CardLayout());
-		final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", OPTION3 = "Wyszukaj sprzet sieciowy";		
-		JPanel comboBoxPane = new JPanel(); //use FlowLayout
-        String comboBoxItems[] = { OPTION1, OPTION2, OPTION3};
+		searchPanel.setLayout(new GridBagLayout());
+		searchPanel1.setLayout(new GridBagLayout());
+		searchPanel2.setLayout(new GridBagLayout());
+		searchPanel3.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", 
+				OPTION3 = "Wyszukaj sprzet sieciowy";
+		String comboBoxItems[] = {OPTION1, OPTION2, OPTION3};
+        String comboBox1[] = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"};
+        String comboBox23[] = {"Adres MAC", "Adres IP"};
         JComboBox<String> cb = new JComboBox<String>(comboBoxItems);
+        JComboBox<String> cb1 = new JComboBox<String>(comboBox1);
+        JComboBox<String> cb2 = new JComboBox<String>(comboBox23);
+        JComboBox<String> cb3 = new JComboBox<String>(comboBox23);
         cb.setEditable(false);
         cb.addItemListener(this);
-        comboBoxPane.add(cb);
-        searchPanel.add(comboBoxPane, BorderLayout.PAGE_START);
-        searchPanel.add(cardSearchPanel, BorderLayout.CENTER);
-               
+        cb1.setEditable(false);
+        cb1.addActionListener(this);
+        cb2.setEditable(false);
+        cb2.addActionListener(this);
+        cb3.setEditable(false);
+        cb3.addActionListener(this);
+        
+        
+        JLabel label1 = new JLabel("Po czym chcesz szukac?"), label2 = new JLabel("Po czym chcesz szukac?"), 
+        		label3 = new JLabel("Po czym chcesz szukac?"),
+        		result1 = new JLabel("Lista wynikow"), result2 = new JLabel("Lista wynikow"), 
+        		result3 = new JLabel("Lista wynikow");
+     	JTextField textField1 = new JTextField(15), textField2 = new JTextField(15), 
+     			textField3 = new JTextField(15);
+     	JButton searchButton1 = new JButton("Szukaj!"), searchButton2 = new JButton("Szukaj!"), 
+     			searchButton3 = new JButton("Szukaj!");
+     	//Wyszukaj uzytkownika
+     	c.gridy = 1;
+     	c.insets = new Insets(10, 10, 0, 0);
+     	searchPanel1.add(label1, c);
+     	c.gridy = 2;
+     	searchPanel1.add(cb1, c);
+     	c.gridy = 3;
+     	c.ipady = 10;
+     	searchPanel1.add(textField1,c);
+     	c.ipady = 0;
+     	c.gridy = 4;
+     	searchPanel1.add(searchButton1,c);
+     	c.gridy = 5;
+     	searchPanel1.add(result1, c);
+     	//Wyszukaj sprzet uzytkownika
+     	c.gridy = 1;
+     	searchPanel2.add(label2, c);
+     	c.gridy = 2;
+     	searchPanel2.add(cb2, c);
+     	c.gridy = 3;
+     	c.ipady = 10;
+     	searchPanel2.add(textField2,c);
+     	c.ipady = 0;
+     	c.gridy = 4;
+     	searchPanel2.add(searchButton2,c);
+     	c.gridy = 5;
+     	searchPanel2.add(result2, c);
+    	//Wyszukaj sprzet
+     	c.gridy = 1;
+     	searchPanel3.add(label3, c);
+     	c.gridy = 2;
+     	searchPanel3.add(cb3, c);
+     	c.gridy = 3;
+     	c.ipady = 10;
+     	searchPanel3.add(textField3,c);
+     	c.ipady = 0;
+     	c.gridy = 4;
+     	searchPanel3.add(searchButton3,c);
+     	c.gridy = 5;
+     	searchPanel3.add(result3, c);
+        
+        
+        c.anchor = GridBagConstraints.CENTER;
+        c.gridx = 0;
+        c.gridy = 0;
+        searchPanel.add(cb, c);
+        c.gridy = 1;
+        searchPanel.add(cardSearchPanel, c);
+        
+        cardSearchPanel.add(searchPanel1, OPTION1);
+        cardSearchPanel.add(searchPanel2, OPTION2);
+        cardSearchPanel.add(searchPanel3, OPTION3);
+        
 		tabbedPane.add("Wyszukaj", searchPanel);
 	}
 	
@@ -80,6 +155,7 @@ public class GUI implements ItemListener, ActionListener{
 	
 		tabbedPane.add("Raporty", reportPanel);
 	}
+	
 	public void dsView(){
 		JPanel dsPanel = new JPanel();
 		JPanel dsPanel0 = new JPanel();
@@ -147,10 +223,6 @@ public class GUI implements ItemListener, ActionListener{
 		c.gridy = 2;
 		dsPanel.add(dsPanel2,c);
 		c.gridy = 0;
-
-		//pane.add(dsPanel,c);
-		
-
 		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Parter");
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel0.setBorder(stageBorder);
@@ -194,10 +266,17 @@ public class GUI implements ItemListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton source = (JButton) e.getSource();
-		String buttonText = source.getText();
-		System.out.println(buttonText);
-		showRoomFrame(buttonText);
+		Object source = e.getSource();
+		if (source instanceof JButton){
+			String buttonText = ((JButton) source).getText();
+			System.out.println(buttonText);
+			showRoomFrame(buttonText);
+		}
+		else if (source instanceof JComboBox<?>){
+			String name = (String)((JComboBox<?>) source).getSelectedItem();
+			System.out.println(name);
+		}
+			
 	}
 
 }
