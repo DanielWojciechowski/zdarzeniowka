@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="zdarzeniowka.DBHistory" table="history">
+
+        <id name="idHistory" type="int" column="idHistory">
+            <generator class="native" />
+        </id>
+        
+         <property name="date" column="date" type="date"/>       
+         <property name="userDataUse" column="userDataUse" type="double"/>
+         	
+    </class>
+</hibernate-mapping>

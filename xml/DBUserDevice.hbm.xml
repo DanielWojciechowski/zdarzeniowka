@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="zdarzeniowka.DBUserDevice" table="userdevice">
+
+        <id name="idDevice" type="int" column="idDevice">
+            <generator class="native" />
+        </id>
+        
+		 <property name="mac" column="MAC" type="string"/>
+		 <property name="ip" column="IP" type="string"/>        
+		 <property name="configuration" column="configuration" type="boolean"/>       
+         <property name="type" column="type" type="character"/>
+		 <property name="otherInfo" column="otherInfo" type="string"/>
+		  <property name="idUser" column="idUser" type="int"/>
+         	
+    </class>
+</hibernate-mapping>
