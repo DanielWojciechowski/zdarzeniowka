@@ -34,6 +34,7 @@ public class GUI implements ItemListener, ActionListener{
 
 	public void addComponents(Container pane){
 		tabbedPane = new JTabbedPane();
+		tabbedPane = new JTabbedPane();
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
@@ -223,6 +224,9 @@ public class GUI implements ItemListener, ActionListener{
 		c.gridy = 2;
 		dsPanel.add(dsPanel2,c);
 		c.gridy = 0;
+		c.gridy = 0;
+
+		//pane.add(dsPanel,c);
 		TitledBorder stageBorder = BorderFactory.createTitledBorder(border, "Parter");
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel0.setBorder(stageBorder);
@@ -278,5 +282,4 @@ public class GUI implements ItemListener, ActionListener{
 		}
 			
 	}
-
 }
