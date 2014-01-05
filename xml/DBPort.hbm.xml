@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="zdarzeniowka.DBPort" table="port">
+
+        <id name="portNo" type="int" column="portNo">
+            <generator class="native" />
+        </id>
+        
+         <property name="idHistory" column="idHistory" type="int"/>       
+         <property name="idUser" column="idUser" type="int"/>
+		 <property name="idDevice" column="idDevice" type="int"/>
+		 <property name="dataUse" column="dataUse" type="double"/>
+         	
+    </class>
+</hibernate-mapping>

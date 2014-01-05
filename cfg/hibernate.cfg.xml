@@ -10,9 +10,9 @@
 
 
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/world</property>
-        <property name="hibernate.connection.username">daniel</property>
-        <property name="hibernate.connection.password">zaq123</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/zdarzeniowka</property>
+        <property name="hibernate.connection.username">zdarzeniowka</property>
+        <property name="hibernate.connection.password">kotek123</property>
         <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
 
         <!-- Automatic schema creation (begin) === -->
@@ -31,7 +31,12 @@
         <!-- # mapping files with external dependencies # -->
         <!-- ############################################ -->
 
-        <mapping resource="hibernateTest/hbm/City.hbm.xml" />
+        <mapping resource="DBHistory.hbm.xml" />
+        <mapping resource="DBNetworkDevice.hbm.xml" />
+        <mapping resource="DBPort.hbm.xml" />
+        <mapping resource="DBRoom.hbm.xml" />
+        <mapping resource="DBUser.hbm.xml" />
+        <mapping resource="DBUserDevice.hbm.xml" />
 
     </session-factory>
 </hibernate-configuration>
