@@ -7,6 +7,13 @@ public class DBPort {
 	private int idDevice;
 	private double dataUse;
 	
+	public DBPort() {}
+	public DBPort(int idHistory, int idUser, int idDevice, double dataUse) {
+		this.idHistory = idHistory;
+		this.idUser = idUser;
+		this.idDevice = idDevice;
+		this.dataUse = dataUse;
+	}
 	public int getPortNo() {
 		return portNo;
 	}

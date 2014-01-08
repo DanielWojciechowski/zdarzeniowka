@@ -9,6 +9,16 @@ public class DBUser {
 	private String email;
 	private int albumNo;
 	
+	public DBUser() {}
+	public DBUser(int roomNo, int portNo, String firstName, String lastName, String email, 
+			int albumNo) {
+		this.roomNo = roomNo;
+		this.portNo = portNo;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.albumNo = albumNo;
+	}
 	public int getIdUser() {
 		return idUser;
 	}

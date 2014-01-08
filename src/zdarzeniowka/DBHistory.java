@@ -7,6 +7,13 @@ public class DBHistory {
 	private Date date;
 	private double userDataUse;
 	
+	public DBHistory() {}
+	
+	public DBHistory(Date date, double userDataUse) {
+		this.date = date;
+		this.userDataUse = userDataUse;
+	}
+
 	public int getIdHistory() {
 		return idHistory;
 	}
