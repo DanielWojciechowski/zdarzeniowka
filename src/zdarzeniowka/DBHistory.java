@@ -32,8 +32,5 @@ public class DBHistory {
 	public void setUserDataUse(double userDataUse) {
 		this.userDataUse = userDataUse;
 	}
-	
-	
-	
 
 }

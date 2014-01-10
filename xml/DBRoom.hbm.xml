@@ -7,9 +7,10 @@
 
     <class name="zdarzeniowka.DBRoom" table="room">
 
-        <id name="roomNo" type="int" column="roomNo">
+        <id name="idRoom" type="int" column="idRoom">
             <generator class="native" />
         </id>
+        <property name="roomNo" column="roomNo" type="int" />
          	
     </class>
 </hibernate-mapping>

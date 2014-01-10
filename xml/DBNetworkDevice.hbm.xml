@@ -16,7 +16,12 @@
 		 <property name="configuration" column="configuration" type="boolean"/>       
          <property name="type" column="type" type="character"/>
 		 <property name="otherInfo" column="otherInfo" type="string"/>
-		 <property name="deviceStatus" column="deviceStatus" type="boolean"/>  
+		 <property name="deviceStatus" column="deviceStatus" type="boolean"/> 
+		 	
+		 <set name="ports" cascade="all">
+			<key column="idPort"/>
+			<one-to-many class="zdarzeniowka.DBPort"/>
+		</set>	 
          	
     </class>
 </hibernate-mapping>

@@ -7,17 +7,14 @@ public class DBUserDevice{
 	private boolean configuration;
 	private char type;
 	private String otherInfo;
-	private int idUser;
 	
 	public DBUserDevice() {}
-	public DBUserDevice(String mac, String ip, boolean configuration, char type, 
-			String otherInfo, int idUser) {
+	public DBUserDevice(String mac, String ip, boolean configuration, char type, String otherInfo) {
 		this.mac = mac;
 		this.ip = ip;
 		this.configuration = configuration;
 		this.type = type;
 		this.otherInfo = otherInfo;
-		this.idUser = idUser;
 	}
 	public int getIdDevice() {
 		return idDevice;
@@ -54,11 +51,5 @@ public class DBUserDevice{
 	}
 	public void setOtherInfo(String otherInfo) {
 		this.otherInfo = otherInfo;
-	}
-	public int getIdUser() {
-		return idUser;
-	}
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
 	}
 }

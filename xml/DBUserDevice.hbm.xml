@@ -16,7 +16,6 @@
 		 <property name="configuration" column="configuration" type="boolean"/>       
          <property name="type" column="type" type="character"/>
 		 <property name="otherInfo" column="otherInfo" type="string"/>
-		  <property name="idUser" column="idUser" type="int"/>
          	
     </class>
 </hibernate-mapping>

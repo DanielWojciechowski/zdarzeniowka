@@ -25,18 +25,18 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
         
-        <!-- property name="hibernate.show_sql">true</property === -->        
+        <property name="hibernate.show_sql">true</property >        
 
         <!-- ############################################ -->
         <!-- # mapping files with external dependencies # -->
         <!-- ############################################ -->
 
         <mapping resource="DBHistory.hbm.xml" />
-        <mapping resource="DBNetworkDevice.hbm.xml" />
         <mapping resource="DBPort.hbm.xml" />
-        <mapping resource="DBRoom.hbm.xml" />
+        <mapping resource="DBNetworkDevice.hbm.xml" />
         <mapping resource="DBUser.hbm.xml" />
-        <mapping resource="DBUserDevice.hbm.xml" />
+        <mapping resource="DBUserDevice.hbm.xml" />        
+        <mapping resource="DBRoom.hbm.xml" />	
 
     </session-factory>
 </hibernate-configuration>

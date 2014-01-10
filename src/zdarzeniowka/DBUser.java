@@ -1,41 +1,55 @@
 package zdarzeniowka;
 
+import java.util.Set;
+
 public class DBUser {
 	private int idUser;
-	private int roomNo;
-	private int portNo;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private int albumNo;
+	private DBPort port;
+	private Set<DBUserDevice> devices;
+	private DBRoom room;
 	
 	public DBUser() {}
-	public DBUser(int roomNo, int portNo, String firstName, String lastName, String email, 
-			int albumNo) {
-		this.roomNo = roomNo;
-		this.portNo = portNo;
+
+	public DBUser(String firstName, String lastName, String email, int albumNo, DBPort port, DBRoom room) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.albumNo = albumNo;
+		this.port = port;
+		this.room = room;
+	}
+
+	public DBRoom getRoom() {
+		return room;
+	}
+
+	public void setRoom(DBRoom room) {
+		this.room = room;
+	}
+
+	public Set<DBUserDevice> getDevices() {
+		return devices;
+	}
+
+	public void setDevices(Set<DBUserDevice> devices) {
+		this.devices = devices;
+	}
+
+	public DBPort getPort() {
+		return port;
+	}
+	public void setPort(DBPort port) {
+		this.port = port;
 	}
 	public int getIdUser() {
 		return idUser;
 	}
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
-	}
-	public int getRoomNo() {
-		return roomNo;
-	}
-	public void setRoomNo(int roomNo) {
-		this.roomNo = roomNo;
-	}
-	public int getPortNo() {
-		return portNo;
-	}
-	public void setPortNo(int portNo) {
-		this.portNo = portNo;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -61,8 +75,5 @@ public class DBUser {
 	public void setAlbumNo(int albumNo) {
 		this.albumNo = albumNo;
 	}
-	
-	
-	
 
 }

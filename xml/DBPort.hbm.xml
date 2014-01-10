@@ -7,14 +7,15 @@
 
     <class name="zdarzeniowka.DBPort" table="port">
 
-        <id name="portNo" type="int" column="portNo">
+        <id name="idPort" type="int" column="idPort">
             <generator class="native" />
         </id>
-        
-         <property name="idHistory" column="idHistory" type="int"/>       
-         <property name="idUser" column="idUser" type="int"/>
-		 <property name="idDevice" column="idDevice" type="int"/>
-		 <property name="dataUse" column="dataUse" type="double"/>
-         	
+		<property name="dataUse" column="dataUse" type="double"/>
+		<property name="portNo" column="portNo" type="int"/>
+		
+		<set name="histories" cascade="all">
+			<key column="idHistory"/>
+			<one-to-many class="zdarzeniowka.DBHistory"/>
+		</set>
     </class>
 </hibernate-mapping>

@@ -1,5 +1,7 @@
 package zdarzeniowka;
 
+import java.util.Set;
+
 public class DBNetworkDevice{
 	private int idDevice;
 	private String mac;
@@ -8,16 +10,24 @@ public class DBNetworkDevice{
 	private char type;
 	private String otherInfo;
 	private boolean deviceStatus;
+	private Set<DBPort> ports;
 	
 	public DBNetworkDevice() {}
-	public DBNetworkDevice(String mac, String ip, boolean configuration, char type, 
-			String otherInfo, boolean deviceStatus) {
+	public DBNetworkDevice(String mac, String ip, boolean configuration, char type, String otherInfo, 
+			boolean deviceStatus) {
 		this.mac = mac;
 		this.ip = ip;
 		this.configuration = configuration;
 		this.type = type;
 		this.otherInfo = otherInfo;
 		this.deviceStatus = deviceStatus;
+	}
+
+	public Set<DBPort> getPorts() {
+		return ports;
+	}
+	public void setPorts(Set<DBPort> ports) {
+		this.ports = ports;
 	}
 	public int getIdDevice() {
 		return idDevice;
