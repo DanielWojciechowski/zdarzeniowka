@@ -79,13 +79,14 @@ public class GUI implements ItemListener, ActionListener{
 	
 	public void addingView(){
 		JPanel[] addingPanel = new JPanel[4], buttonPanel = new JPanel[3], 
-				topPanel = new JPanel[3], bottomPanel = new JPanel[3] ;
+				topPanel = new JPanel[3], bottomPanel = new JPanel[3];
+		JScrollPane[] scrollPane = new JScrollPane[2];
 		JLabel[] label = new JLabel[21];
 		JTextField[] textField = new JTextField[21];
 		JTextArea[] textArea = new JTextArea[2];
-		GridBagConstraints cpane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
+		GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
 				c = new GridBagConstraints(), ctop = new GridBagConstraints(),
-				cbot = new GridBagConstraints();;
+				cbot = new GridBagConstraints();
 		JButton[] confirmButton = new JButton[3], clearButton = new JButton[3];
 		final String OPTION1 = "Dodaj u¿ytkownika", OPTION2 = "Dodaj sprzêt u¿ytkownika", 
 				OPTION3 = "Dodaj sprzêt sieciowy";
@@ -93,7 +94,7 @@ public class GUI implements ItemListener, ActionListener{
 				"Numer pokoju:", "Numer albumu:", "Numer portu:", "Adres MAC:", "Adres IP:",
 				"Typ:","Konfiguracja:", "Id urzadzenia:", "Id u¿ytkownika:", "Uwagi:", 
 				"Adres MAC:", "Adres IP:", "Typ:", "Konfiguracja:", "Id urzadzenia:", 
-				"Numer portu", "Uwagi:"};
+				"Numer portu:", "Uwagi:"};
 		String comboBoxItems[] = {OPTION1, OPTION2, OPTION3};
     	Insets insets1 = new Insets(0,20,10,0), insets0 = new Insets(0,0,10,0);
 		addingCB = new JComboBox<String>(comboBoxItems);
@@ -105,6 +106,7 @@ public class GUI implements ItemListener, ActionListener{
 			addingPanel[i] = new JPanel();
 			addingPanel[i].setLayout(new GridBagLayout());
 		}
+		
 		for(int i = 0; i < 3; i++){
 			topPanel[i] = new JPanel();
 			bottomPanel[i] = new JPanel();
@@ -121,28 +123,31 @@ public class GUI implements ItemListener, ActionListener{
 				label[j] = new JLabel(stringLabel[j]);
 				label[j].setFont(normal);
 				if ((i == 0 && j < 3) || (i > 0 && j < (i)*7 + 2)){
-					textField[j] = new JTextField(30);
+					textField[j] = new JTextField(28);
 				}
 				else {
-					textField[j] = new JTextField(10);
+					textField[j] = new JTextField(8);
 				}
 				textField[j].setFont(normal);
 			}
-
-        	c.gridx = 0;
-        	c.gridy = 0;
-        	c.anchor = GridBagConstraints.CENTER;	
+			
 			if (i == 0){
-				c.insets = new Insets(50,0,0,0);
+				textField[i+3].setEditable(false);
+				textField[i+3].setText("meh");
+				
 				for(int j = 0; j < 3; j++){
 		        	ctop.insets = insets0;
+					ctop.gridwidth = 1;
 		        	ctop.anchor = GridBagConstraints.LINE_END;
 					ctop.gridx = 0;
 					ctop.gridy = j;
+					ctop.ipady = 0;
 					topPanel[i].add(label[j], ctop);
 					ctop.insets = insets1;
+					ctop.ipady = 6;
 					ctop.anchor = GridBagConstraints.LINE_START;
 					ctop.gridx = 1;
+					ctop.gridwidth = 4;
 					topPanel[i].add(textField[j], ctop);
 				}
 				for (int j = 3; j < 7; j += 2){
@@ -150,58 +155,75 @@ public class GUI implements ItemListener, ActionListener{
 					cbot.anchor = GridBagConstraints.LINE_END;
 					cbot.gridx = 0;
 					cbot.gridy = j;
+					cbot.ipady = 0;
 					bottomPanel[i].add(label[i+j], cbot);
 					cbot.insets = insets1;
 					cbot.anchor = GridBagConstraints.LINE_START;
 					cbot.gridx = 1;
+					cbot.ipady = 6;
 					bottomPanel[i].add(textField[i+j], cbot);	
 					cbot.anchor = GridBagConstraints.LINE_END;
 					cbot.gridx = 2;
 					cbot.gridy = j;
+					cbot.ipady = 0;
 					bottomPanel[i].add(label[i+j+1], cbot);
 					cbot.anchor = GridBagConstraints.LINE_START;
 					cbot.gridx = 3;
+					cbot.ipady = 6;
 					bottomPanel[i].add(textField[i+j+1], cbot);	
 				}
 	
 			}
 			else{
+				//c.insets = new Insets(50,0,0,0);
+				textField[7*i+4].setEditable(false);
+				textField[7*i+4].setText("meh");
+				
 				textArea[i-1] = new JTextArea();
-				textArea[i-1].setPreferredSize(new Dimension(400, 100));
+				textArea[i-1].setText("");
+				textArea[i-1].setPreferredSize(new Dimension(300, 80));
 		        textArea[i-1].setLineWrap(true);
+		        
+		        scrollPane[i-1] = new JScrollPane(textArea[i-1]);
+		        scrollPane[i-1].setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		        scrollPane[i-1].setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 				for(int j = 0; j < 2; j++){
 					ctop.insets = insets0;
-					ctop.weightx = 0;
+					ctop.gridwidth = 1;
 					ctop.anchor = GridBagConstraints.LINE_END;
 					ctop.gridx = 0;
 					ctop.gridy = j;
+					ctop.ipady = 0;
 					topPanel[i].add(label[7*i+j], ctop);
 					ctop.insets = insets1;
 					ctop.anchor = GridBagConstraints.LINE_START;
 					ctop.gridx = 1;
-					ctop.weightx = 3;
+					ctop.gridwidth = 3;
+					ctop.ipady = 6;
 					topPanel[i].add(textField[7*i+j], ctop);				
 				}
-
 				cbot.gridwidth = 1;
 				for(int j = 2; j < 6; j += 2){
 					cbot.insets = insets0;
 					cbot.anchor = GridBagConstraints.LINE_END;
 					cbot.gridx = 0;
 					cbot.gridy = j;
+					cbot.ipady = 0;
 					bottomPanel[i].add(label[7*i+j], cbot);
 					cbot.insets = insets1;
 					cbot.anchor = GridBagConstraints.LINE_START;
 					cbot.gridx = 1;
+					cbot.ipady = 6;
 					bottomPanel[i].add(textField[7*i+j], cbot);	
 					cbot.anchor = GridBagConstraints.LINE_END;
 					cbot.gridx = 2;
+					cbot.ipady = 0;
 					bottomPanel[i].add(label[7*i+j+1], cbot);
 					cbot.anchor = GridBagConstraints.LINE_START;
 					cbot.gridx = 3;
+					cbot.ipady = 6;
 					bottomPanel[i].add(textField[7*i+j+1], cbot);	
 				}
-
 				cbot.anchor = GridBagConstraints.LINE_END;
 				cbot.gridx = 0;
 				cbot.gridy = 5;
@@ -210,16 +232,11 @@ public class GUI implements ItemListener, ActionListener{
 				cbot.anchor = GridBagConstraints.LINE_START;
 				cbot.gridx = 1;
 				cbot.insets = insets1;
-				cbot.gridwidth = 3;
-				bottomPanel[i].add(textArea[i-1], cbot);
+				cbot.gridwidth = 4;
+				bottomPanel[i].add(scrollPane[i-1], cbot);
 			}
-
-			addingPanel[i+1].add(topPanel[i], c);
-			c.gridy = 1;
-			c.insets = new Insets(0,0,0,0);
-			addingPanel[i+1].add(bottomPanel[i], c);
 			
-			cbutton.anchor = GridBagConstraints.FIRST_LINE_END;
+			cbutton.anchor = GridBagConstraints.LINE_END;
         	cbutton.gridy = 0;
         	cbutton.gridx = 0;
         	cbutton.ipadx = 12;
@@ -228,21 +245,31 @@ public class GUI implements ItemListener, ActionListener{
         	cbutton.gridx = 1;
         	cbutton.ipadx = 0;
         	buttonPanel[i].add(clearButton[i],cbutton);
-        	c.insets = new Insets(80, 0, 0, 0);
-        	c.gridy = 3;
+        
+        	c.insets = new Insets(50,0,0,0);
+        	c.gridx = 0;
+        	c.gridy = 0;
+        	c.anchor = GridBagConstraints.CENTER;	
+			addingPanel[i+1].add(topPanel[i], c);
+			c.gridy = 1;
+			c.insets = new Insets(20,0,0,0);
+			addingPanel[i+1].add(bottomPanel[i], c);
+			
+        	c.insets = new Insets(20, 0, 0, 0);
+        	c.gridy = 2;
         	c.anchor = GridBagConstraints.LINE_END;
          	addingPanel[i+1].add(buttonPanel[i], c);
 		}
 		
-        cpane.anchor = GridBagConstraints.NORTH;
-        cpane.weightx = 1;
-    	cpane.weighty = 1;
-        cpane.ipadx = 253;
-        cpane.gridx = 0;
-        cpane.gridy = 0;
-        cpane.insets= new Insets(30, 0, 0, 0);
-        addingPanel[0].add(addingCB, cpane);
-        addingPanel[0].add(cardAddingPanel, cpane);
+        capane.anchor = GridBagConstraints.NORTH;
+        capane.weightx = 1;
+    	capane.weighty = 1;
+        capane.ipadx = 253;
+        capane.gridx = 0;
+        capane.gridy = 0;
+        capane.insets= new Insets(30, 0, 0, 0);
+        addingPanel[0].add(addingCB, capane);
+        addingPanel[0].add(cardAddingPanel, capane);
 		
         cardAddingPanel.add(addingPanel[1], OPTION1);
         cardAddingPanel.add(addingPanel[2], OPTION2);
@@ -267,9 +294,9 @@ public class GUI implements ItemListener, ActionListener{
     	Insets insets1 = new Insets(0,20,10,0), insets0 = new Insets(0,0,10,0);
 		final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", 
 				OPTION3 = "Wyszukaj sprzet sieciowy";
-		String comboBoxItems[] = {OPTION1, OPTION2, OPTION3};
-        String comboBox1[] = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"};
-        String comboBox23[] = {"Adres MAC", "Adres IP"};
+		String[] comboBoxItems = {OPTION1, OPTION2, OPTION3}, 
+				comboBox1 = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
+				comboBox23 = {"Adres MAC", "Adres IP"};
         JComboBox<String>[] cb = new JComboBox[4];
 		cardSearchPanel = new JPanel(new CardLayout());
         cb[0]= new JComboBox<String>(comboBoxItems);
@@ -342,7 +369,7 @@ public class GUI implements ItemListener, ActionListener{
         	csearch.ipadx = 0;
         	csearch.gridx = 0;
         	csearch.gridy = 1;
-        	csearch.insets = new Insets(0,0,0,0);
+        	csearch.insets = insets0;
         	csearch.anchor = GridBagConstraints.LINE_END;
         	searchPane[i].add(label2[i], csearch);
         	csearch.gridx = 1;
@@ -415,10 +442,69 @@ public class GUI implements ItemListener, ActionListener{
 	}
 	
 	public void reportView(){
-		JPanel reportPanel = new JPanel();
-		reportPanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-	
+		JPanel reportPanel = new JPanel(), cbPane = new JPanel(), report = new JPanel(),
+				buttonPane = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(report);
+		JButton generateButton = new JButton("Generuj"), 
+				saveButton = new JButton("Zapisz do pliku");
+		GridBagConstraints crpane = new GridBagConstraints(), cbpane = new GridBagConstraints(),
+				cbutton = new GridBagConstraints();
+		String[] comboBox0 = {"Jakis okres", "Jakis okres"},
+				comboBox1 = {"Jakies dane", "Jakies dane"};
+        JComboBox<String>[] cb = new JComboBox[2];
+        JLabel[] label = new JLabel[2];
+    	Insets insets1 = new Insets(0,20,10,0), insets0 = new Insets(0,0,10,0);
+
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setPreferredSize(new Dimension(500, 300));
+        reportPanel.setLayout(new GridBagLayout());
+        cbPane.setLayout(new GridBagLayout());
+        report.setLayout(new GridBagLayout());
+        buttonPane.setLayout(new GridBagLayout());
+        saveButton.setFont(normal);
+        generateButton.setFont(normal);
+        cb[0] = new JComboBox<String>(comboBox0);
+        cb[1] = new JComboBox<String>(comboBox1);
+        cb[0].setFont(normal);
+        cb[1].setFont(normal);
+        label[0] = new JLabel("Wybierz okres:");
+        label[1] = new JLabel("Wybierz dane: ");
+        label[0].setFont(normal);
+        label[1].setFont(normal);
+        
+        for (int i = 0; i < 2; i++)
+        	{
+        	cbpane.insets = insets0;
+        	cbpane.gridy = i;
+        	cbpane.gridx = 0;
+        	cbpane.ipadx = 0;
+    		cbpane.anchor = GridBagConstraints.LINE_END;
+    		cbPane.add(label[i], cbpane);
+    		cbpane.insets = insets1;
+    		cbpane.anchor = GridBagConstraints.LINE_START;
+    		cbpane.gridx = 1;
+    		cbpane.ipadx = 300;
+    		cbPane.add(cb[i], cbpane);
+        	}
+		
+        cbutton.insets = insets0;
+        buttonPane.add(generateButton, cbutton);
+        cbutton.insets = insets1;
+        cbutton.gridx = 1;
+        buttonPane.add(saveButton, cbutton);
+        
+        crpane.insets = new Insets(0, 0, 0, 0);
+        crpane.anchor = GridBagConstraints.NORTH;
+        reportPanel.add(cbPane, crpane);
+        crpane.insets = new Insets(10,0,0,0);
+        crpane.gridy = 1;
+        crpane.anchor = GridBagConstraints.LINE_END;
+        reportPanel.add(buttonPane, crpane);
+        crpane.gridy = 2;
+        crpane.anchor = GridBagConstraints.CENTER;
+        reportPanel.add(scrollPane, crpane);
+            
 		tabbedPane.add("Raporty", reportPanel);
 	}
 	
