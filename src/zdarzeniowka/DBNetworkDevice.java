@@ -9,18 +9,15 @@ public class DBNetworkDevice{
 	private boolean configuration;
 	private char type;
 	private String otherInfo;
-	private boolean deviceStatus;
 	private Set<DBPort> ports;
 	
 	public DBNetworkDevice() {}
-	public DBNetworkDevice(String mac, String ip, boolean configuration, char type, String otherInfo, 
-			boolean deviceStatus) {
+	public DBNetworkDevice(String mac, String ip, boolean configuration, char type, String otherInfo) {
 		this.mac = mac;
 		this.ip = ip;
 		this.configuration = configuration;
 		this.type = type;
 		this.otherInfo = otherInfo;
-		this.deviceStatus = deviceStatus;
 	}
 
 	public Set<DBPort> getPorts() {
@@ -64,11 +61,5 @@ public class DBNetworkDevice{
 	}
 	public void setOtherInfo(String otherInfo) {
 		this.otherInfo = otherInfo;
-	}
-	public boolean isDeviceStatus() {
-		return deviceStatus;
-	}
-	public void setDeviceStatus(boolean deviceStatus) {
-		this.deviceStatus = deviceStatus;
 	}
 }

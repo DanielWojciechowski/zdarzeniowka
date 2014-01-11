@@ -14,7 +14,7 @@ public class DBUser {
 	
 	public DBUser() {}
 
-	public DBUser(String firstName, String lastName, String email, int albumNo, DBPort port, int roomNo) {
+	public DBUser(String firstName, String lastName, String email, int albumNo, int roomNo, DBPort port) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

@@ -17,8 +17,10 @@ public class DBUtil {
 	public static void main(String[] args) {
 		factory = SessionFactoryUtil.getSessionFactory();
 		DBUtil ht = new DBUtil();
+		ht.addNetworkDevice("1234", "192.168.0.1", 'r', true, "g³ówny router");
         System.exit(0);
 	}
+	
 	public List<?> findUserOrDevice(String category, String criterium, String value){
 		Session session = factory.openSession();
 		Transaction trans = null;
@@ -56,8 +58,66 @@ public class DBUtil {
 		return list;
 	}
 	
-	public void addUser(){
-		
+	public Integer addUser(String firstName, String lastName, String email, int roomNo, int albumNo, int portNo){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		Integer userId = null;
+		try{
+        	trans = session.beginTransaction();
+        	
+        	Criteria crit = session.createCriteria(DBPort.class);
+        	crit.add(Restrictions.eq("portNo", portNo));
+        	DBPort port = (DBPort) crit.uniqueResult();
+        	DBUser user = new DBUser(firstName, lastName, email, albumNo, roomNo, port);
+        	userId = (Integer) session.save(user);
+        	
+        	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		return userId;
+	}
+	
+	public Integer addUserDevice(String mac, String ip, char type, boolean configuration, String otherInfo, 
+			int idUser){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		Integer deviceId = null;
+		try{
+        	trans = session.beginTransaction();
+        	DBUser user = (DBUser) session.byId(DBUser.class).getReference(idUser);
+        	DBUserDevice device = new DBUserDevice(mac, ip, configuration, type, otherInfo);
+        	user.getDevices().add(device);
+        	session.saveOrUpdate(user);
+        	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		return deviceId;
+	}
+	
+	public Integer addNetworkDevice(String mac, String ip, char type, boolean configuration, String otherInfo){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		Integer deviceId = null;
+		try{
+        	trans = session.beginTransaction();
+        	DBNetworkDevice device = new DBNetworkDevice(mac, ip, configuration, type, otherInfo);
+        	session.save(device);
+        	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		return deviceId;
 	}
 	
 	
