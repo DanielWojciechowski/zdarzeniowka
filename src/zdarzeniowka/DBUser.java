@@ -7,28 +7,28 @@ public class DBUser {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private int roomNo;
 	private int albumNo;
 	private DBPort port;
 	private Set<DBUserDevice> devices;
-	private DBRoom room;
 	
 	public DBUser() {}
 
-	public DBUser(String firstName, String lastName, String email, int albumNo, DBPort port, DBRoom room) {
+	public DBUser(String firstName, String lastName, String email, int albumNo, DBPort port, int roomNo) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.albumNo = albumNo;
 		this.port = port;
-		this.room = room;
+		this.roomNo = roomNo;
 	}
 
-	public DBRoom getRoom() {
-		return room;
+	public int getRoomNo() {
+		return roomNo;
 	}
 
-	public void setRoom(DBRoom room) {
-		this.room = room;
+	public void setRoomNo(int roomNo) {
+		this.roomNo = roomNo;
 	}
 
 	public Set<DBUserDevice> getDevices() {

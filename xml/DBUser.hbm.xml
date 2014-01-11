@@ -15,12 +15,12 @@
 		 <property name="lastName" column="lastName" type="string"/>
 		 <property name="email" column="email" type="string"/>
 		 <property name="albumNo" column="albumNo" type="int"/>
+		 <property name="roomNo" column="roomNo" type="int"/>
 		 <many-to-one name="port" column="idPort" unique="true" class="zdarzeniowka.DBPort" not-null="true"/>
 		 <set name="devices" cascade="all">
 			<key column="idUser"/>
 			<one-to-many class="zdarzeniowka.DBUserDevice"/>
 		</set>
-		<many-to-one name="room" column="idRoom" class="zdarzeniowka.DBRoom" not-null="true"/>
          	
     </class>
 </hibernate-mapping>

@@ -36,7 +36,6 @@
         <mapping resource="DBNetworkDevice.hbm.xml" />
         <mapping resource="DBUser.hbm.xml" />
         <mapping resource="DBUserDevice.hbm.xml" />        
-        <mapping resource="DBRoom.hbm.xml" />	
 
     </session-factory>
 </hibernate-configuration>
