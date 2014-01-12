@@ -28,7 +28,7 @@ public abstract class JBasicPanel extends JPanel{
 	public JBasicPanel() {
 		super();
 		normal = new Font("Open sans", Font.PLAIN, 13);
-		editable = false;
+		editable = true;
 		
 		topPanel = new JPanel();
 		botPanel = new JPanel();
@@ -44,11 +44,14 @@ public abstract class JBasicPanel extends JPanel{
 	public void setTextField(int index, String text){ //ma rzucac wyjatek jezeli indeks przekracza tablice
 		textFields[index].setText(text);		
 	}
-	
-	public void editabling(){
-		editable = !editable;
+		
+	public void editabling(boolean value){
+		editable = value;
 		for (int i = 0; i < textFields.length; i++){
-			textFields[i].setEditable(editable);
+			if (i != 3){
+				textFields[i].setEditable(editable);
+			}
+			
 		}
 		if (cb != null){
 			for (int i = 0; i < cb.length; i++){

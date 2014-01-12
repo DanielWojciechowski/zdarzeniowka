@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -52,6 +53,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			c.insets = new Insets(0, 0, 10, 10);
 			pane[i] = new JPanel();
 			userPanel[i] = new JUserPanel();
+			userPanel[i].editabling(false);
 			buttonPanel[i] = new JPanel();
 			pane[i].setLayout(new GridBagLayout());
 			buttonPanel[i].setLayout(new GridBagLayout());
@@ -98,8 +100,17 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		JButton source = (JButton) e.getSource();
 		for (int i = 0; i < editButton.length; i++){
 			if (source == editButton[i]){
-				userPanel[i].editabling();
-				System.out.println("meh" + i);
+				userPanel[i].editabling(true);
+			}
+			if (source == okButton[i]){
+				int n = JOptionPane.showConfirmDialog(
+					    this,
+					    "Czy na pewno chcesz potwierdziæ?",
+					    "PotwierdŸ zmiany.",
+					    JOptionPane.YES_NO_OPTION);
+				if (n == 0) {
+					userPanel[i].editabling(false);
+				}
 			}
 		}
 	}

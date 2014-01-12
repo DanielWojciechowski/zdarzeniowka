@@ -27,7 +27,7 @@ public class JUserDevicePanel extends JBasicPanel{
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(336, 130));
-		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Typ:", "Id urzadzenia:", "Id u¿ytkownika:", "Uwagi:"},
+		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Id urzadzenia:", "Typ:", "Id u¿ytkownika:", "Uwagi:"},
 				configuration = {"0", "1"}, type = {"Komputer", "Switch", "Router", "AP"};
 		cb = new JComboBox[2];
 		cb[0] = new JComboBox<String>(configuration);
@@ -38,13 +38,11 @@ public class JUserDevicePanel extends JBasicPanel{
 					textFields[i] = new JTextField(28);	
 					cb[i].setPrototypeDisplayValue("Such wow w");
 					cb[i].setFont(normal);
-					cb[i].setEnabled(editable);
 				}
 				else {
 					textFields[i] = new JTextField(8);
 				}
 				textFields[i].setFont(normal);
-				textFields[i].setEditable(editable);
 				}
 			labels[i] = new JLabel(stringLabel[i]);
 			labels[i].setFont(normal);		
@@ -82,7 +80,8 @@ public class JUserDevicePanel extends JBasicPanel{
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 3;
 		cbot.ipady = 6;
-		botPanel.add(cb[1], cbot);
+		textFields[2].setEditable(false);
+		botPanel.add(textFields[2], cbot);
 		
 		cbot.insets = insets0;
 		cbot.anchor = GridBagConstraints.LINE_END;
@@ -94,7 +93,7 @@ public class JUserDevicePanel extends JBasicPanel{
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 1;
 		cbot.ipady = 6;
-		botPanel.add(textFields[2], cbot);	
+		botPanel.add(cb[1], cbot);	
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 2;
 		cbot.ipady = 0;

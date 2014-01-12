@@ -100,7 +100,6 @@ public class GUI implements ItemListener, ActionListener{
 		panel[2] = new JNetworkDevicePanel();
 		
 		for(int i = 0; i < 3; i++){
-			((JBasicPanel) panel[i]).editabling();
 			buttonPanel[i] = new JPanel();
 			buttonPanel[i].setLayout(new GridBagLayout());
 			confirmButton[i] = new JButton("Dodaj");
@@ -160,7 +159,7 @@ public class GUI implements ItemListener, ActionListener{
 				resultPane = new JPanel[3], buttonPanel = new JPanel[3];
         JLabel[] label = new JLabel[3], label2 = new JLabel[3], result = new JLabel[3];
         JTextField[] textField = new JTextField[3];
-        JButton[] searchButtonS = new JButton[3], editButtonS = new JButton[3], 
+        JButton[] searchButtonS = new JButton[3], 
         		 deleteButtonS = new JButton[3], showButtonS = new JButton[3];
     	GridBagConstraints c = new GridBagConstraints(), cbutton = new GridBagConstraints(), 
     			cpane = new GridBagConstraints(), csearch = new GridBagConstraints(), 
@@ -201,7 +200,6 @@ public class GUI implements ItemListener, ActionListener{
         	result[i] = new JLabel("Wyniki:");
         	textField[i] = new JTextField(30);
         	searchButtonS[i] = new JButton("Szukaj!");
-        	editButtonS[i] = new JButton("Edytuj");
         	deleteButtonS[i] = new JButton("Usun");
         	showButtonS[i] = new JButton("Wyœwietl");
 
@@ -217,7 +215,6 @@ public class GUI implements ItemListener, ActionListener{
         	result[i].setFont(normal);
         	deleteButtonS[i].setFont(normal);
         	searchButtonS[i].setFont(normal);
-        	editButtonS[i].setFont(normal);
         	showButtonS[i].setFont(normal);
         	textField[i].setFont(normal);
         	       	
@@ -286,9 +283,6 @@ public class GUI implements ItemListener, ActionListener{
         	cbutton.insets = new Insets(0, 10, 0, 0);
         	buttonPanel[i].add(showButtonS[i], cbutton);
         	cbutton.gridx = 1;
-        	cbutton.ipadx = 15;
-        	buttonPanel[i].add(editButtonS[i],cbutton);
-        	cbutton.gridx = 2;
         	cbutton.ipadx = 20;
         	buttonPanel[i].add(deleteButtonS[i], cbutton);
         	

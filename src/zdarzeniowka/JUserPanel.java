@@ -25,10 +25,10 @@ public class JUserPanel extends JBasicPanel {
 					textFields[i] = new JTextField(8);
 			}
 			textFields[i].setFont(normal);
-			textFields[i].setEditable(editable);
 			labels[i] = new JLabel(stringLabel[i]);
 			labels[i].setFont(normal);
 		}
+		textFields[3].setEditable(false);
 		for (int i = 0; i < 3; i++){
         	ctop.insets = insets0;
 			ctop.gridwidth = 1;
