@@ -11,7 +11,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-
+/**
+ * Klasa obsługi bazy danych
+ * @author Daniel
+ *
+ */
 public class DBUtil {
     private static SessionFactory factory = null;
     
@@ -20,7 +24,15 @@ public class DBUtil {
 		DBUtil ht = new DBUtil();	
         System.exit(0);
 	}
-	
+	/**
+	 * Funkcja wyszukuje użytkownika lub urządzenie sieciowe
+	 * @param category kategoria do jakiej należy obiekt do wyszukania - DBUser, DBUserDevice, DBNetworkDevice
+	 * @param criterium kryterium po jakim wyszukiwany będzie obiekt 
+	 * dla DBUser: firstName, lastName, roomNo, albumNo; 
+	 * dla DBUserDevice i DBNetworkDevice: mac, ip
+	 * @param value wartość wpisana przez użytkownika w pole wyszukiwania
+	 * @return funkcja zwraca listę typu DBUser, DBUserDevice, DBNetworkDevice, zawierającą wyniki wyszukiwania
+	 */
 	public List<?> findUserOrDevice(String category, String criterium, String value){
 		Session session = factory.openSession();
 		Transaction trans = null;
@@ -56,6 +68,12 @@ public class DBUtil {
         }
 		return list;
 	}
+	/**
+	 * Funkcja usuwa wskazany element z bazy danych
+	 * @param category kategoria do jakiej należy obiekt do usunięcia - DBUser, DBUserDevice, DBNetworkDevice
+	 * @param idObject identyfikator obiektu do usunięcia
+	 * @return funkcja zwraca true jeżli operacja powiedzie się, false w przeciwnym wypadku
+	 */
 	public boolean removeUserOrDevice(String category, int idObject){
 		Session session = factory.openSession();
 		Transaction trans = null;
@@ -79,7 +97,16 @@ public class DBUtil {
         }
 		return true;
 	}
-	
+	/**
+	 * funkcja dodająca użytkownika do bazy danych
+	 * @param firstName wartość pola imię
+	 * @param lastName wartość pola nazwisko
+	 * @param email wartość pola email
+	 * @param roomNo wartość pola numer pokoju
+	 * @param albumNo wartość pola numer albumu
+	 * @param portNo wartość pola numer portu
+	 * @return funkcja zwraca identyfikator utworzonego użytkownika, jeśli operacja nie powiedzie się zwraca NULL
+	 */
 	public Integer addUser(String firstName, String lastName, String email, int roomNo, int albumNo, int portNo){
 		Session session = factory.openSession();
 		Transaction trans = null;
@@ -102,7 +129,17 @@ public class DBUtil {
         }
 		return userId;
 	}
-	
+	/**
+	 * funkcja umożliwiąjąca edytowanie danych istniejącego użytkownika
+	 * @param firstName wartość pola imię
+	 * @param lastName wartość pola nazwisko
+	 * @param email wartość pola email
+	 * @param roomNo wartość pola numer pokoju
+	 * @param albumNo wartość pola numer albumu
+	 * @param portNo wartość pola numer portu
+	 * @param idUser identyfikator edytowanego użytkownika
+	 * @return funkcja zwraca true jeśli operacja powiedzie się, false w przeciwnym wypadku
+	 */
 	public boolean updateUser(String firstName, String lastName, String email, int roomNo, int albumNo, int portNo, 
 			int idUser){
 		Session session = factory.openSession();
@@ -130,7 +167,16 @@ public class DBUtil {
         }
 		return true;
 	}	
-	
+	/**
+	 * funkcja dodająca urządzenie użytkownika do bazy danych
+	 * @param mac wartość pola mac
+	 * @param ip wartość pola ip
+	 * @param type wartość pola typ
+	 * @param configuration wartość pola konfiguracja
+	 * @param otherInfo wartość pola uwagi
+	 * @param idUser wartość pola id użytkownika
+	 * @return funkcja zwraca identyfikator utworzonego urządzenia użytkownika, jeśli operacja nie powiedzie się zwraca NULL
+	 */
 	public Integer addUserDevice(String mac, String ip, char type, boolean configuration, String otherInfo, 
 			int idUser){
 		Session session = factory.openSession();
@@ -151,6 +197,17 @@ public class DBUtil {
         }
 		return deviceId;
 	}
+	/**
+	 * funkcja umożliwiająca edytowanie danych istniejącego urządzenia użytkownika
+	 * @param mac wartość pola mac
+	 * @param ip wartość pola ip
+	 * @param type wartość pola typ
+	 * @param configuration wartość pola konfiguracja
+	 * @param otherInfo wartość pola uwagi
+	 * @param idUser wartość pola id użytkownika
+	 * @param idDevice identyfikator edytowanego urządzenia
+	 * @return funkcja zwraca true jeśli operacja powiedzie się, false w przeciwnym wypadku
+	 */
 	public boolean updateUserDevice(String mac, String ip, char type, boolean configuration, String otherInfo, 
 			int idUser, int idDevice){
 		Session session = factory.openSession();
@@ -179,7 +236,15 @@ public class DBUtil {
         }
 		return true;
 	}
-	
+	/**
+	 * funkcja dodająca urządzenie sieciowe do bazy danych
+	 * @param mac wartość pola mac
+	 * @param ip warto pola ip
+	 * @param type wartość pola typ
+	 * @param configuration wartość pola konfiguracja
+	 * @param otherInfo wartość pola uwagi
+	 * @return funkcja zwraca identyfikator utworzonego urządzenia sieciowego, jeśli operacja nie powiedzie się zwraca NULL
+	 */
 	public Integer addNetworkDevice(String mac, String ip, char type, boolean configuration, String otherInfo){
 		Session session = factory.openSession();
 		Transaction trans = null;
@@ -197,6 +262,16 @@ public class DBUtil {
         }
 		return deviceId;
 	}
+	/**
+	 * funkcja umożliwiająca edytowanie danych istniejącego urządzenia sieciowego
+	 * @param mac wartość pola mac
+	 * @param ip wartość pola ip
+	 * @param type wartość pola typ
+	 * @param configuration wartość pola konfiguracja
+	 * @param otherInfo wartość pola uwagi
+	 * @param idDevice identyfikator edytowanego urządzenia
+	 * @return funkcja zwraca true jeśli operacja powiedzie się, false w przeciwnym wypadku
+	 */
 	public boolean updateNetworkDevice(String mac, String ip, char type, boolean configuration, String otherInfo, 
 			int idDevice){
 		Session session = factory.openSession();
@@ -220,7 +295,11 @@ public class DBUtil {
         }
 		return true;
 	}
-	
+	/**
+	 * funkcja umożliwiająca znalezienie użytkownika danego urządzenia
+	 * @param idDevice identyfikator urządzenia którego użytkownika chcemy znaleźć
+	 * @return funkcja zwraca identyfikator użytkownika będącego właścicielem podanego urządzenia
+	 */
 	public int getDeviceUser(int idDevice){
 		Session session = factory.openSession();
     	String qs = "Select idUser From UserDevice where idDevice = :idDevice";
@@ -230,7 +309,12 @@ public class DBUtil {
     	int idUser = list.get(0);
 		return idUser;
 	}
-	
+	/**
+	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
+	 * @param clazz typ na jaki ma być rzutowana lista
+	 * @param c lista dowolnego typu
+	 * @return funkcja zwraca listę ze zrzutowanymi elementami
+	 */
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
 	    List<T> r = new ArrayList<T>(c.size());
 	    for(Object o: c)
