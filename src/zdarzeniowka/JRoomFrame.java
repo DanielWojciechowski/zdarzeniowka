@@ -105,8 +105,8 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			if (source == okButton[i]){
 				int n = JOptionPane.showConfirmDialog(
 					    this,
-					    "Czy na pewno chcesz potwierdziæ?",
-					    "PotwierdŸ zmiany.",
+					    "Czy na pewno chcesz potwierdziÄ‡?",
+					    "PotwierdÅº zmiany.",
 					    JOptionPane.YES_NO_OPTION);
 				if (n == 0) {
 					userPanel[i].editabling(false);
