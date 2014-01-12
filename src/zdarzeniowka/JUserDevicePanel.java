@@ -28,7 +28,7 @@ public class JUserDevicePanel extends JBasicPanel{
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(336, 130));
 
-		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Id urzadzenia:", "Typ:", "Id u�ytkownika:", "Uwagi:"},configuration = {"Niezatwierdzona", "Zatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP"};
+		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Id urzadzenia:", "Typ:", "Id użytkownika:", "Uwagi:"},configuration = {"Niezatwierdzona", "Zatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP"};
 		cb = new JComboBox[2];
 		cb[0] = new JComboBox<String>(configuration);
 		cb[1] = new JComboBox<String>(type);
