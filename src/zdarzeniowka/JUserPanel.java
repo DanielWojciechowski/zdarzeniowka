@@ -15,7 +15,7 @@ public class JUserPanel extends JBasicPanel {
 		this.setLayout(new GridBagLayout());
 		labels = new JLabel[7];
 		textFields = new JTextField[7];
-		String[] stringLabel = {"Imiê:", "Nazwisko:", "Adres e-mail:", "Id u¿ytkownika:", 
+		String[] stringLabel = {"ImiÄ™:", "Nazwisko:", "Adres e-mail:", "Id uÅ¼ytkownika:", 
 				"Numer pokoju:", "Numer albumu:", "Numer portu:"};
 		for(int i = 0; i < 7; i++){
 			if (i < 3){

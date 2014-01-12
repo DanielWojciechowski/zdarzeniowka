@@ -53,7 +53,7 @@ public class GUI implements ItemListener, ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel topPane = new JPanel();
-		JLabel label = new JLabel("Jestem ³adnym programem.");
+		JLabel label = new JLabel("Jestem Å‚adnym programem.");
 		JLabel label2 = new JLabel("Version 1. beta");
 		label.setFont(header);
 		label2.setFont(new Font("Open sans", Font.ITALIC, 10));
@@ -83,8 +83,8 @@ public class GUI implements ItemListener, ActionListener{
 		GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
 				c = new GridBagConstraints();
 		JButton[] confirmButton = new JButton[3], clearButton = new JButton[3];
-		final String OPTION1 = "Dodaj u¿ytkownika", OPTION2 = "Dodaj sprzêt u¿ytkownika", 
-				OPTION3 = "Dodaj sprzêt sieciowy";
+		final String OPTION1 = "Dodaj uÅ¼ytkownika", OPTION2 = "Dodaj sprzÄ™t uÅ¼ytkownika", 
+				OPTION3 = "Dodaj sprzÄ™t sieciowy";
 		String comboBoxItems[] = {OPTION1, OPTION2, OPTION3};
 		addingCB = new JComboBox<String>(comboBoxItems);
 		addingCB.addItemListener(this);
@@ -201,7 +201,7 @@ public class GUI implements ItemListener, ActionListener{
         	textField[i] = new JTextField(30);
         	searchButtonS[i] = new JButton("Szukaj!");
         	deleteButtonS[i] = new JButton("Usun");
-        	showButtonS[i] = new JButton("Wyœwietl");
+        	showButtonS[i] = new JButton("WyÅ›wietl");
 
         	buttonPanel[i] = new JPanel();
         	searchPane[i] = new JPanel();
@@ -480,11 +480,11 @@ public class GUI implements ItemListener, ActionListener{
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		stageBorder.setTitleFont(normal);
 		dsPanel0.setBorder(stageBorder);
-		stageBorder = BorderFactory.createTitledBorder(border, "Piêtro I");
+		stageBorder = BorderFactory.createTitledBorder(border, "PiÄ™tro I");
 		stageBorder.setTitleFont(normal);
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel1.setBorder(stageBorder);
-		stageBorder = BorderFactory.createTitledBorder(border, "Piêtro II");
+		stageBorder = BorderFactory.createTitledBorder(border, "PiÄ™tro II");
 		stageBorder.setTitleFont(normal);
 		stageBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
 		dsPanel2.setBorder(stageBorder);
@@ -506,7 +506,7 @@ public class GUI implements ItemListener, ActionListener{
 	}
 
 	public void showRoomFrame(String buttonText){
-		JRoomFrame roomFrame = new JRoomFrame("Pokój nr " + buttonText);
+		JRoomFrame roomFrame = new JRoomFrame("PokÃ³j nr " + buttonText);
 		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		roomFrame.setLocation(400, 200);
 		roomFrame.setResizable(false);
