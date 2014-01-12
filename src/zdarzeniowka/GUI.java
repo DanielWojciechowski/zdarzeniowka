@@ -3,18 +3,19 @@ package zdarzeniowka;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,7 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -40,7 +40,22 @@ public class GUI implements ItemListener, ActionListener{
 	private JComboBox<String> addingCB;
 	
 	private void initiate(){
-		header = new Font("Open sans", Font.PLAIN, 20);
+		File fontFile1 = new File("font/OpenSans-Regular.ttf"),
+				fontFile2 = new File("font/OpenSans-Italic.ttf");
+		try {
+			Font fontH = Font.createFont(Font.TRUETYPE_FONT, fontFile1);
+			header = fontH.deriveFont(20f);
+			Font fontN = Font.createFont(Font.TRUETYPE_FONT, fontFile2);
+			normal = fontN.deriveFont(12f);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {	
+			e.printStackTrace();
+		}
+		
+		
+		
+		new Font("Open sans", Font.PLAIN, 20);
 		normal = new Font("Open sans", Font.PLAIN, 13);
 		border = BorderFactory.createEmptyBorder();
 	}
@@ -493,7 +508,7 @@ public class GUI implements ItemListener, ActionListener{
 	
 	public void showGUI(){
 		frame = new JFrame("System ewidencyjny sieci komputerowej w DS - AC&DW"); 
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("cat.png"));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("icons/cat.png"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize((new Dimension(600, 500))); 
 		frame.setLocation(250, 50);

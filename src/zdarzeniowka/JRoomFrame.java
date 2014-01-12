@@ -1,11 +1,14 @@
 package zdarzeniowka;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,7 +28,15 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	
 	public JRoomFrame(String text, int usersInRoom){
 		super(text);
-		normal = new Font("Open sans", Font.PLAIN, 13);
+		File fontFile = new File("font/OpenSans-Italic.ttf");
+		try {
+			Font fontN = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+			normal = fontN.deriveFont(12f);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {	
+			e.printStackTrace();
+		}
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
 		pane = new JPanel[usersInRoom];
@@ -105,8 +116,8 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			if (source == okButton[i]){
 				int n = JOptionPane.showConfirmDialog(
 					    this,
-					    "Czy na pewno chcesz potwierdziæ?",
-					    "PotwierdŸ zmiany.",
+					    "Czy na pewno chcesz potwierdziï¿½?",
+					    "Potwierdï¿½ zmiany.",
 					    JOptionPane.YES_NO_OPTION);
 				if (n == 0) {
 					userPanel[i].editabling(false);
