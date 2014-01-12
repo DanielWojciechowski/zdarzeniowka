@@ -17,8 +17,7 @@ public class DBUtil {
     
 	public static void main(String[] args) {
 		factory = SessionFactoryUtil.getSessionFactory();
-		DBUtil ht = new DBUtil();		
-		ht.updateNetworkDevice("1234", "192.168.0.1", 'r', true, "g³ówny router akademika", 6);
+		DBUtil ht = new DBUtil();	
         System.exit(0);
 	}
 	
@@ -56,6 +55,29 @@ public class DBUtil {
         	session.close();
         }
 		return list;
+	}
+	public boolean removeUserOrDevice(String category, int idObject){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		try{
+        	trans = session.beginTransaction();
+        	Object objctToRemove = null;
+        	if(category == "DBUserDevice")
+        		objctToRemove = session.get(DBUserDevice.class, idObject);
+        	else if(category == "DBNetworkDevice")
+        		objctToRemove = session.get(DBNetworkDevice.class, idObject);
+        	else if(category == "DBUser")
+        		objctToRemove = session.get(DBUser.class, idObject);
+        	session.delete(objctToRemove);
+        	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+    		return false;
+        }finally{
+        	session.close();
+        }
+		return true;
 	}
 	
 	public Integer addUser(String firstName, String lastName, String email, int roomNo, int albumNo, int portNo){
@@ -107,7 +129,7 @@ public class DBUtil {
         	session.close();
         }
 		return true;
-	}
+	}	
 	
 	public Integer addUserDevice(String mac, String ip, char type, boolean configuration, String otherInfo, 
 			int idUser){
