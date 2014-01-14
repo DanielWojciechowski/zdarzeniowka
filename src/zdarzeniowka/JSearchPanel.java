@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 public class JSearchPanel extends JPanel implements ItemListener, ActionListener{
 
@@ -41,10 +43,14 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private String[] comboBoxItems = {OPTION1, OPTION2, OPTION3}, 
 			comboBox1 = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
 			comboBox23 = {"Adres MAC", "Adres IP"};
+	
 	private DBUtil dbUtil = null;
 	private String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"},
 			criterium1 = {"firstName","lastName", "roomNo", "albumNo"},
 			criterium2 = {"mac", "ip"};
+	private List<DBUser> userResultList = null;
+	private List<DBUserDevice> userDeviceResultList = null;
+	private List<DBNetworkDevice> networkDeviceResultList = null;
 	
 	public JSearchPanel(){
 		super();
@@ -225,14 +231,29 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			//System.out.println(name);
 			searchListModel[1].addElement(name);
 		}
-		int tmp = cb[0].getSelectedIndex();
+		final int tmp = cb[0].getSelectedIndex();
 		if (source == searchButton[tmp]){
-			int tmp2 = cb[tmp+1].getSelectedIndex();
-			dbUtil = new DBUtil();
-			if(tmp == 0)
-				 dbUtil.findUserOrDevice(category[tmp], criterium1[tmp2], textField[tmp].getText());
-			else if(tmp == 1 || tmp == 2) 
-				 dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText());
+			final int tmp2 = cb[tmp+1].getSelectedIndex();
+			
+			SwingWorker<String, Void> worker = new SwingWorker<String, Void>(){
+	            @Override
+	            protected String doInBackground() throws Exception {
+	    			dbUtil = new DBUtil();
+	    			if(tmp == 0)
+	    				userResultList = (List<DBUser>) dbUtil.findUserOrDevice(category[tmp], criterium1[tmp2], textField[tmp].getText());
+	    			else if(tmp == 1)
+	    				userDeviceResultList = (List<DBUserDevice>) dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText());
+	    			else if(tmp == 1)
+	    				networkDeviceResultList = (List<DBNetworkDevice>) dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText());
+	    			return category[tmp+1];
+	            }
+	            
+	
+	            @Override
+	            protected void done() {
+	            }
+	       };
+	       	worker.execute();
 		}
 	}
 		

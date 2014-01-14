@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+
 /**
  * Klasa obsługi bazy danych
  * @author Daniel
@@ -20,6 +21,7 @@ public class DBUtil {
     private static SessionFactory factory = null;
     
     public DBUtil(){
+    	//Logger  logger = Logger.getLogger("com.foo");
     	factory = SessionFactoryUtil.getSessionFactory();
     }
     
