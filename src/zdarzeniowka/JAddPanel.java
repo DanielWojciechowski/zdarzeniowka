@@ -31,7 +31,6 @@ public class JAddPanel extends JPanel implements ItemListener{
 		addingPanel = new JPanel[3];
 		buttonPanel = new JPanel[3];
 		panel = new JPanel[3];	
-		JComboBox<String> addingCB;
 		capane = new GridBagConstraints();
 		cbutton = new GridBagConstraints();
 		c = new GridBagConstraints();

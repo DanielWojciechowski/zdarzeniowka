@@ -44,7 +44,7 @@ public class JReportPanel extends JPanel {
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(500, 300));
+        scrollPane.setPreferredSize(new Dimension(500, 310));
         this.setLayout(new GridBagLayout());
         cbPane.setLayout(new GridBagLayout());
         report.setLayout(new GridBagLayout());

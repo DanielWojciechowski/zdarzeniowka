@@ -1,5 +1,6 @@
 package zdarzeniowka;
 
+import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
@@ -7,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,27 +19,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class JRoomFrame extends JFrame implements ActionListener {
+public class JRoomFrame extends JFrame implements ActionListener, ItemListener {
 	private static final long serialVersionUID = -8038078091109185534L;
 	private JTabbedPane tabbedPane;
 	private JPanel[] pane, buttonPanel;
 	private JUserPanel[] userPanel;
+	private JUserDevicePanel[] userDevicePanel;
 	private JButton[] editButton, deleteButton, showDeviceButton, okButton;
 	private GridBagConstraints c;
 	private Font normal;
 	
 	
-	public JRoomFrame(String text, int usersInRoom){
+	/*public JRoomFrame(String text, int usersInRoom){
 		super(text);
-		File fontFile = new File("font/OpenSans-Italic.ttf");
-		try {
-			Font fontN = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-			normal = fontN.deriveFont(12f);
-		} catch (FontFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {	
-			e.printStackTrace();
-		}
+		normal = new Font("Open sans", Font.PLAIN, 13);
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
 		pane = new JPanel[usersInRoom];
@@ -45,10 +41,11 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			tabbedPane.add("Osoba",pane[i]);	
 		}
 		this.add(tabbedPane);
-	}
+	}*/
 	
 	public JRoomFrame(String text){
 		super(text);
+		this.setLayout(new CardLayout());
 		normal = new Font("Open sans", Font.PLAIN, 13);
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
@@ -71,6 +68,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			editButton[i] = new JButton("Edytuj");
 			deleteButton[i] = new JButton("Usun");
 			showDeviceButton[i] = new JButton("Urzadzenia uzytkownika");
+			showDeviceButton[i].addItemListener(this);
 			okButton[i] = new JButton("Akcpetuj");
 			editButton[i].setFont(normal);
 			editButton[i].addActionListener(this);
@@ -90,17 +88,19 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			buttonPanel[i].add(deleteButton[i], c);
 			c.gridx = 0;
 			c.gridy = 1;
-			c.gridwidth = 4;
+			c.gridwidth = 3;
 			buttonPanel[i].add(showDeviceButton[i],c);
 			
 			c.gridy = 0;
 			c.gridwidth = 1;
-			c.insets = new Insets(10,10,0,10);
+
+			c.anchor = GridBagConstraints.LINE_END;
+			c.insets = new Insets(10,0,0,0);
 			pane[i].add(userPanel[i], c);
 			c.gridy = 1;
-			c.insets = new Insets(20,0,0,16);
+			c.insets = new Insets(10,0,0,5);
 			pane[i].add(buttonPanel[i],c);
-			
+			c.gridy = 0;
 			tabbedPane.add("Osoba",pane[i]);	
 		}
 		this.add(tabbedPane);
@@ -124,6 +124,13 @@ public class JRoomFrame extends JFrame implements ActionListener {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Object source = e.getSource();
+		//if (source = )
+		
 	}
 	
 	
