@@ -31,13 +31,11 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 public class GUI implements ItemListener, ActionListener{
-	private JPanel cardSearchPanel, cardAddingPanel;
+
 	private JFrame frame;
 	private JTabbedPane tabbedPane;
 	private Border border;
-	private DefaultListModel<String>[] searchListModel;
 	private Font header, normal;
-	private JComboBox<String> addingCB;
 	
 	private void initiate(){
 		File fontFile1 = new File("font/OpenSans-Regular.ttf"),
@@ -93,235 +91,13 @@ public class GUI implements ItemListener, ActionListener{
 	}
 	
 	public void addingView(){
-		JPanel[] addingPanel = new JPanel[4], buttonPanel = new JPanel[3], 
-				panel = new JPanel[3];	
-		GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
-				c = new GridBagConstraints();
-		JButton[] confirmButton = new JButton[3], clearButton = new JButton[3];
-		final String OPTION1 = "Dodaj użytkownika", OPTION2 = "Dodaj sprzęt użytkownika", 
-				OPTION3 = "Dodaj sprzęt sieciowy";
-		String comboBoxItems[] = {OPTION1, OPTION2, OPTION3};
-		addingCB = new JComboBox<String>(comboBoxItems);
-		addingCB.addItemListener(this);
-		addingCB.setFont(normal);
-		cardAddingPanel = new JPanel(new CardLayout());
-		
-		for(int i = 0; i < 4; i++){
-			addingPanel[i] = new JPanel();
-			addingPanel[i].setLayout(new GridBagLayout());
-		}
-		panel[0] = new JUserPanel();
-		panel[1] = new JUserDevicePanel();
-		panel[2] = new JNetworkDevicePanel();
-		
-		for(int i = 0; i < 3; i++){
-			buttonPanel[i] = new JPanel();
-			buttonPanel[i].setLayout(new GridBagLayout());
-			confirmButton[i] = new JButton("Dodaj");
-			clearButton[i] = new JButton("Wyczysc");
-			confirmButton[i].setFont(normal);
-			clearButton[i].setFont(normal);
-			
-			cbutton.anchor = GridBagConstraints.LINE_END;
-        	cbutton.gridy = 0;
-        	cbutton.gridx = 0;
-        	cbutton.ipadx = 12;
-        	cbutton.insets = new Insets(0, 10, 0, 0);
-        	buttonPanel[i].add(confirmButton[i], cbutton);
-        	cbutton.gridx = 1;
-        	cbutton.ipadx = 0;
-        	buttonPanel[i].add(clearButton[i],cbutton);
-        
-        	c.insets = new Insets(50,0,0,0);
-        	c.gridx = 0;
-        	c.gridy = 0;
-        	c.anchor = GridBagConstraints.CENTER;	
-			addingPanel[i+1].add(panel[i], c);
-			
-        	if (i == 0) {
-        		c.insets = new Insets(20, 0, 152, 0);
-        	}
-        	else {
-        		c.insets = new Insets(20, 0, 20, 0);
-        	}
-        	c.gridy = 2;
-        	c.anchor = GridBagConstraints.LINE_END;
-         	addingPanel[i+1].add(buttonPanel[i], c);
-		}
-		
-        capane.anchor = GridBagConstraints.NORTH;
-        capane.weightx = 1;
-    	capane.weighty = 1;
-        capane.ipadx = 253;
-        capane.gridx = 0;
-        capane.gridy = 0;
-        capane.insets= new Insets(30, 0, 0, 0);
-        addingPanel[0].add(addingCB, capane);
-        addingPanel[0].add(cardAddingPanel, capane);
-		
-        cardAddingPanel.add(addingPanel[1], OPTION1);
-        cardAddingPanel.add(addingPanel[2], OPTION2);
-        cardAddingPanel.add(addingPanel[3], OPTION3);
-        
-		tabbedPane.add("Dodaj", addingPanel[0]);
+		JAddPanel addPanel = new JAddPanel();
+		tabbedPane.add("Dodaj", addPanel);
 	}
 	
 	public void searchView(){
-		searchListModel = new DefaultListModel[3];
-		JList<String>[] list = new JList[3];
-		JScrollPane[] scrollPane = new JScrollPane[3];
-		JPanel[] searchPanel = new JPanel[4], searchPane = new JPanel[3], 
-				resultPane = new JPanel[3], buttonPanel = new JPanel[3];
-        JLabel[] label = new JLabel[3], label2 = new JLabel[3], result = new JLabel[3];
-        JTextField[] textField = new JTextField[3];
-        JButton[] searchButtonS = new JButton[3], 
-        		 deleteButtonS = new JButton[3], showButtonS = new JButton[3];
-    	GridBagConstraints c = new GridBagConstraints(), cbutton = new GridBagConstraints(), 
-    			cpane = new GridBagConstraints(), csearch = new GridBagConstraints(), 
-    			cresult = new GridBagConstraints();
-    	Insets insets1 = new Insets(0,20,10,0), insets0 = new Insets(0,0,10,0);
-		final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", 
-				OPTION3 = "Wyszukaj sprzet sieciowy";
-		String[] comboBoxItems = {OPTION1, OPTION2, OPTION3}, 
-				comboBox1 = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
-				comboBox23 = {"Adres MAC", "Adres IP"};
-        JComboBox<String>[] cb = new JComboBox[4];
-		cardSearchPanel = new JPanel(new CardLayout());
-        cb[0]= new JComboBox<String>(comboBoxItems);
-        cb[1] = new JComboBox<String>(comboBox1);
-        cb[2] = new JComboBox<String>(comboBox23);
-        cb[3] = new JComboBox<String>(comboBox23);
-        cb[0].addItemListener(this);
-        
-        for (int i = 0; i < 4; i++){
-        	cb[i].setFont(normal);
-        	if (i > 0) {
-        		cb[i].addActionListener(this);
-        	}
-    		searchPanel[i] = new JPanel();
-    		searchPanel[i].setLayout(new GridBagLayout());
-        }        
-        
-        for (int i = 0; i < 3; i++){
-    		searchListModel[i] = new DefaultListModel<String>();
-    		list[i] = new JList<String>(searchListModel[i]);
-    		list[i].setPrototypeCellValue("Mam nadzieje, ze ta   "
-    				+ " glupia funkcja zadziala mehehehhehe        ");
-    		list[i].setFont(normal);
-    		scrollPane[i] = new JScrollPane(list[i]);  
-    		
-        	label[i] = new JLabel("Wybierz:");
-        	label2[i] = new JLabel("Wpisz:");
-        	result[i] = new JLabel("Wyniki:");
-        	textField[i] = new JTextField(30);
-        	searchButtonS[i] = new JButton("Szukaj!");
-        	deleteButtonS[i] = new JButton("Usun");
-        	showButtonS[i] = new JButton("Wyświetl");
-
-        	buttonPanel[i] = new JPanel();
-        	searchPane[i] = new JPanel();
-        	resultPane[i] = new JPanel();
-        	buttonPanel[i].setLayout(new GridBagLayout());
-        	searchPane[i].setLayout(new GridBagLayout());
-        	resultPane[i].setLayout(new GridBagLayout());
-        	
-        	label[i].setFont(normal);
-        	label2[i].setFont(normal);
-        	result[i].setFont(normal);
-        	deleteButtonS[i].setFont(normal);
-        	searchButtonS[i].setFont(normal);
-        	showButtonS[i].setFont(normal);
-        	textField[i].setFont(normal);
-        	       	
-        	c.insets = new Insets(50,0,0,0);
-        	c.gridx = 0;
-        	c.gridy = 0;
-        	c.anchor = GridBagConstraints.CENTER;
-        	csearch.insets = insets0;
-        	csearch.anchor = GridBagConstraints.LINE_END;
-        	csearch.gridx = 0;
-        	csearch.gridy = 0;
-        	searchPane[i].add(label[i], csearch);
-        	csearch.anchor = GridBagConstraints.LINE_START;
-        	csearch.gridx = 1;
-        	csearch.insets = insets1;
-        	if(i == 0){
-        		csearch.ipadx = 243;
-        	}
-        	else {
-        		csearch.ipadx = 270;
-        	}
-        	searchPane[i].add(cb[i+1], csearch);
-        	csearch.ipadx = 0;
-        	csearch.gridx = 0;
-        	csearch.gridy = 1;
-        	csearch.insets = insets0;
-        	csearch.anchor = GridBagConstraints.LINE_END;
-        	searchPane[i].add(label2[i], csearch);
-        	csearch.gridx = 1;
-        	csearch.insets = insets1;
-        	csearch.ipady = 6;
-        	csearch.anchor = GridBagConstraints.LINE_START;
-        	searchPane[i].add(textField[i], csearch);
-        	csearch.ipadx = 0;
-        	csearch.ipady = 0;
-        	csearch.insets = insets0;
-        	csearch.anchor = GridBagConstraints.LINE_END;
-        	csearch.gridy = 2;
-        	csearch.gridx = 1;
-        	searchPane[i].add(searchButtonS[i], csearch);
-        	c.gridy = 1;
-        	searchPanel[i+1].add(searchPane[i], c);        	
-        	
-        	c.insets = new Insets(0,18,0,0);
-        	cresult.gridheight = 0;
-        	cresult.ipadx = 0;
-        	cresult.ipady = 0;
-        	cresult.anchor = GridBagConstraints.LINE_END;
-        	cresult.gridx = 0;
-        	cresult.gridy = 0;
-        	cresult.insets = new Insets(0, 0, 0, 0);
-        	resultPane[i].add(result[i], cresult);
-        	cresult.insets = insets1;
-        	cresult.anchor = GridBagConstraints.LINE_START;
-        	cresult.gridx = 1;
-        	cresult.ipady = 75;
-        	resultPane[i].add(scrollPane[i], cresult);
-        	c.gridy = 2;
-        	c.insets = new Insets(10,14,0,0);
-        	searchPanel[i+1].add(resultPane[i], c);
-        	
-        	cbutton.anchor = GridBagConstraints.FIRST_LINE_END;
-        	cbutton.gridy = 0;
-        	cbutton.gridx = 0;
-        	cbutton.ipadx = 0;
-        	cbutton.insets = new Insets(0, 10, 0, 0);
-        	buttonPanel[i].add(showButtonS[i], cbutton);
-        	cbutton.gridx = 1;
-        	cbutton.ipadx = 20;
-        	buttonPanel[i].add(deleteButtonS[i], cbutton);
-        	
-        	c.insets = new Insets(0, 0, 0, 0);
-        	c.gridy = 3;
-        	c.anchor = GridBagConstraints.LINE_END;
-         	searchPanel[i+1].add(buttonPanel[i], c);
-        }
-        
-        cpane.anchor = GridBagConstraints.NORTH;
-        cpane.weightx = 1;
-    	cpane.weighty = 1;
-        cpane.ipadx = 232;
-        cpane.gridx = 0;
-        cpane.gridy = 0;
-        cpane.insets= new Insets(30, 0, 0, 0);
-        searchPanel[0].add(cb[0], cpane);
-        searchPanel[0].add(cardSearchPanel, cpane);
-		
-        cardSearchPanel.add(searchPanel[1], OPTION1);
-        cardSearchPanel.add(searchPanel[2], OPTION2);
-        cardSearchPanel.add(searchPanel[3], OPTION3);
-        
-		tabbedPane.add("Wyszukaj", searchPanel[0]);
+		JSearchPanel searchPanel = new JSearchPanel();
+		tabbedPane.add("Wyszukaj", searchPanel);
 	}
 	
 	public void reportView(){
@@ -537,30 +313,11 @@ public class GUI implements ItemListener, ActionListener{
 			System.out.println(buttonText);
 			showRoomFrame(buttonText);
 		}
-		else if (source instanceof JComboBox<?>){
-			String name = (String)((JComboBox<?>) source).getSelectedItem();
-			System.out.println(name);
-			searchListModel[1].addElement(name);
-		}
 			
 	}
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Object source = e.getSource();
-		if (source == addingCB){
-			CardLayout cl = (CardLayout)(cardAddingPanel.getLayout());
-	        cl.show(cardAddingPanel, (String)e.getItem());
-	        
-		}
-		else
-		{
-			CardLayout cl = (CardLayout)(cardSearchPanel.getLayout());
-	        cl.show(cardSearchPanel, (String)e.getItem());
-	        for(int i = 0; i < 3; i++){
-	        	searchListModel[i].clear();
-	        }
-		}
 	}
 	
 
