@@ -15,8 +15,7 @@ import javax.swing.JPanel;
 public class JAddPanel extends JPanel implements ItemListener{
 	
 	private static final long serialVersionUID = -2513979177576640749L;
-	private JPanel[] addingPanel = new JPanel[3], buttonPanel = new JPanel[3], 
-			panel = new JPanel[3];	
+	private JPanel[] addingPanel, buttonPanel, panel;	
 	private JPanel cardAddingPanel;
 	private JComboBox<String> addingCB;
 	private GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
@@ -29,6 +28,15 @@ public class JAddPanel extends JPanel implements ItemListener{
 	
 	public JAddPanel(){
 		super();
+		addingPanel = new JPanel[3];
+		buttonPanel = new JPanel[3];
+		panel = new JPanel[3];	
+		JComboBox<String> addingCB;
+		capane = new GridBagConstraints();
+		cbutton = new GridBagConstraints();
+		c = new GridBagConstraints();
+		confirmButton = new JButton[3];
+		clearButton = new JButton[3];
 		normal = new Font("Open sans", Font.PLAIN, 13);
 		addingCB = new JComboBox<String>(comboBoxItems);
 		addingCB.addItemListener(this);

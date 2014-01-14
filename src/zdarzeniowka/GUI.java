@@ -101,73 +101,7 @@ public class GUI implements ItemListener, ActionListener{
 	}
 	
 	public void reportView(){
-		JPanel reportPanel = new JPanel(), cbPane = new JPanel(),
-				buttonPane = new JPanel();
-		JChart report = new JChart(500, 600);
-		JScrollPane scrollPane = new JScrollPane(report);
-		JButton generateButton = new JButton("Generuj"), 
-				saveButton = new JButton("Zapisz do pliku");
-		GridBagConstraints crpane = new GridBagConstraints(), cbpane = new GridBagConstraints(),
-				cbutton = new GridBagConstraints();
-		String[] comboBox0 = {"Jakis okres ", "Jakis okres"},
-				comboBox1 = {"Jakies dane", "Jakies dane"};
-        JComboBox<String>[] cb = new JComboBox[2];
-        JLabel[] label = new JLabel[2];
-    	Insets insets1 = new Insets(0,20,10,0), insets0 = new Insets(0,0,10,0);
-
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(500, 300));
-        reportPanel.setLayout(new GridBagLayout());
-        cbPane.setLayout(new GridBagLayout());
-        report.setLayout(new GridBagLayout());
-        buttonPane.setLayout(new GridBagLayout());
-        saveButton.setFont(normal);
-        generateButton.setFont(normal);
-        cb[0] = new JComboBox<String>(comboBox0);
-        cb[1] = new JComboBox<String>(comboBox1);
-        cb[0].setFont(normal);
-        cb[1].setFont(normal);
-        cb[0].setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla bla blaBla bla bla bla bla b");
-        cb[1].setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla bla blaBla bla bla bla bla b");
-        label[0] = new JLabel("Wybierz okres:");
-        label[1] = new JLabel("Wybierz dane: ");
-        label[0].setFont(normal);
-        label[1].setFont(normal);
-        
-        for (int i = 0; i < 2; i++)
-        	{
-        	cbpane.insets = insets0;
-        	cbpane.gridy = i;
-        	cbpane.gridx = 0;
-    		cbpane.anchor = GridBagConstraints.LINE_END;
-    		cbPane.add(label[i], cbpane);
-    		cbpane.insets = insets1;
-    		cbpane.anchor = GridBagConstraints.LINE_START;
-    		cbpane.gridx = 1;
-    		cbPane.add(cb[i], cbpane);
-        	}
-		
-        cbutton.insets = insets0;
-        cbutton.ipadx = 30;
-        buttonPane.add(generateButton, cbutton);
-        cbutton.insets = insets1;
-        cbutton.gridx = 1;
-        cbutton.ipadx = 0;
-        buttonPane.add(saveButton, cbutton);
-        
-        crpane.insets = new Insets(0, 0, 0, 0);
-        crpane.anchor = GridBagConstraints.NORTH;
-        reportPanel.add(cbPane, crpane);
-        crpane.insets = new Insets(10,0,0,0);
-        crpane.gridy = 1;
-        crpane.anchor = GridBagConstraints.LINE_END;
-        reportPanel.add(buttonPane, crpane);
-        crpane.gridy = 2;
-        //crpane.gridheight = 2;
-        crpane.anchor = GridBagConstraints.CENTER;
-        reportPanel.add(scrollPane, crpane);
-            
+		JReportPanel reportPanel = new JReportPanel();
 		tabbedPane.add("Raporty", reportPanel);
 	}
 	

@@ -22,30 +22,49 @@ import javax.swing.JTextField;
 public class JSearchPanel extends JPanel implements ItemListener, ActionListener{
 
 	private static final long serialVersionUID = 4379112746462083318L;
+	private final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", 
+			OPTION3 = "Wyszukaj sprzet sieciowy";
 	private JPanel cardSearchPanel;
 	private DefaultListModel<String>[] searchListModel;
 	private Font normal;
-	private JList<String>[] list = new JList[3];
-	private JScrollPane[] scrollPane = new JScrollPane[3];
-	private JPanel[] searchPanel = new JPanel[3], searchPane = new JPanel[3], 
-			resultPane = new JPanel[3], buttonPanel = new JPanel[3];
-    private JLabel[] label = new JLabel[3], label2 = new JLabel[3], result = new JLabel[3];
-    private JTextField[] textField = new JTextField[3];
-    private JButton[] searchButtonS = new JButton[3], 
-    		 deleteButtonS = new JButton[3], showButtonS = new JButton[3];
+	private JList<String>[] list;
+	private JScrollPane[] scrollPane;
+	private JPanel[] searchPanel, searchPane, resultPane, buttonPanel;
+    private JLabel[] label, label2, result;
+    private JTextField[] textField;
+    private JButton[] searchButton, deleteButton, showButton;
 	private GridBagConstraints c = new GridBagConstraints(), cbutton = new GridBagConstraints(), 
 			cpane = new GridBagConstraints(), csearch = new GridBagConstraints(), 
 			cresult = new GridBagConstraints();
-	private Insets insets1 = new Insets(0,20,10,0), insets0 = new Insets(0,0,10,0);
-	private final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", 
-			OPTION3 = "Wyszukaj sprzet sieciowy";
+	private Insets insets1, insets0;
+    private JComboBox<String>[] cb;
 	private String[] comboBoxItems = {OPTION1, OPTION2, OPTION3}, 
 			comboBox1 = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
 			comboBox23 = {"Adres MAC", "Adres IP"};
-    private JComboBox<String>[] cb = new JComboBox[4];
 	
 	public JSearchPanel(){
 		super();
+		list = new JList[3];
+		scrollPane = new JScrollPane[3];
+		searchPanel = new JPanel[3];
+		searchPane = new JPanel[3];
+		resultPane = new JPanel[3];
+		buttonPanel = new JPanel[3];
+		label = new JLabel[3];
+		label2 = new JLabel[3];
+		result = new JLabel[3];
+		textField = new JTextField[3];
+		searchButton = new JButton[3];
+		deleteButton = new JButton[3];
+		showButton = new JButton[3];
+		c = new GridBagConstraints();
+		cbutton = new GridBagConstraints();
+		cpane = new GridBagConstraints();
+		csearch = new GridBagConstraints();
+		cresult = new GridBagConstraints();
+		insets1 = new Insets(0,20,10,0);
+		insets0 = new Insets(0,0,10,0);
+		cb = new JComboBox[4];
 		normal = new Font("Open sans", Font.PLAIN, 13);
 		searchListModel = new DefaultListModel[3];
 		cardSearchPanel = new JPanel(new CardLayout());
@@ -58,6 +77,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         
         for (int i = 0; i < 4; i++){
         	cb[i].setFont(normal);
+        	if (i > 0) cb[i].addActionListener(this);
         }        
         
         for (int i = 0; i < 3; i++){
@@ -74,9 +94,9 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	label2[i] = new JLabel("Wpisz:");
         	result[i] = new JLabel("Wyniki:");
         	textField[i] = new JTextField(30);
-        	searchButtonS[i] = new JButton("Szukaj!");
-        	deleteButtonS[i] = new JButton("Usun");
-        	showButtonS[i] = new JButton("Wyświetl");
+        	searchButton[i] = new JButton("Szukaj!");
+        	deleteButton[i] = new JButton("Usun");
+        	showButton[i] = new JButton("Wyświetl");
 
         	buttonPanel[i] = new JPanel();
         	searchPane[i] = new JPanel();
@@ -88,9 +108,9 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	label[i].setFont(normal);
         	label2[i].setFont(normal);
         	result[i].setFont(normal);
-        	deleteButtonS[i].setFont(normal);
-        	searchButtonS[i].setFont(normal);
-        	showButtonS[i].setFont(normal);
+        	deleteButton[i].setFont(normal);
+        	searchButton[i].setFont(normal);
+        	showButton[i].setFont(normal);
         	textField[i].setFont(normal);
         	       	
         	c.insets = new Insets(50,0,0,0);
@@ -129,7 +149,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	csearch.anchor = GridBagConstraints.LINE_END;
         	csearch.gridy = 2;
         	csearch.gridx = 1;
-        	searchPane[i].add(searchButtonS[i], csearch);
+        	searchPane[i].add(searchButton[i], csearch);
         	c.gridy = 1;
         	searchPanel[i].add(searchPane[i], c);        	
         	
@@ -156,10 +176,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	cbutton.gridx = 0;
         	cbutton.ipadx = 0;
         	cbutton.insets = new Insets(0, 10, 0, 0);
-        	buttonPanel[i].add(showButtonS[i], cbutton);
+        	buttonPanel[i].add(showButton[i], cbutton);
         	cbutton.gridx = 1;
         	cbutton.ipadx = 20;
-        	buttonPanel[i].add(deleteButtonS[i], cbutton);
+        	buttonPanel[i].add(deleteButton[i], cbutton);
         	
         	c.insets = new Insets(0, 0, 0, 0);
         	c.gridy = 3;
@@ -184,11 +204,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Object source = e.getSource();
 		CardLayout cl = (CardLayout)(cardSearchPanel.getLayout());
         cl.show(cardSearchPanel, (String)e.getItem());
         for(int i = 0; i < 3; i++){
-        	searchListModel[i].clear();
+                searchListModel[i].clear();
 	}
 
 }
