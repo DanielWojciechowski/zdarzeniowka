@@ -41,6 +41,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private String[] comboBoxItems = {OPTION1, OPTION2, OPTION3}, 
 			comboBox1 = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
 			comboBox23 = {"Adres MAC", "Adres IP"};
+	private DBUtil dbUtil = null;
+	private String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"},
+			criterium1 = {"firstName","lastName", "roomNo", "albumNo"},
+			criterium2 = {"mac", "ip"};
 	
 	public JSearchPanel(){
 		super();
@@ -95,6 +99,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	result[i] = new JLabel("Wyniki:");
         	textField[i] = new JTextField(30);
         	searchButton[i] = new JButton("Szukaj!");
+        	searchButton[i].addActionListener(this);
         	deleteButton[i] = new JButton("Usun");
         	showButton[i] = new JButton("Wyświetl");
 
@@ -217,8 +222,17 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		Object source = e.getSource();
 		if (source instanceof JComboBox<?>){
 			String name = (String)((JComboBox<?>) source).getSelectedItem();
-			System.out.println(name);
+			//System.out.println(name);
 			searchListModel[1].addElement(name);
+		}
+		int tmp = cb[0].getSelectedIndex();
+		if (source == searchButton[tmp]){
+			int tmp2 = cb[tmp+1].getSelectedIndex();
+			dbUtil = new DBUtil();
+			if(tmp == 0)
+				 dbUtil.findUserOrDevice(category[tmp], criterium1[tmp2], textField[tmp].getText());
+			else if(tmp == 1 || tmp == 2) 
+				 dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText());
 		}
 	}
 		

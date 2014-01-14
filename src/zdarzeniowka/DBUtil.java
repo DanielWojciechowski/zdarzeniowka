@@ -19,11 +19,16 @@ import org.hibernate.criterion.Restrictions;
 public class DBUtil {
     private static SessionFactory factory = null;
     
-	public static void main(String[] args) {
-		factory = SessionFactoryUtil.getSessionFactory();
+    public DBUtil(){
+    	factory = SessionFactoryUtil.getSessionFactory();
+    }
+    
+	/*public static void main(String[] args) {
+		
 		DBUtil ht = new DBUtil();	
+		ht.findUserOrDevice("DBUser", "firstName", "Daniel");
         System.exit(0);
-	}
+	}*/
 	/**
 	 * Funkcja wyszukuje użytkownika lub urządzenie sieciowe
 	 * @param category kategoria do jakiej należy obiekt do wyszukania - DBUser, DBUserDevice, DBNetworkDevice
