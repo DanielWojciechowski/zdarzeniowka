@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -19,6 +22,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
+
+import org.apache.log4j.Logger;
 
 public class JSearchPanel extends JPanel implements ItemListener, ActionListener{
 
@@ -49,6 +55,15 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private String[][] data0 = {{"", "", "", "", ""}}, data1 = {{"", "", "", ""}}, 
 			data2 = {{"", "", "", ""}};
 	private Dimension d;
+	
+	private DBUtil dbUtil = null;
+	private String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"},
+			criterium1 = {"firstName","lastName", "roomNo", "albumNo"},
+			criterium2 = {"mac", "ip"};
+	private List<DBUser> userResultList = null;
+	private List<DBUserDevice> userDeviceResultList = null;
+	private List<DBNetworkDevice> networkDeviceResultList = null;
+    Logger  log = Logger.getLogger(JSearchPanel.class);
 	
 	public JSearchPanel(){
 		super();
@@ -104,6 +119,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	label2[i] = new JLabel("Wpisz:");
         	textField[i] = new JTextField(30);
         	searchButton[i] = new JButton("Szukaj!");
+        	searchButton[i].addActionListener(this);
         	searchPane[i] = new JPanel();
         	searchPane[i].setLayout(new GridBagLayout());
         	searchButton[i].addActionListener(this);
@@ -227,8 +243,37 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 					//displayColumns(i, columnNames0, data0);
 				}
 			}
+		}
+		final int tmp = cb[0].getSelectedIndex();
+		if (source == searchButton[tmp]){
+			log.info("Wciśnięto przycisk szukaj");
+			final int tmp2 = cb[tmp+1].getSelectedIndex();
 			
+			SwingWorker<String, Void> worker = new SwingWorker<String, Void>(){
+	            @Override
+	            protected String doInBackground() throws Exception {
+	    			dbUtil = new DBUtil();
+	    			if(tmp == 0)
+	    				userResultList = castList(DBUser.class, dbUtil.findUserOrDevice(category[tmp], criterium1[tmp2], textField[tmp].getText()));
+	    			else if(tmp == 1)
+	    				userDeviceResultList = castList(DBUserDevice.class, dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText()));
+	    			else if(tmp == 1)
+	    				networkDeviceResultList = castList(DBNetworkDevice.class, dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText()));
+	    			return category[tmp+1];
+	            }
+	            @Override
+	            protected void done() {
+	            }
+	       };
+	       	worker.execute();
 		}
 	}
+	
+	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+	    List<T> r = new ArrayList<T>(c.size());
+	    for(Object o: c)
+	      r.add(clazz.cast(o));
+	    return r;
+	}	
 		
-	}
+}
