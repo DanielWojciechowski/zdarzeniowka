@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -19,9 +20,10 @@ import org.hibernate.criterion.Restrictions;
  */
 public class DBUtil {
     private static SessionFactory factory = null;
+    private Logger  log = Logger.getLogger(DBUtil.class);
     
     public DBUtil(){
-    	//Logger  logger = Logger.getLogger("com.foo");
+    	log.info("Utworzenie sessionFactory");
     	factory = SessionFactoryUtil.getSessionFactory();
     }
     
@@ -41,6 +43,7 @@ public class DBUtil {
 	 * @return funkcja zwraca listę typu DBUser, DBUserDevice, DBNetworkDevice, zawierającą wyniki wyszukiwania
 	 */
 	public List<?> findUserOrDevice(String category, String criterium, String value){
+		log.info("Wykonywanie findUserOrDevice()");
 		Session session = factory.openSession();
 		Transaction trans = null;
 		List <?> list = null;
@@ -69,10 +72,12 @@ public class DBUtil {
         	trans.commit();
         }catch(HibernateException ex){
         	if(trans != null) trans.rollback();
+        	log.info("Błąd w wykonywaniu findUserOrDevice()");
         	ex.printStackTrace();
         }finally{
         	session.close();
         }
+		log.info("koniec wykonywania findUserOrDevice()");
 		return list;
 	}
 	/**
