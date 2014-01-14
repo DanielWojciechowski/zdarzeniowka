@@ -26,9 +26,11 @@ public class JUserDevicePanel extends JBasicPanel{
         scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setPreferredSize(new Dimension(336, 130));
-
-		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Id urzadzenia:", "Typ:", "Id użytkownika:", "Uwagi:"},configuration = {"Niezatwierdzona", "Zatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP"};
+		scrollPane.setPreferredSize(new Dimension(338, 130));
+		Insets insets2 = new Insets(0,24,10,0);
+		
+		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Id urzadzenia:", "Typ:", "Id użytkownika:", "Uwagi:"},
+				configuration = {"Niezatwierdzona", "Zatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP"};
 		cb = new JComboBox[2];
 		cb[0] = new JComboBox<String>(configuration);
 		cb[1] = new JComboBox<String>(type);
@@ -76,10 +78,12 @@ public class JUserDevicePanel extends JBasicPanel{
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 2;
 		cbot.ipady = 0;
+		cbot.insets = insets2;
 		botPanel.add(labels[3], cbot);
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 3;
 		cbot.ipady = 6;
+		cbot.insets = insets1;
 		textFields[2].setEditable(false);
 		botPanel.add(textFields[2], cbot);
 		
@@ -97,29 +101,31 @@ public class JUserDevicePanel extends JBasicPanel{
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 2;
 		cbot.ipady = 0;
+		cbot.insets = insets2;
 		botPanel.add(labels[5], cbot);
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 3;
 		cbot.ipady = 6;
+		cbot.insets = insets1;
 		botPanel.add(textFields[3], cbot);
 		
-		cbot.insets = new Insets(20,0,10,0);
+		cbot.insets = new Insets(20, 0, 10, 0);
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 0;
 		cbot.gridy = 4;
 		cbot.ipady = 0;
 		botPanel.add(labels[6], cbot);
-		cbot.insets = new Insets(20,20,10,0);
+		cbot.insets = new Insets(20, 20, 10, 0);
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 1;
 		cbot.gridwidth = 3;
 		botPanel.add(scrollPane, cbot);	
 		
-    	cpane.anchor = GridBagConstraints.CENTER;
+    	cpane.anchor = GridBagConstraints.LINE_END;
     	cpane.gridx = 0;
     	this.add(topPanel, cpane);
 		cpane.gridy = 1;
-		cpane.insets = new Insets(20,0,0,12);
+		cpane.insets = new Insets(20,0,0,0);
 		this.add(botPanel, cpane);	
 	}
 

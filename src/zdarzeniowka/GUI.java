@@ -339,7 +339,7 @@ public class GUI implements ItemListener, ActionListener{
         JLabel[] label = new JLabel[2];
     	Insets insets1 = new Insets(0,20,10,0), insets0 = new Insets(0,0,10,0);
 
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(500, 300));
         reportPanel.setLayout(new GridBagLayout());
