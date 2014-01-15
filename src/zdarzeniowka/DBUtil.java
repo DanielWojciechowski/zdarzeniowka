@@ -29,6 +29,8 @@ public class DBUtil {
     }
     public DBUtil(boolean startFactory){
     	factory = SessionFactoryUtil.getSessionFactory();
+    	log = Logger.getLogger(DBUtil.class);
+    	log.info("Połączono z bazą danych");
 
     }
 	/**
@@ -70,7 +72,7 @@ public class DBUtil {
         	trans.commit();
         }catch(HibernateException ex){
         	if(trans != null) trans.rollback();
-        	log.info("Błąd w wykonywaniu findUserOrDevice()");
+        	log.error("Błąd w wykonywaniu findUserOrDevice()");
         	ex.printStackTrace();
         }finally{
         	session.close();
@@ -199,6 +201,7 @@ public class DBUtil {
         	user.getDevices().add(device);
         	session.saveOrUpdate(user);
         	trans.commit();
+        	deviceId = device.getIdDevice();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
         	ex.printStackTrace();
@@ -264,6 +267,7 @@ public class DBUtil {
         	DBNetworkDevice device = new DBNetworkDevice(mac, ip, configuration, type, otherInfo);
         	session.save(device);
         	trans.commit();
+        	deviceId = device.getIdDevice();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
         	ex.printStackTrace();

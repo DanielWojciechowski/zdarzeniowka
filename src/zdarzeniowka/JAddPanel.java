@@ -35,6 +35,7 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	
 	private DBUtil dbUtil = null;
 	private Logger  log = Logger.getLogger(JAddPanel.class);
+	private char[] deviceTypes = {'k','p','r','a','i','s'};
 	
 	public JAddPanel(){
 		super();
@@ -139,13 +140,16 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	    			else if(tmp == 1){
 		    			JTextField[] tf = ((JUserDevicePanel)panel[tmp]).textFields;
 		    			boolean conf = (((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
-		    			
-		    			return dbUtil.addUserDevice(tf[0].getText(), tf[1].getText(), tf[4].getText().charAt(0), conf, tf[6].getText(), Integer.parseInt(tf[5].getText()));
+		    			int typeInd = ((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex();
+		    			String s = ((JUserDevicePanel)panel[tmp]).textArea.getText();
+		    			return dbUtil.addUserDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s, Integer.parseInt(tf[3].getText()));
 	    			}
 	    			else if(tmp == 2){
 		    			JTextField[] tf = ((JNetworkDevicePanel)panel[tmp]).textFields;
-		    			boolean conf = (tf[2].getText() == "Zatwierdzona");
-		    			return dbUtil.addNetworkDevice(tf[0].getText(), tf[1].getText(), tf[4].getText().charAt(0), conf, tf[6].getText());
+		    			boolean conf = (((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
+		    			int typeInd = ((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex();  			
+		    			String s = ((JNetworkDevicePanel)panel[tmp]).textArea.getText();
+		    			return dbUtil.addNetworkDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s);
 	    			}
 					return null;
 	    		}
@@ -162,7 +166,7 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	            		((JUserPanel)panel[tmp]).textFields[3].setText(String.valueOf(id));
 	            	else if(tmp == 1)
 	            		((JUserDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
-	            	else if(tmp == 1)
+	            	else if(tmp == 2)
 	            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
 	            }
 	       };
