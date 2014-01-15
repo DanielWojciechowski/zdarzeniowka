@@ -12,9 +12,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -49,7 +50,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private String[] comboBoxItems = {OPTION1, OPTION2, OPTION3}, 
 			comboBox1 = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
 			comboBox23 = {"Adres MAC", "Adres IP"}, 
-			columnNames0 = {"Id", "Imie", "Naz", "Pok", "Albumu"}, 
+			columnNames0 = {"Id", "Imie", "Nazwisko", "Pokój", "Nr Albumu"}, 
 			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"}, 
 			columnNames2 = {"Id", "Adres IP", "Adres MAC", "Typ"};;
 	private String[][] data0 = {{"", "", "", "", ""}}, data1 = {{"", "", "", ""}}, 
@@ -122,7 +123,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	searchButton[i].addActionListener(this);
         	searchPane[i] = new JPanel();
         	searchPane[i].setLayout(new GridBagLayout());
-        	searchButton[i].addActionListener(this);
         	label[i].setFont(normal);
         	label2[i].setFont(normal);
         	searchButton[i].setFont(normal);
@@ -234,15 +234,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		Object source = e.getSource();
 		if (source instanceof JComboBox<?>){
 			String name = (String)((JComboBox<?>) source).getSelectedItem();
-			System.out.println(name);
-		}
-		else if (source instanceof JButton){
-			for (int i = 0; i < 3; i++){
-				if ((JButton)source == searchButton[i]){
-					System.out.println("meh");
-					//displayColumns(i, columnNames0, data0);
-				}
-			}
 		}
 		final int tmp = cb[0].getSelectedIndex();
 		if (source == searchButton[tmp]){
@@ -259,14 +250,38 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	    				userDeviceResultList = castList(DBUserDevice.class, dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText()));
 	    			else if(tmp == 1)
 	    				networkDeviceResultList = castList(DBNetworkDevice.class, dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText()));
-	    			return category[tmp+1];
+	    			return category[tmp];
 	            }
 	            @Override
 	            protected void done() {
+	            	String cat = null;
+					try {
+						cat = this.get();
+					} catch (InterruptedException | ExecutionException e) {
+						log.error("Błąd SWING Workera");
+						e.printStackTrace();
+					}
+	            	if(cat == category[0]){
+	            		log.info("Listowanie Userów");
+	            		int i = 0;
+	            		for(Iterator<DBUser> iter = userResultList.iterator(); iter.hasNext();){
+	            			DBUser user = iter.next();
+	            			data0[i][0] = String.valueOf(user.getIdUser());
+	            			data0[i][1] = user.getFirstName();
+	            			data0[i][2] = user.getLastName();
+	            			data0[i][3] = String.valueOf(user.getRoomNo());
+	            			data0[i][4] = String.valueOf(user.getAlbumNo());
+	            			i++;
+	            		}
+	            	}
+	            	resultTable.repaint();
 	            }
 	       };
 	       	worker.execute();
 		}
+	}
+	public void listToTable(){
+		
 	}
 	
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
