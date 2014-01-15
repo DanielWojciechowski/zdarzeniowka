@@ -21,7 +21,7 @@ import org.hibernate.criterion.Restrictions;
 public class DBUtil {
     private static SessionFactory factory = null;
 
-    Logger  log;
+    private Logger  log;
     
     public DBUtil(){
     	log = Logger.getLogger(DBUtil.class);
@@ -184,8 +184,8 @@ public class DBUtil {
 	 * @param idUser wartość pola id użytkownika
 	 * @return funkcja zwraca identyfikator utworzonego urządzenia użytkownika, jeśli operacja nie powiedzie się zwraca NULL
 	 */
-	public Integer addUserDevice(String mac, String ip, char type, boolean configuration, String otherInfo, 
-			int idUser){
+	public Integer addUserDevice(String mac, String ip, char type, boolean configuration, 
+			String otherInfo, int idUser){
 		Session session = factory.openSession();
 		Transaction trans = null;
 		Integer deviceId = null;

@@ -64,7 +64,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private List<DBUser> userResultList = null;
 	private List<DBUserDevice> userDeviceResultList = null;
 	private List<DBNetworkDevice> networkDeviceResultList = null;
-    Logger  log = Logger.getLogger(JSearchPanel.class);
+    private Logger  log = Logger.getLogger(JSearchPanel.class);
 	
 	public JSearchPanel(){
 		super();
@@ -274,14 +274,35 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            			i++;
 	            		}
 	            	}
+	            	else if(cat == category[1]){
+	            		log.info("Listowanie Urządzeń Userów");
+	            		int i = 0;
+	            		for(Iterator<DBUserDevice> iter = userDeviceResultList.iterator(); iter.hasNext();){
+	            			DBUserDevice device = iter.next();
+	            			data1[i][0] = String.valueOf(device.getIdDevice());
+	            			data1[i][1] = device.getIp();
+	            			data1[i][2] = device.getMac();
+	            			data1[i][3] = String.valueOf(device.getType());
+	            			i++;
+	            		}
+	            	}
+	            	else if(cat == category[2]){
+	            		log.info("Listowanie Urządzeń Sieciowych");
+	            		int i = 0;
+	            		for(Iterator<DBNetworkDevice> iter = networkDeviceResultList.iterator(); iter.hasNext();){
+	            			DBNetworkDevice device = iter.next();
+	            			data2[i][0] = String.valueOf(device.getIdDevice());
+	            			data2[i][1] = device.getIp();
+	            			data2[i][2] = device.getMac();
+	            			data2[i][3] = String.valueOf(device.getType());
+	            			i++;
+	            		}
+	            	}
 	            	resultTable.repaint();
 	            }
 	       };
 	       	worker.execute();
 		}
-	}
-	public void listToTable(){
-		
 	}
 	
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
