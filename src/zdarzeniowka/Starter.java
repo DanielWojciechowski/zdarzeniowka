@@ -13,5 +13,6 @@ public class Starter {
 				gui.showGUI();	
 			}
 			});
+		new DBUtil(true);
 	}
 }

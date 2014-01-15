@@ -20,13 +20,16 @@ import org.hibernate.criterion.Restrictions;
  */
 public class DBUtil {
     private static SessionFactory factory = null;
-
     private Logger  log;
     
     public DBUtil(){
     	log = Logger.getLogger(DBUtil.class);
-    	log.info("Utworzenie sessionFactory");
+    	log.info("Nowa instancja");
+    	
+    }
+    public DBUtil(boolean startFactory){
     	factory = SessionFactoryUtil.getSessionFactory();
+
     }
 	/**
 	 * Funkcja wyszukuje użytkownika lub urządzenie sieciowe
