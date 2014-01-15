@@ -65,18 +65,23 @@ public class JAddPanel extends JPanel implements ItemListener{
         	cbutton.gridx = 1;
         	cbutton.ipadx = 0;
         	buttonPanel[i].add(clearButton[i],cbutton);
-        
-        	c.insets = new Insets(50,0,0,0);
+        	if (i == 0) {
+        		c.insets = new Insets(50,0,0,5);
+        	}
+        	else {
+        		c.insets = new Insets(50,0,0,0);
+        	}
+         
         	c.gridx = 0;
         	c.gridy = 0;
         	c.anchor = GridBagConstraints.CENTER;	
 			addingPanel[i].add(panel[i], c);
 			
         	if (i == 0) {
-        		c.insets = new Insets(20, 0, 152, 0);
+        		c.insets = new Insets(20, 0, 152, 8);
         	}
         	else {
-        		c.insets = new Insets(20, 0, 20, 0);
+        		c.insets = new Insets(20, 30, 20, 0);
         	}
         	c.gridy = 2;
         	c.anchor = GridBagConstraints.LINE_END;

@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -20,15 +19,15 @@ public class JDSPanel extends JPanel implements ActionListener {
 	private JPanel dsPanel0, dsPanel1, dsPanel2 = new JPanel();
 	private GridBagConstraints c;
 	private Insets cInsets1, cInsets2, cInsets3, cInsets4;
-	private Font normal;
 	private Border border;
+	private Font normal;
 	
 	public JDSPanel(){
+		normal = new Font("Open sans", Font.PLAIN, 13);
 		dsPanel0 = new JPanel();
 		dsPanel1 = new JPanel();
 		dsPanel2 = new JPanel();
 		border = BorderFactory.createEmptyBorder();
-		normal = new Font("Open sans", Font.PLAIN, 13);
 		dsPanel0.setLayout(new GridBagLayout());
 		dsPanel1.setLayout(new GridBagLayout());
 		dsPanel2.setLayout(new GridBagLayout());
@@ -36,8 +35,8 @@ public class JDSPanel extends JPanel implements ActionListener {
 		c = new GridBagConstraints();
 		c.gridx=0;
 		c.gridy=0;
-		c.ipadx=60;
-		c.ipady=20;
+		//c.ipadx=60;
+		//c.ipady=20;
 		c.fill = GridBagConstraints.BOTH;
 		cInsets1 = new Insets(0,0,30,10);
 		cInsets2 = new Insets(0,0,10,10);
@@ -52,8 +51,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JButton b = new JButton(String.valueOf(stage+i));
-				b.setFont(normal);
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i));
 				b.addActionListener(this);
 				dsPanel0.add(b,c);
 				c.gridx++;
@@ -62,7 +60,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			c.gridx=0;
 			c.gridy++;
 		}
-		c.ipadx=50;
+		//c.ipadx=50;
 		stage=100;
 		
 		for(int j=1;j<=2;j++){
@@ -73,8 +71,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JButton b = new JButton(String.valueOf(stage+i));
-				b.setFont(normal);
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i));
 				b.addActionListener(this);
 				dsPanel1.add(b,c);
 				c.gridx++;
@@ -92,8 +89,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JButton b = new JButton(String.valueOf(stage+i));
-				b.setFont(normal);
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i));
 				b.addActionListener(this);
 				dsPanel2.add(b,c);
 				c.gridx++;
@@ -150,8 +146,8 @@ public class JDSPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		if (source instanceof JButton){
-			String buttonText = ((JButton) source).getText();
+		if (source instanceof JRoomButton){
+			String buttonText = ((JRoomButton) source).getText();
 			System.out.println(buttonText);
 			showRoomFrame(buttonText);
 		}
