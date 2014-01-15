@@ -24,7 +24,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 
@@ -69,7 +68,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public JSearchPanel(){
 		super();
-		resultTable = new JTable(new DefaultTableModel());
+		resultTable = new JTable();
 		scrollPane = new JScrollPane(resultTable);
 		searchPanel = new JPanel[3];
 		searchPane = new JPanel[3];
@@ -276,7 +275,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            		}
 	            	}
 	            	resultTable.repaint();
-	            	
 	            }
 	       };
 	       	worker.execute();

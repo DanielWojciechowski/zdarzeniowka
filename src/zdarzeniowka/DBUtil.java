@@ -20,9 +20,11 @@ import org.hibernate.criterion.Restrictions;
  */
 public class DBUtil {
     private static SessionFactory factory = null;
-    private Logger  log = Logger.getLogger(DBUtil.class);
+
+    Logger  log;
     
     public DBUtil(){
+    	log = Logger.getLogger(DBUtil.class);
     	log.info("Utworzenie sessionFactory");
     	factory = SessionFactoryUtil.getSessionFactory();
     }
