@@ -36,6 +36,7 @@ public class JRoomButton extends JButton{
 		color = new Color[3];
 		//this.setBackground(Color.gray);
 		label = new JLabel(txt);
+		label.setFont(new Font("Open sans", Font.PLAIN, 13));
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.CENTER;
 	}

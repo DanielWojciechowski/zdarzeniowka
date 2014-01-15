@@ -51,11 +51,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			comboBox1 = {"Imie", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
 			comboBox23 = {"Adres MAC", "Adres IP"}, 
 			columnNames0 = {"Id", "Imie", "Nazwisko", "Pokój", "Nr Albumu"}, 
-			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"}, 
-			columnNames2 = {"Id", "Adres IP", "Adres MAC", "Typ"};;
-	private String[][] data0 = {{"", "", "", "", ""}}, data1 = {{"", "", "", ""}}, 
-			data2 = {{"", "", "", ""}};
+			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
+	private String[][] data0 = {{"", "", "", "", ""}}, data1 = {{"", "", "", ""}};
 	private Dimension d;
+	private TableModel userModel, deviceModel;
 	
 	private DBUtil dbUtil = null;
 	private String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"},
@@ -64,11 +63,14 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private List<DBUser> userResultList = null;
 	private List<DBUserDevice> userDeviceResultList = null;
 	private List<DBNetworkDevice> networkDeviceResultList = null;
+	
     Logger  log = Logger.getLogger(JSearchPanel.class);
 	
 	public JSearchPanel(){
 		super();
-		resultTable = new JTable();
+    	userModel = new TableModel(columnNames0, data0);
+    	deviceModel = new TableModel(columnNames1, data1);
+		resultTable = new JTable(userModel);
 		scrollPane = new JScrollPane(resultTable);
 		searchPanel = new JPanel[3];
 		searchPane = new JPanel[3];
@@ -92,7 +94,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		cardSearchPanel = new JPanel(new CardLayout());
     	deleteButton = new JButton("Usun");
     	showButton = new JButton("Wyświetl");
-
     	result = new JLabel("Wyniki:");
     	result.setFont(normal);
     	buttonPanel.setLayout(new GridBagLayout());
@@ -221,6 +222,13 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	public void itemStateChanged(ItemEvent e) {
 		CardLayout cl = (CardLayout)(cardSearchPanel.getLayout());
         cl.show(cardSearchPanel, (String)e.getItem());
+        final int tmp = cb[0].getSelectedIndex();
+		if (tmp != 0){
+			resultTable.setModel(deviceModel);
+		}
+		else {
+			resultTable.setModel(userModel);		
+		}
 	}
 
 	public void displayColumns(int j, String[] columnNames, String[][] dataValues){
@@ -274,7 +282,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            			i++;
 	            		}
 	            	}
-	            	resultTable.repaint();
+	            	resultTable.revalidate();
 	            }
 	       };
 	       	worker.execute();
