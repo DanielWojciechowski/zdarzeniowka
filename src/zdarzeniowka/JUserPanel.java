@@ -67,11 +67,11 @@ public class JUserPanel extends JBasicPanel {
 			botPanel.add(textFields[i+1], cbot);	
 		}
 		
-    	cpane.anchor = GridBagConstraints.CENTER;
+    	cpane.anchor = GridBagConstraints.LINE_END;
     	cpane.gridx = 0;
     	this.add(topPanel, cpane);
 		cpane.gridy = 1;
-		cpane.insets = new Insets(20,0,0,15);
+		cpane.insets = new Insets(20,0,0,0);
 		this.add(botPanel, cpane);	
 	}
 

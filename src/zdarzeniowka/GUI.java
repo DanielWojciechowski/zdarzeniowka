@@ -23,7 +23,7 @@ public class GUI{
 	private JDSPanel dsPanel;
 	private JReportPanel reportPanel;
 	private JTabbedPane tabbedPane;
-	private Font header, normal;
+	private Font header, normal, italic;
 	
 	private void initiate(){
 		File fontFile1 = new File("font/OpenSans-Regular.ttf"),
@@ -31,16 +31,16 @@ public class GUI{
 		try {
 			Font fontH = Font.createFont(Font.TRUETYPE_FONT, fontFile1);
 			header = fontH.deriveFont(20f);
-			Font fontN = Font.createFont(Font.TRUETYPE_FONT, fontFile2);
+			Font fontN = Font.createFont(Font.TRUETYPE_FONT, fontFile1);
 			normal = fontN.deriveFont(12f);
+			Font fontI = Font.createFont(Font.TRUETYPE_FONT, fontFile2);
+			italic = fontI.deriveFont(10f);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}
 		
-		header = new Font("Open sans", Font.PLAIN, 20);
-		normal = new Font("Open sans", Font.PLAIN, 13);
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
 		dsPanel = new JDSPanel();
@@ -59,7 +59,7 @@ public class GUI{
 		JLabel label = new JLabel("Jestem ładnym programem.");
 		JLabel label2 = new JLabel("Version 1. beta");
 		label.setFont(header);
-		label2.setFont(new Font("Open sans", Font.ITALIC, 10));
+		label2.setFont(italic);
 		topPane.setLayout(new GridBagLayout());
 
 		c.anchor = GridBagConstraints.FIRST_LINE_START;

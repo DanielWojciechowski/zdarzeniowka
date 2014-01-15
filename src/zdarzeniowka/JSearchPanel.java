@@ -204,10 +204,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         this.add(cardSearchPanel, cpane);
         cpane.gridy = 1;
         cpane.anchor = GridBagConstraints.LINE_END;
-        cpane.insets = new Insets(10,0,0,23);
+        cpane.insets = new Insets(10,0,0,15);
     	this.add(resultPane, cpane);
     	cpane.gridy = 2;
-    	cpane.insets = new Insets(0,0,50,23);
+    	cpane.insets = new Insets(0,0,50,15);
         this.add(buttonPanel, cpane);
 		
         cardSearchPanel.add(searchPanel[0], OPTION1);
