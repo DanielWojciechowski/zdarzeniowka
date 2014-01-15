@@ -63,8 +63,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private List<DBUser> userResultList = null;
 	private List<DBUserDevice> userDeviceResultList = null;
 	private List<DBNetworkDevice> networkDeviceResultList = null;
-	
-    Logger  log = Logger.getLogger(JSearchPanel.class);
+    private Logger  log = Logger.getLogger(JSearchPanel.class);
 	
 	public JSearchPanel(){
 		super();
@@ -283,13 +282,11 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            		}
 	            	}
 	            	resultTable.revalidate();
+
 	            }
 	       };
 	       	worker.execute();
 		}
-	}
-	public void listToTable(){
-		
 	}
 	
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {

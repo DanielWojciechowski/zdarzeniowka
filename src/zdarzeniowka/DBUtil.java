@@ -20,13 +20,18 @@ import org.hibernate.criterion.Restrictions;
  */
 public class DBUtil {
     private static SessionFactory factory = null;
-
-    Logger  log;
+    private Logger  log;
     
     public DBUtil(){
     	log = Logger.getLogger(DBUtil.class);
-    	log.info("Utworzenie sessionFactory");
+    	log.info("Nowa instancja");
+    	
+    }
+    public DBUtil(boolean startFactory){
     	factory = SessionFactoryUtil.getSessionFactory();
+    	log = Logger.getLogger(DBUtil.class);
+    	log.info("Połączono z bazą danych");
+
     }
 	/**
 	 * Funkcja wyszukuje użytkownika lub urządzenie sieciowe
@@ -67,7 +72,7 @@ public class DBUtil {
         	trans.commit();
         }catch(HibernateException ex){
         	if(trans != null) trans.rollback();
-        	log.info("Błąd w wykonywaniu findUserOrDevice()");
+        	log.error("Błąd w wykonywaniu findUserOrDevice()");
         	ex.printStackTrace();
         }finally{
         	session.close();
@@ -184,8 +189,8 @@ public class DBUtil {
 	 * @param idUser wartość pola id użytkownika
 	 * @return funkcja zwraca identyfikator utworzonego urządzenia użytkownika, jeśli operacja nie powiedzie się zwraca NULL
 	 */
-	public Integer addUserDevice(String mac, String ip, char type, boolean configuration, String otherInfo, 
-			int idUser){
+	public Integer addUserDevice(String mac, String ip, char type, boolean configuration, 
+			String otherInfo, int idUser){
 		Session session = factory.openSession();
 		Transaction trans = null;
 		Integer deviceId = null;
@@ -196,6 +201,7 @@ public class DBUtil {
         	user.getDevices().add(device);
         	session.saveOrUpdate(user);
         	trans.commit();
+        	deviceId = device.getIdDevice();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
         	ex.printStackTrace();
@@ -261,6 +267,7 @@ public class DBUtil {
         	DBNetworkDevice device = new DBNetworkDevice(mac, ip, configuration, type, otherInfo);
         	session.save(device);
         	trans.commit();
+        	deviceId = device.getIdDevice();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
         	ex.printStackTrace();

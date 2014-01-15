@@ -5,14 +5,21 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
-public class JAddPanel extends JPanel implements ItemListener{
+import org.apache.log4j.Logger;
+
+public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	
 	private static final long serialVersionUID = -2513979177576640749L;
 	private JPanel[] addingPanel, buttonPanel, panel;	
@@ -25,6 +32,10 @@ public class JAddPanel extends JPanel implements ItemListener{
 			OPTION3 = "Dodaj sprzęt sieciowy";
 	private String comboBoxItems[] = {OPTION1, OPTION2, OPTION3}; 
 	private Font normal;
+	
+	private DBUtil dbUtil = null;
+	private Logger  log = Logger.getLogger(JAddPanel.class);
+	private char[] deviceTypes = {'k','p','r','a','i','s'};
 	
 	public JAddPanel(){
 		super();
@@ -52,6 +63,7 @@ public class JAddPanel extends JPanel implements ItemListener{
 			buttonPanel[i] = new JPanel();
 			buttonPanel[i].setLayout(new GridBagLayout());
 			confirmButton[i] = new JButton("Dodaj");
+			confirmButton[i].addActionListener(this);
 			clearButton[i] = new JButton("Wyczysc");
 			confirmButton[i].setFont(normal);
 			clearButton[i].setFont(normal);
@@ -109,7 +121,56 @@ public class JAddPanel extends JPanel implements ItemListener{
 		if (source == addingCB){
 			CardLayout cl = (CardLayout)(cardAddingPanel.getLayout());
 	        cl.show(cardAddingPanel, (String)e.getItem());
-	        
+		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		final int tmp = addingCB.getSelectedIndex();
+		if (source == confirmButton[tmp]){
+
+			SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>(){
+	            @Override
+	            protected Integer doInBackground() throws Exception {
+	    			dbUtil = new DBUtil();
+	    			if(tmp == 0){
+		    			JTextField[] tf = ((JUserPanel)panel[tmp]).textFields;
+		    			return dbUtil.addUser(tf[0].getText(), tf[1].getText(), tf[2].getText(), Integer.parseInt(tf[4].getText()), Integer.parseInt(tf[5].getText()), Integer.parseInt(tf[6].getText()));
+	    			}
+	    			else if(tmp == 1){
+		    			JTextField[] tf = ((JUserDevicePanel)panel[tmp]).textFields;
+		    			boolean conf = (((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
+		    			int typeInd = ((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex();
+		    			String s = ((JUserDevicePanel)panel[tmp]).textArea.getText();
+		    			return dbUtil.addUserDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s, Integer.parseInt(tf[3].getText()));
+	    			}
+	    			else if(tmp == 2){
+		    			JTextField[] tf = ((JNetworkDevicePanel)panel[tmp]).textFields;
+		    			boolean conf = (((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
+		    			int typeInd = ((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex();  			
+		    			String s = ((JNetworkDevicePanel)panel[tmp]).textArea.getText();
+		    			return dbUtil.addNetworkDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s);
+	    			}
+					return null;
+	    		}
+	            @Override
+	            protected void done() {
+	            	Integer id = null;
+	            	try {
+						id = this.get();
+					} catch (InterruptedException | ExecutionException e1) {
+						log.error("Błąd SWING Workera");
+						e1.printStackTrace();
+					}
+	            	if(tmp == 0)
+	            		((JUserPanel)panel[tmp]).textFields[3].setText(String.valueOf(id));
+	            	else if(tmp == 1)
+	            		((JUserDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+	            	else if(tmp == 2)
+	            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+	            }
+	       };
+	       	worker.execute();
 		}
 		
 	}
