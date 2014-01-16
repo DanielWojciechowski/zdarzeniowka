@@ -230,8 +230,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		}
 	}
 
-	public void displayColumns(int j, String[] columnNames, String[][] dataValues){
-	   
+	public void displayColumns(int j, String[] columnNames, String[][] dataValues){   
 	    this.revalidate();
 	}
 	

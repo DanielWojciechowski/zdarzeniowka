@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,9 +14,19 @@ import javax.swing.JTextField;
 
 public class JNetworkDevicePanel extends JBasicPanel  {
 	private static final long serialVersionUID = 8913270095466798762L;
-	
+
 	public JNetworkDevicePanel() {
 		super();
+		paint();
+	}
+		
+	public JNetworkDevicePanel(boolean editable){
+		super(editable);
+		paint();
+		editabling(editable);
+	}
+
+	public void paint(){
 		this.setLayout(new GridBagLayout());
 		Insets insets2 = new Insets(0,35,10,0);
 		labels = new JLabel[6];
@@ -117,6 +128,11 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		cpane.gridy = 1;
 		cpane.insets = new Insets(20,0,0,0);
 		this.add(botPanel, cpane);	
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
