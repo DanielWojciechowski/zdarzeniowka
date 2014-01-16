@@ -94,9 +94,7 @@ public class JUserPanel extends JBasicPanel {
 		}
 		
 	}
-
 	
-
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 			if (source == editButton){

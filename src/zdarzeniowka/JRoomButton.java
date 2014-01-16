@@ -71,5 +71,9 @@ public class JRoomButton extends JButton{
 		return color;
 	}
 	
+	public String getText(){
+		return txt;
+	}
+	
 }
 
