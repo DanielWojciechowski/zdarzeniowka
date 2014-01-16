@@ -53,8 +53,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			comboBox23 = {"Adres MAC", "Adres IP"}, 
 			columnNames0 = {"Id", "Imie", "Nazwisko", "Pokój", "Nr Albumu"}, 
 			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
-	private String[][] data0 = {{"", "", "", "", ""}}, data1 = {{"", "", "", ""}};
-	private Dimension d;
 	private DefaultTableModel userModel, deviceModel;
 	
 	private DBUtil dbUtil = null;
@@ -88,7 +86,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		cresult = new GridBagConstraints();
 		insets1 = new Insets(0,20,10,0);
 		insets0 = new Insets(0,0,10,0);
-		d = new Dimension(330,120);
 		cb = new JComboBox[4];
 		normal = new Font("Open sans", Font.PLAIN, 13);
 		cardSearchPanel = new JPanel(new CardLayout());
@@ -216,31 +213,38 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         cardSearchPanel.add(searchPanel[2], OPTION3);
 	}
 	
-	
+	private void clearSearchForm(int n){
+			textField[n].setText("");
+			cb[n+1].setSelectedIndex(0);
+	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		if(e.getStateChange() == ItemEvent.DESELECTED){
+			String item = (String) e.getItem();
+			if(item == comboBoxItems[0])
+				clearSearchForm(0);
+			else if(item == comboBoxItems[1])
+				clearSearchForm(1);
+			else if(item == comboBoxItems[2])
+				clearSearchForm(2);
+		}
 		CardLayout cl = (CardLayout)(cardSearchPanel.getLayout());
         cl.show(cardSearchPanel, (String)e.getItem());
-        final int tmp = cb[0].getSelectedIndex();
-		if (tmp != 0){
+        int tmp = cb[0].getSelectedIndex();
+		if (tmp == 1 || tmp == 2){
 			resultTable.setModel(deviceModel);
+			userModel.setRowCount(0);
 		}
-		else {
-			resultTable.setModel(userModel);		
+		else if(tmp == 0) {
+			resultTable.setModel(userModel);
+			deviceModel.setRowCount(0);
 		}
-	}
-
-	public void displayColumns(int j, String[] columnNames, String[][] dataValues){   
-	    this.revalidate();
-	}
-	
+	}	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		if (source instanceof JComboBox<?>){
-		}
 		final int tmp = cb[0].getSelectedIndex();
 		if (source == searchButton[tmp]){
 			log.info("Wciśnięto przycisk szukaj");
@@ -280,7 +284,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            	}
 	            	else if(cat == category[1]){
 	            		log.info("Listowanie Urządzeń Usera, liczba wyników: "+ userDeviceResultList.size());
-	            		deviceModel.setRowCount(0);
 	            		for(Iterator<DBUserDevice> iter = userDeviceResultList.iterator(); iter.hasNext();){
 	            			DBUserDevice device = iter.next();
 	            			deviceModel.addRow(new Object[]{String.valueOf(device.getIdDevice()),
@@ -290,7 +293,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            	}
 	            	else if(cat == category[2]){
 	            		log.info("Listowanie Urządzeń Sieciowych, liczba wyników: "+ networkDeviceResultList.size());
-	            		deviceModel.setRowCount(0);
 	            		for(Iterator<DBNetworkDevice> iter = networkDeviceResultList.iterator(); iter.hasNext();){
 	            			DBNetworkDevice device = iter.next();
 	            			deviceModel.addRow(new Object[]{String.valueOf(device.getIdDevice()),
