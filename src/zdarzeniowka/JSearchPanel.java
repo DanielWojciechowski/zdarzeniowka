@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 
@@ -54,7 +55,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
 	private String[][] data0 = {{"", "", "", "", ""}}, data1 = {{"", "", "", ""}};
 	private Dimension d;
-	private TableModel userModel, deviceModel;
+	private DefaultTableModel userModel, deviceModel;
 	
 	private DBUtil dbUtil = null;
 	private String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"},
@@ -67,8 +68,8 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public JSearchPanel(){
 		super();
-    	userModel = new TableModel(columnNames0, data0);
-    	deviceModel = new TableModel(columnNames1, data1);
+    	userModel = new DefaultTableModel(columnNames0,0);
+    	deviceModel = new DefaultTableModel(columnNames1, 0);
 		resultTable = new JTable(userModel);
 		scrollPane = new JScrollPane(resultTable);
 		searchPanel = new JPanel[3];
@@ -240,7 +241,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source instanceof JComboBox<?>){
-			String name = (String)((JComboBox<?>) source).getSelectedItem();
 		}
 		final int tmp = cb[0].getSelectedIndex();
 		if (source == searchButton[tmp]){
@@ -255,7 +255,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	    				userResultList = castList(DBUser.class, dbUtil.findUserOrDevice(category[tmp], criterium1[tmp2], textField[tmp].getText()));
 	    			else if(tmp == 1)
 	    				userDeviceResultList = castList(DBUserDevice.class, dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText()));
-	    			else if(tmp == 1)
+	    			else if(tmp == 2)
 	    				networkDeviceResultList = castList(DBNetworkDevice.class, dbUtil.findUserOrDevice(category[tmp], criterium2[tmp2], textField[tmp].getText()));
 	    			return category[tmp];
 	            }
@@ -269,20 +269,37 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 						e.printStackTrace();
 					}
 	            	if(cat == category[0]){
-	            		log.info("Listowanie Userów");
-	            		int i = 0;
+	            		log.info("Listowanie Userów, liczba wyników: "+ userResultList.size());
+	            		userModel.setRowCount(0);
 	            		for(Iterator<DBUser> iter = userResultList.iterator(); iter.hasNext();){
 	            			DBUser user = iter.next();
-	            			data0[i][0] = String.valueOf(user.getIdUser());
-	            			data0[i][1] = user.getFirstName();
-	            			data0[i][2] = user.getLastName();
-	            			data0[i][3] = String.valueOf(user.getRoomNo());
-	            			data0[i][4] = String.valueOf(user.getAlbumNo());
-	            			i++;
+	            			userModel.addRow(new Object[]{String.valueOf(user.getIdUser()),
+	            					user.getFirstName(),user.getLastName(),
+	            					String.valueOf(user.getRoomNo()),
+	            					String.valueOf(user.getAlbumNo())});
 	            		}
 	            	}
-	            	resultTable.revalidate();
-
+	            	else if(cat == category[1]){
+	            		log.info("Listowanie Urządzeń Usera, liczba wyników: "+ userDeviceResultList.size());
+	            		deviceModel.setRowCount(0);
+	            		for(Iterator<DBUserDevice> iter = userDeviceResultList.iterator(); iter.hasNext();){
+	            			DBUserDevice device = iter.next();
+	            			deviceModel.addRow(new Object[]{String.valueOf(device.getIdDevice()),
+	            					device.getIp(),device.getMac(),
+	            					String.valueOf(device.getType()),});
+	            		}
+	            	}
+	            	else if(cat == category[2]){
+	            		log.info("Listowanie Urządzeń Sieciowych, liczba wyników: "+ networkDeviceResultList.size());
+	            		deviceModel.setRowCount(0);
+	            		for(Iterator<DBNetworkDevice> iter = networkDeviceResultList.iterator(); iter.hasNext();){
+	            			DBNetworkDevice device = iter.next();
+	            			deviceModel.addRow(new Object[]{String.valueOf(device.getIdDevice()),
+	            					device.getIp(),device.getMac(),
+	            					String.valueOf(device.getType()),});
+	            		}
+	            	}
+	            	resultTable.repaint();
 	            }
 	       };
 	       	worker.execute();
