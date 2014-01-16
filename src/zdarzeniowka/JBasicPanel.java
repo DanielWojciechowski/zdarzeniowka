@@ -78,10 +78,10 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		textFields[index].setText(text);		
 	}
 		
-	public void editabling(boolean value){
+	public void editabling(boolean value, int id){
 		editable = value;
 		for (int i = 0; i < textFields.length; i++){
-			if (i != 3){
+			if (i != id){
 				textFields[i].setEditable(editable);
 			}
 			
