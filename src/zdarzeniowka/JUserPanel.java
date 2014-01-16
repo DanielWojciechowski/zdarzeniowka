@@ -101,11 +101,13 @@ public class JUserPanel extends JBasicPanel {
 				this.editabling(true);
 			}
 			if (source == okButton){
-				int n = JOptionPane.showConfirmDialog(
+				Object[] options = {"Tak","Nie",};
+				int n = JOptionPane.showOptionDialog(
 					    this,
 					    "Czy na pewno chcesz potwierdzić?",
 					    "Potwierdź zmiany.",
-					    JOptionPane.YES_NO_OPTION);
+					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
+	                    options[1]);
 				if (n == 0) {
 					this.editabling(false);
 				}

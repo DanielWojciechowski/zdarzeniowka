@@ -94,6 +94,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		}
 		if (textArea != null)
 			textArea.setEditable(editable);
+		okButton.setEnabled(editable);
 	}
 
 }
