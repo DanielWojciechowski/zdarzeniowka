@@ -1,17 +1,32 @@
 package zdarzeniowka;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
 	
 	public JUserPanel(){
-		super();		
+		super();	
+		paint();
+	}
+	
+	public JUserPanel(boolean editable){
+		super(editable);
+		paint();
+		editabling(editable);
+	}
+	
+	public void paint(){
 		this.setLayout(new GridBagLayout());
 		labels = new JLabel[7];
 		textFields = new JTextField[7];
@@ -66,13 +81,36 @@ public class JUserPanel extends JBasicPanel {
 			cbot.ipady = 6;
 			botPanel.add(textFields[i+1], cbot);	
 		}
-		
-    	cpane.anchor = GridBagConstraints.LINE_END;
+		cpane.anchor = GridBagConstraints.LINE_END;
     	cpane.gridx = 0;
     	this.add(topPanel, cpane);
 		cpane.gridy = 1;
 		cpane.insets = new Insets(20,0,0,0);
 		this.add(botPanel, cpane);	
+		
+		if (buttonPanel != null){
+			cpane.gridy = 2;
+			this.add(buttonPanel, cpane);
+		}
+		
 	}
 
+	
+
+	public void actionPerformed(ActionEvent e) {
+		JButton source = (JButton) e.getSource();
+			if (source == editButton){
+				this.editabling(true);
+			}
+			if (source == okButton){
+				int n = JOptionPane.showConfirmDialog(
+					    this,
+					    "Czy na pewno chcesz potwierdzić?",
+					    "Potwierdź zmiany.",
+					    JOptionPane.YES_NO_OPTION);
+				if (n == 0) {
+					this.editabling(false);
+				}
+			}
+	}
 }
