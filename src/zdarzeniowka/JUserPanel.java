@@ -23,7 +23,7 @@ public class JUserPanel extends JBasicPanel {
 	public JUserPanel(boolean editable){
 		super(editable);
 		paint();
-		editabling(editable);
+		editabling(editable, 3);
 	}
 	
 	public void paint(){
@@ -98,7 +98,7 @@ public class JUserPanel extends JBasicPanel {
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 			if (source == editButton){
-				this.editabling(true);
+				this.editabling(true, 3);
 			}
 			if (source == okButton){
 				Object[] options = {"Tak","Nie",};
@@ -109,7 +109,7 @@ public class JUserPanel extends JBasicPanel {
 					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
 	                    options[1]);
 				if (n == 0) {
-					this.editabling(false);
+					this.editabling(false, 3);
 				}
 			}
 	}

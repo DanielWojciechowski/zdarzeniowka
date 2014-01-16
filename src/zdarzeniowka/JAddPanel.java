@@ -162,12 +162,14 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 						log.error("Błąd SWING Workera");
 						e1.printStackTrace();
 					}
-	            	if(tmp == 0)
-	            		((JUserPanel)panel[tmp]).textFields[3].setText(String.valueOf(id));
-	            	else if(tmp == 1)
-	            		((JUserDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
-	            	else if(tmp == 2)
-	            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+	            	if (id != null){
+	            		if(tmp == 0)
+		            		((JUserPanel)panel[tmp]).textFields[3].setText(String.valueOf(id));
+		            	else if(tmp == 1)
+		            		((JUserDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+		            	else if(tmp == 2)
+		            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+	            	}
 	            }
 	       };
 	       	worker.execute();
