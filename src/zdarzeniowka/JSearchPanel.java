@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -90,6 +91,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		normal = new Font("Open sans", Font.PLAIN, 13);
 		cardSearchPanel = new JPanel(new CardLayout());
     	deleteButton = new JButton("Usun");
+    	deleteButton.addActionListener(this);
     	showButton = new JButton("Wyświetl");
     	result = new JLabel("Wyniki:");
     	result.setFont(normal);
@@ -304,6 +306,52 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            }
 	       };
 	       	worker.execute();
+		}
+		else if(source == deleteButton){
+			log.info("Wciśnięto przycisk usuń");
+			Object[] options = {"Tak","Nie",};
+			int n = JOptionPane.showOptionDialog(this, "Czy na pewno chcesz potwierdzić?", 
+					"Potwierdź zmiany.", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, 
+					null, options, options[1]);
+			if (n == 0) {
+				final int selectedRow = resultTable.getSelectedRow();
+				final int index = Integer.parseInt((String) resultTable.getValueAt(selectedRow, 0));
+				final int cat = cb[0].getSelectedIndex();
+				
+				SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
+		            @Override
+		            protected Boolean doInBackground() throws Exception {
+		            	return dbUtil.removeUserOrDevice(category[cat], index);
+		            }
+		            @Override
+		            protected void done() {
+		            	boolean conf = false;
+						try {
+							conf = get();
+						} catch (InterruptedException | ExecutionException e) {
+							log.error("Błąd SWING Workera");
+							e.printStackTrace();
+						}
+		            	if(conf){
+		            		log.info("Usunięto!");
+		            		if(cat == 0) 
+		            			userModel.removeRow(selectedRow);
+		            		else if(cat == 1 || cat == 2) 
+		            			deviceModel.removeRow(selectedRow);
+		            	}
+		            	else{
+		            		log.error("Usuwanie nie powiodło się");
+		            		JOptionPane.showMessageDialog(cardSearchPanel,
+		            			    "Usuwanie wybranego rekordu nie powiodło się!",
+		            			    "Błąd usuwania",
+		            			    JOptionPane.ERROR_MESSAGE);
+		            	}
+		            }
+		       };
+		       	worker.execute();
+				
+			}
+			
 		}
 	}
 	
