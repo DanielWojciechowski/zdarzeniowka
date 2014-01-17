@@ -76,6 +76,9 @@ public class JRoomButton extends JButton{
 	public int setUsersInRoom(int users){
 		return this.usersInRoom = users;
 	}
+	public int getUsersInRoom(){
+		return usersInRoom;
+	}
 	
 	public ImageIcon[] setIcons(){
 		for (int i = 0; i < this.usersInRoom; i++){
