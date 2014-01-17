@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,6 +22,11 @@ import org.hibernate.criterion.Restrictions;
 public class DBUtil {
     private static SessionFactory factory = null;
     private Logger  log;
+    
+   /* public static void main(String[] args){
+    	DBUtil db = new DBUtil(true);
+    	db.countUsersInRoom(108);
+    }*/
     
     public DBUtil(){
     	log = Logger.getLogger(DBUtil.class);
@@ -316,13 +322,50 @@ public class DBUtil {
 	 */
 	public int getDeviceUser(int idDevice){
 		Session session = factory.openSession();
-    	String qs = "Select idUser From UserDevice where idDevice = :idDevice";
-    	SQLQuery q = session.createSQLQuery(qs);
-    	q.setParameter("idDevice", idDevice);
-    	List<Integer> list = castList(Integer.class, q.list());
-    	int idUser = list.get(0);
+		Transaction trans = null;
+		int idUser = -1;
+		try{
+        	trans = session.beginTransaction();
+	    	String qs = "Select idUser From UserDevice where idDevice = :idDevice";
+	    	SQLQuery q = session.createSQLQuery(qs);
+	    	q.setParameter("idDevice", idDevice);
+	    	List<Integer> list = castList(Integer.class, q.list());
+	    	idUser = list.get(0);
+	    	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
 		return idUser;
 	}
+	/**
+	 * Funkcja zwracająca liczbę osób w pokoju
+	 * @param roomNo numer pokoju z którego zliczamy użytkownikó
+	 * @return liczba użytkownikó w pokoju
+	 */
+	public int countUsersInRoom(int roomNo){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		int count = 0;
+		try{
+        	trans = session.beginTransaction();
+        	String hql = "SELECT count(idUser) FROM DBUser WHERE roomNo=:roomNo";
+        	Query query = session.createQuery(hql);
+        	query.setParameter("roomNo", roomNo);
+        	List<Long> list = castList(Long.class, query.list());
+	    	count = (int)(long)list.get(0);
+	    	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		return count;
+	}
+	
 	/**
 	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
 	 * @param clazz typ na jaki ma być rzutowana lista
