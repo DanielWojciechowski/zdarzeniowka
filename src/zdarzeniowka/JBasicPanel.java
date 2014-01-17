@@ -29,14 +29,14 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 	protected Font normal;
 	protected boolean editable;
 	
-	public JBasicPanel() {
+	public JBasicPanel(Font font) {
 		super();
-		initiate();
+		initiate(font);
 	}
 	
-	public JBasicPanel(boolean meh){
+	public JBasicPanel(Font font, boolean whatever){
 		super();
-		initiate();
+		initiate(font);
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		cbutton = new GridBagConstraints();
@@ -60,8 +60,8 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		buttonPanel.add(deleteButton, cbutton);		
 	}
 	
-	public void initiate(){
-		normal = new Font("Open sans", Font.PLAIN, 13);
+	public void initiate(Font font){
+		normal = font;
 		editable = true;
 		topPanel = new JPanel();
 		botPanel = new JPanel();

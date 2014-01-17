@@ -26,8 +26,13 @@ public class JReportPanel extends JPanel {
     private JLabel[] label;
 	private Insets insets1, insets0;
 	
-	public JReportPanel(){
-		normal = new Font("Open sans", Font.PLAIN, 13);
+	public JReportPanel(Font font){
+		super();
+		paint(font);
+	}
+	
+	public void paint(Font font){
+		normal = font;
 		cbPane = new JPanel();
 		buttonPane = new JPanel();
 		report = new JChart(500, 600);

@@ -32,7 +32,7 @@ public class GUI{
 			Font fontH = Font.createFont(Font.TRUETYPE_FONT, fontFile1);
 			header = fontH.deriveFont(20f);
 			Font fontN = Font.createFont(Font.TRUETYPE_FONT, fontFile1);
-			normal = fontN.deriveFont(12f);
+			normal = fontN.deriveFont(13f);
 			Font fontI = Font.createFont(Font.TRUETYPE_FONT, fontFile2);
 			italic = fontI.deriveFont(10f);
 		} catch (FontFormatException e) {
@@ -43,10 +43,10 @@ public class GUI{
 		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
-		dsPanel = new JDSPanel();
-		addPanel= new JAddPanel();
-		searchPanel = new JSearchPanel();
-		reportPanel = new JReportPanel();
+		dsPanel = new JDSPanel(normal);
+		addPanel= new JAddPanel(normal);
+		searchPanel = new JSearchPanel(normal);
+		reportPanel = new JReportPanel(normal);
 		frame.setLayout(new GridBagLayout());
 		
 	}

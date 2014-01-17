@@ -1,6 +1,7 @@
 package zdarzeniowka;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,14 +19,14 @@ import javax.swing.JTextField;
 public class JUserDevicePanel extends JBasicPanel{
 	private static final long serialVersionUID = 9083184852370768151L;
 	
-	public JUserDevicePanel(boolean editable){
-		super(editable);
+	public JUserDevicePanel(Font font, boolean editable){
+		super(font, editable);
 		paint();
 		editabling(editable, 2);
 	}
 	
-	public JUserDevicePanel() {
-		super();
+	public JUserDevicePanel(Font font) {
+		super(font);
 		paint();
 	}
 	

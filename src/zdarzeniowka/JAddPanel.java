@@ -37,8 +37,12 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	private Logger  log = Logger.getLogger(JAddPanel.class);
 	private char[] deviceTypes = {'k','p','r','a','i','s'};
 	
-	public JAddPanel(){
+	public JAddPanel(Font font){
 		super();
+		paint(font);
+	}
+
+	void paint(Font font){
 		addingPanel = new JPanel[3];
 		buttonPanel = new JPanel[3];
 		panel = new JPanel[3];	
@@ -47,15 +51,15 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 		c = new GridBagConstraints();
 		confirmButton = new JButton[3];
 		clearButton = new JButton[3];
-		normal = new Font("Open sans", Font.PLAIN, 13);
+		normal = font;
 		addingCB = new JComboBox<String>(comboBoxItems);
 		addingCB.addItemListener(this);
 		addingCB.setFont(normal);
 		cardAddingPanel = new JPanel(new CardLayout());
 		this.setLayout(new GridBagLayout());
-		panel[0] = new JUserPanel();
-		panel[1] = new JUserDevicePanel();
-		panel[2] = new JNetworkDevicePanel();
+		panel[0] = new JUserPanel(font);
+		panel[1] = new JUserDevicePanel(font);
+		panel[2] = new JNetworkDevicePanel(font);
 		
 		for(int i = 0; i < 3; i++){
 			addingPanel[i] = new JPanel();
@@ -112,9 +116,8 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 		
         cardAddingPanel.add(addingPanel[0], OPTION1);
         cardAddingPanel.add(addingPanel[1], OPTION2);
-        cardAddingPanel.add(addingPanel[2], OPTION3);		
+        cardAddingPanel.add(addingPanel[2], OPTION3);	
 	}
-
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		Object source = e.getSource();

@@ -17,24 +17,31 @@ import javax.swing.JLabel;
 public class JRoomButton extends JButton{
 	private static final long serialVersionUID = 7475937080439185047L;
 	private String txt;
-	private int width, height;
-	private byte usersInRoom;
+	private int width, height, usersInRoom;
 	private Color[] color;
 	private static ImageIcon imageIcon = new ImageIcon("icons/door.png");
 	private JLabel label;
 	private GridBagConstraints c;
 
-	public JRoomButton(String txt){ 
+	public JRoomButton(String txt, Font font){ 
 		super(imageIcon);
+		initiate(txt, font, 3);
+	}
+	
+	public JRoomButton(String txt, Font font, int users){ 
+		super(imageIcon);
+		initiate(txt, font, users);
+	}
+	
+	public void initiate(String txt, Font font, int value){
 		super.setMinimumSize(new Dimension(100, 50));
 		super.setPreferredSize(new Dimension(100, 50));
 		super.setMaximumSize(new Dimension(100, 50));
 		super.setRolloverIcon(imageIcon);
-		this.setFont(new Font("Open sans", Font.PLAIN, 15));
+		this.setFont(font);
 		this.txt = txt;
-		usersInRoom = 3;
+		usersInRoom = value;
 		color = new Color[3];
-		//this.setBackground(Color.gray);
 		label = new JLabel(txt);
 		label.setFont(new Font("Open sans", Font.PLAIN, 13));
 		c = new GridBagConstraints();
@@ -46,7 +53,6 @@ public class JRoomButton extends JButton{
 		this.width = getWidth(); 
 		this.height = getHeight(); 
 		color = setColor();
-		//g.drawString(this.txt, width/2 + 10, height/2 + 7);
 		this.setLayout(new GridBagLayout());
 		this.add(label,c);
 		for (int i = 0; i < usersInRoom; i++){
@@ -60,7 +66,7 @@ public class JRoomButton extends JButton{
 		}
 	}
 	
-	public byte setUsersInRoom(byte users){
+	public int setUsersInRoom(int users){
 		return this.usersInRoom = users;
 	}
 	
