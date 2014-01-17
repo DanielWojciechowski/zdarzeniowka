@@ -64,9 +64,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			c.gridx=0;
 			c.gridy++;
 		}
-		//c.ipadx=50;
 		stage=100;
-		
 		for(int j=1;j<=2;j++){
 			if (j == 2) {
 				c.insets = cInsets2;
@@ -104,7 +102,6 @@ public class JDSPanel extends JPanel implements ActionListener {
 		}
 		c.gridx = 0;
 		c.gridy = 0;
-		c.ipadx=0;
 		c.ipady=0;
 		c.insets = cInsets3;
 		this.add(dsPanel0,c);

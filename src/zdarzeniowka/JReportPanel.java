@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -25,7 +27,7 @@ public class JReportPanel extends JPanel {
     private JComboBox<String>[] cb;
     private JLabel[] label;
 	private Insets insets1, insets0;
-	
+
 	public JReportPanel(Font font){
 		super();
 		paint(font);
@@ -46,6 +48,7 @@ public class JReportPanel extends JPanel {
         label = new JLabel[2];
     	insets1 = new Insets(0,20,10,0);
     	insets0 = new Insets(0,0,10,0);
+    	
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
