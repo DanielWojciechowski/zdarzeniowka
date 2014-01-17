@@ -44,7 +44,7 @@ public class JUserDevicePanel extends JBasicPanel{
 		Insets insets2 = new Insets(0,24,10,0);
 		
 		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Id urzadzenia:", "Typ:", "Id użytkownika:", "Uwagi:"},
-				configuration = {"Niezatwierdzona", "Zatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP", "Inne"};
+				configuration = {"Zatwierdzona", "Niezatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP", "Inne"};
 		cb = new JComboBox[2];
 		cb[0] = new JComboBox<String>(configuration);
 		cb[1] = new JComboBox<String>(type);

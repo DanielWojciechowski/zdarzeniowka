@@ -1,19 +1,22 @@
 package zdarzeniowka;
 
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
 
 public abstract class JBasicPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 5020407406483635930L;
@@ -28,6 +31,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 	protected Insets insets1, insets0;
 	protected Font normal;
 	protected boolean editable;
+	private Logger  log = Logger.getLogger(JBasicPanel.class);
 	
 	public JBasicPanel(Font font) {
 		super();
@@ -95,6 +99,70 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		if (textArea != null)
 			textArea.setEditable(editable);
 		okButton.setEnabled(editable);
+	}
+	
+	public void clearForm(int n){
+		for(int i=0; i<textFields.length; i++)
+			textFields[i].setText("");
+		if(n == 1 || n == 2){
+			textArea.setText("");
+			for(int i=0; i<cb.length; i++)
+				cb[i].setSelectedIndex(0);
+		}
+	}
+	public boolean checkForm(int n){
+		LinkedList<Boolean> checker = new LinkedList<Boolean>();
+		if(n == 0){
+			checker.add(textFields[0].getText().matches("[a-zA-Z]+"));
+			checker.add(textFields[1].getText().matches("[a-zA-Z]+"));
+			checker.add(textFields[2].getText().matches("^([_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,}))?$"));
+			int tmp = 0;
+			try{
+				tmp = Integer.parseInt(textFields[4].getText());
+			}catch(java.lang.NumberFormatException e){
+				checker.add(false);
+			}
+			checker.add((tmp>0 && tmp<=12) || (tmp>100 && tmp<=112) || (tmp>200 && tmp<=212));
+			tmp = 0;
+			try{
+				tmp = Integer.parseInt(textFields[5].getText());
+			}catch(java.lang.NumberFormatException e){
+				checker.add(false);
+			}
+			checker.add(tmp>0 && tmp<99999);
+			tmp = 0;
+			try{
+				tmp = Integer.parseInt(textFields[6].getText());
+			}catch(java.lang.NumberFormatException e){
+				checker.add(false);
+			}
+			checker.add(tmp>0 && tmp<=108);
+		} 
+		else if(n == 1 || n == 2){
+			checker.add(textFields[0].getText().matches("^(([0-9A-F]{2}[:-]){5}([0-9A-F]{2}))?$"));
+			checker.add(textFields[1].getText().matches("^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))?$"));
+			if(n == 1){
+				int tmp = 0;
+				try{
+					tmp = Integer.parseInt(textFields[3].getText());
+				}catch(java.lang.NumberFormatException e){
+					checker.add(false);
+				}
+				checker.add(tmp>0);
+			}
+			
+		}
+		
+		if(checker.contains(false)){
+			JOptionPane.showMessageDialog(this, "Podane dane są nieprawidłowe!", "Błąd danych", 
+					JOptionPane.ERROR_MESSAGE);
+			log.error("Błąd danych");
+			return false;
+		}
+		else{
+			log.error("Dodawanie w toku");
+			return true;
+		}
 	}
 
 }
