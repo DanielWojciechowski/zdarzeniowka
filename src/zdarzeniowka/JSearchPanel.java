@@ -65,9 +65,15 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private List<DBNetworkDevice> networkDeviceResultList = null;
     private Logger  log = Logger.getLogger(JSearchPanel.class);
 	
-	public JSearchPanel(){
+	public JSearchPanel(Font font){
 		super();
-    	userModel = new DefaultTableModel(columnNames0,0);
+		initiate(font);
+		paint();
+
+	}
+
+	public void initiate(Font font){
+		userModel = new DefaultTableModel(columnNames0,0);
     	deviceModel = new DefaultTableModel(columnNames1, 0);
 		resultTable = new JTable(userModel);
 		scrollPane = new JScrollPane(resultTable);
@@ -88,7 +94,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		insets1 = new Insets(0,20,10,0);
 		insets0 = new Insets(0,0,10,0);
 		cb = new JComboBox[4];
-		normal = new Font("Open sans", Font.PLAIN, 13);
+		normal = font;
 		cardSearchPanel = new JPanel(new CardLayout());
     	deleteButton = new JButton("Usun");
     	deleteButton.addActionListener(this);
@@ -107,7 +113,9 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         this.setLayout(new GridBagLayout());
 	    resultTable.setPreferredScrollableViewportSize(new Dimension(360, 130)); 
 	    resultTable.setFillsViewportHeight(true); 
-	    
+	}
+	
+	public void paint(){
         for (int i = 0; i < 4; i++){
         	cb[i].setFont(normal);
         	if (i > 0) cb[i].addActionListener(this);

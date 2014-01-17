@@ -22,8 +22,12 @@ public class JDSPanel extends JPanel implements ActionListener {
 	private Border border;
 	private Font normal;
 	
-	public JDSPanel(){
-		normal = new Font("Open sans", Font.PLAIN, 13);
+	public JDSPanel(Font font){
+		paint(font);
+	}
+	
+	public void paint(Font font){
+		this.normal = font;
 		dsPanel0 = new JPanel();
 		dsPanel1 = new JPanel();
 		dsPanel2 = new JPanel();
@@ -51,7 +55,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JRoomButton b = new JRoomButton(String.valueOf(stage+i));
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal);
 				b.addActionListener(this);
 				dsPanel0.add(b,c);
 				c.gridx++;
@@ -60,9 +64,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			c.gridx=0;
 			c.gridy++;
 		}
-		//c.ipadx=50;
 		stage=100;
-		
 		for(int j=1;j<=2;j++){
 			if (j == 2) {
 				c.insets = cInsets2;
@@ -71,7 +73,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JRoomButton b = new JRoomButton(String.valueOf(stage+i));
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal);
 				b.addActionListener(this);
 				dsPanel1.add(b,c);
 				c.gridx++;
@@ -89,7 +91,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JRoomButton b = new JRoomButton(String.valueOf(stage+i));
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal);
 				b.addActionListener(this);
 				dsPanel2.add(b,c);
 				c.gridx++;
@@ -100,7 +102,6 @@ public class JDSPanel extends JPanel implements ActionListener {
 		}
 		c.gridx = 0;
 		c.gridy = 0;
-		c.ipadx=0;
 		c.ipady=0;
 		c.insets = cInsets3;
 		this.add(dsPanel0,c);
@@ -135,7 +136,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 	}
 	
 	public void showRoomFrame(String buttonText){
-		JRoomFrame roomFrame = new JRoomFrame("Pokój nr " + buttonText);
+		JRoomFrame roomFrame = new JRoomFrame(normal, "Pokój nr " + buttonText, 3);//do podania l. osob w danym pokoju
 		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		roomFrame.setLocation(400, 200);
 		roomFrame.setResizable(false);
