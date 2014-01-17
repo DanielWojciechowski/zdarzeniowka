@@ -45,7 +45,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	public JRoomFrame(Font font, String text, int value){
 		super(text);
 		if(value < 0 || value > 4) {
-            throw new IllegalArgumentException("Too many users in room!");
+            throw new IllegalArgumentException("Too many/too lessusers in room!");
         }
 		initiate(value, font);
 	}

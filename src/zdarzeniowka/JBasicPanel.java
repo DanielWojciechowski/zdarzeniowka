@@ -110,6 +110,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 				cb[i].setSelectedIndex(0);
 		}
 	}
+	
 	public boolean checkForm(int n){
 		LinkedList<Boolean> checker = new LinkedList<Boolean>();
 		if(n == 0){

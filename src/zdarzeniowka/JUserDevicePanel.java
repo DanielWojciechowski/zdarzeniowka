@@ -147,7 +147,33 @@ public class JUserDevicePanel extends JBasicPanel{
 			this.add(buttonPanel, cpane);
 		}
 	}
-
+	
+	
+	public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, String otherInfo){
+		textFields[0].setText(mac);
+		textFields[1].setText(ip);
+		textFields[2].setText(String.valueOf(idDevice));
+		textFields[3].setText(String.valueOf(idUser));
+		if(configuration)
+			cb[0].setSelectedIndex(1);
+		else cb[0].setSelectedIndex(0);
+		switch (type){
+			case 'k': //komp
+				cb[1].setSelectedIndex(0);
+				break;
+			case 'p': //switch
+				cb[1].setSelectedIndex(1);
+				break;
+			case 'r': //router
+				cb[1].setSelectedIndex(2);
+				break;
+			case 'a': //ap
+				cb[1].setSelectedIndex(3);
+				break;
+			case 'i': //inne
+				cb[1].setSelectedIndex(4);
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

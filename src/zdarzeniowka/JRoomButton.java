@@ -63,7 +63,7 @@ public class JRoomButton extends JButton{
 		super.paintComponent(g);
 		this.width = getWidth(); 
 		this.height = getHeight(); 
-		for (int i = 0; i < usersInRoom; i++){
+		for (int i = 0; i < this.usersInRoom; i++){
 			if (i == 2){
 				icon[i].paintIcon(this, g, width-15, height-13-i*17);
 			}

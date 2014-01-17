@@ -96,6 +96,16 @@ public class JUserPanel extends JBasicPanel {
 		
 	}
 	
+	public void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, DBPort port){
+		textFields[0].setText(name);
+		textFields[1].setText(lastName);
+		textFields[2].setText(email);
+		textFields[3].setText(String.valueOf(userId));
+		textFields[4].setText(String.valueOf(roomNo));
+		textFields[5].setText(String.valueOf(albumNo));
+		textFields[6].setText(String.valueOf(port.getIdPort()));	
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 			if (source == editButton){
