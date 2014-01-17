@@ -1,5 +1,6 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -40,7 +41,6 @@ public class GUI{
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}
-		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
 		dsPanel = new JDSPanel(normal);
@@ -74,6 +74,11 @@ public class GUI{
 		tabbedPane.add("Dodaj", addPanel);
 		tabbedPane.add("Wyszukaj", searchPanel);
 		tabbedPane.add("Raporty", reportPanel);
+		
+		tabbedPane.setBackgroundAt(0, Color.white);
+		tabbedPane.setBackgroundAt(1, Color.white);
+		tabbedPane.setBackgroundAt(2, Color.white);
+		tabbedPane.setBackgroundAt(3, Color.white);
 		
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridy = 1;
