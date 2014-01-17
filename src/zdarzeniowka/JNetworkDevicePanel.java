@@ -41,7 +41,7 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 	    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 	    scrollPane.setPreferredSize(new Dimension(338, 130));
 		String[] stringLabel = {"Adres MAC:", "Adres IP:", "Konfiguracja:", "Id urzadzenia:", "Typ:", "Uwagi:"},
-				configuration = {"Niezatwierdzona", "Zatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP", "Inne", "Serwer"};
+				configuration = {"Zatwierdzona", "Niezatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP", "Inne", "Serwer"};
 		cb = new JComboBox[2];
 		cb[0] = new JComboBox<String>(configuration);
 		cb[1] = new JComboBox<String>(type);

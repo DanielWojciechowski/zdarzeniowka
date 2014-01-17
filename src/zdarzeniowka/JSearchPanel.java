@@ -215,7 +215,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         cardSearchPanel.add(searchPanel[2], OPTION3);
 	}
 	
-	private void clearSearchForm(int n){
+	private void clearForm(int n){
 			textField[n].setText("");
 			cb[n+1].setSelectedIndex(0);
 	}
@@ -225,11 +225,11 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		if(e.getStateChange() == ItemEvent.DESELECTED){
 			String item = (String) e.getItem();
 			if(item == comboBoxItems[0])
-				clearSearchForm(0);
+				clearForm(0);
 			else if(item == comboBoxItems[1])
-				clearSearchForm(1);
+				clearForm(1);
 			else if(item == comboBoxItems[2])
-				clearSearchForm(2);
+				clearForm(2);
 		}
 		CardLayout cl = (CardLayout)(cardSearchPanel.getLayout());
         cl.show(cardSearchPanel, (String)e.getItem());

@@ -65,6 +65,7 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 			confirmButton[i] = new JButton("Dodaj");
 			confirmButton[i].addActionListener(this);
 			clearButton[i] = new JButton("Wyczysc");
+			clearButton[i].addActionListener(this);
 			confirmButton[i].setFont(normal);
 			clearButton[i].setFont(normal);
 			
@@ -114,9 +115,20 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
         cardAddingPanel.add(addingPanel[1], OPTION2);
         cardAddingPanel.add(addingPanel[2], OPTION3);		
 	}
-
+	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		
+		if(e.getStateChange() == ItemEvent.DESELECTED){
+			String item = (String) e.getItem();
+			if(item == comboBoxItems[0])
+				((JBasicPanel) panel[0]).clearForm(0);
+			else if(item == comboBoxItems[1])
+				((JBasicPanel) panel[1]).clearForm(1);
+			else if(item == comboBoxItems[2])
+				((JBasicPanel) panel[2]).clearForm(2);
+		}
+		
 		Object source = e.getSource();
 		if (source == addingCB){
 			CardLayout cl = (CardLayout)(cardAddingPanel.getLayout());
@@ -128,51 +140,61 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 		Object source = e.getSource();
 		final int tmp = addingCB.getSelectedIndex();
 		if (source == confirmButton[tmp]){
-
-			SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>(){
-	            @Override
-	            protected Integer doInBackground() throws Exception {
-	    			dbUtil = new DBUtil();
-	    			if(tmp == 0){
-		    			JTextField[] tf = ((JUserPanel)panel[tmp]).textFields;
-		    			return dbUtil.addUser(tf[0].getText(), tf[1].getText(), tf[2].getText(), Integer.parseInt(tf[4].getText()), Integer.parseInt(tf[5].getText()), Integer.parseInt(tf[6].getText()));
-	    			}
-	    			else if(tmp == 1){
-		    			JTextField[] tf = ((JUserDevicePanel)panel[tmp]).textFields;
-		    			boolean conf = (((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
-		    			int typeInd = ((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex();
-		    			String s = ((JUserDevicePanel)panel[tmp]).textArea.getText();
-		    			return dbUtil.addUserDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s, Integer.parseInt(tf[3].getText()));
-	    			}
-	    			else if(tmp == 2){
-		    			JTextField[] tf = ((JNetworkDevicePanel)panel[tmp]).textFields;
-		    			boolean conf = (((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
-		    			int typeInd = ((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex();  			
-		    			String s = ((JNetworkDevicePanel)panel[tmp]).textArea.getText();
-		    			return dbUtil.addNetworkDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s);
-	    			}
-					return null;
-	    		}
-	            @Override
-	            protected void done() {
-	            	Integer id = null;
-	            	try {
-						id = this.get();
-					} catch (InterruptedException | ExecutionException e1) {
-						log.error("Błąd SWING Workera");
-						e1.printStackTrace();
-					}
-	            	if (id != null){
-	            		if(tmp == 0)
-		            		((JUserPanel)panel[tmp]).textFields[3].setText(String.valueOf(id));
-		            	else if(tmp == 1)
-		            		((JUserDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
-		            	else if(tmp == 2)
-		            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
-	            	}
-	            }
-	       };
-	       	worker.execute();
+			if(((JBasicPanel) panel[tmp]).checkForm(tmp)){
+			/*
+				SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>(){
+		            @Override
+		            protected Integer doInBackground() throws Exception {
+		    			dbUtil = new DBUtil();
+		    			if(tmp == 0){
+			    			JTextField[] tf = ((JUserPanel)panel[tmp]).textFields;
+			    			return dbUtil.addUser(tf[0].getText(), tf[1].getText(), tf[2].getText(), Integer.parseInt(tf[4].getText()), Integer.parseInt(tf[5].getText()), Integer.parseInt(tf[6].getText()));
+		    			}
+		    			else if(tmp == 1){
+			    			JTextField[] tf = ((JUserDevicePanel)panel[tmp]).textFields;
+			    			boolean conf = (((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
+			    			int typeInd = ((JUserDevicePanel)panel[tmp]).cb[0].getSelectedIndex();
+			    			String s = ((JUserDevicePanel)panel[tmp]).textArea.getText();
+			    			return dbUtil.addUserDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s, Integer.parseInt(tf[3].getText()));
+		    			}
+		    			else if(tmp == 2){
+			    			JTextField[] tf = ((JNetworkDevicePanel)panel[tmp]).textFields;
+			    			boolean conf = (((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex() == 0);
+			    			int typeInd = ((JNetworkDevicePanel)panel[tmp]).cb[0].getSelectedIndex();  			
+			    			String s = ((JNetworkDevicePanel)panel[tmp]).textArea.getText();
+			    			return dbUtil.addNetworkDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s);
+		    			}
+						return null;
+		    		}
+		            @Override
+		            protected void done() {
+		            	Integer id = null;
+		            	try {
+							id = this.get();
+						} catch (InterruptedException | ExecutionException e1) {
+							log.error("Błąd SWING Workera");
+							e1.printStackTrace();
+						}
+		            	if (id != null){
+		            		if(tmp == 0)
+			            		((JUserPanel)panel[tmp]).textFields[3].setText(String.valueOf(id));
+			            	else if(tmp == 1)
+			            		((JUserDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+			            	else if(tmp == 2)
+			            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+		            	}
+		            }
+		       };
+		       	worker.execute();
+	       	*/
+			}
+			else{
+				
+			}
+		}
+		else if(source == clearButton[tmp]){
+			log.info("Naciśnięto przycisk Wyczyść!");
+			((JBasicPanel) panel[tmp]).clearForm(tmp);
 		}
 		
 	}
