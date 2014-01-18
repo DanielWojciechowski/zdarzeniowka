@@ -17,7 +17,7 @@ public class LoadingFrame extends JFrame{
 	private static final long serialVersionUID = 6749328366168616302L;
 	private JProgressBar progressBar;
 	private JLabel label1, label2;
-	private Dimension d = new Dimension(200,140);
+	private Dimension d = new Dimension(200,130);
 	private GridBagConstraints c;
 	private Font font;
 	
@@ -53,7 +53,8 @@ public class LoadingFrame extends JFrame{
 		c.gridy = 2;
 		c.ipady = 5;
 		this.add(progressBar, c);
-		
+		c.gridy = 2;
+		c.ipadx = 0;
 		
 		this.pack();
 		this.setResizable(false);
