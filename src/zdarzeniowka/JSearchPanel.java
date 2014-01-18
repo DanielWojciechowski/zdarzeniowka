@@ -57,7 +57,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
 	private DefaultTableModel userModel, deviceModel;
 	
-	private DBUtil dbUtil = null;
+	private DBUtil dbUtil = new DBUtil();
 	private String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"},
 			criterium1 = {"firstName","lastName", "roomNo", "albumNo"},
 			criterium2 = {"mac", "ip"};
@@ -230,8 +230,8 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			cb[n+1].setSelectedIndex(0);
 	}
 	
-	public void showResultFrame(String frameLabel, DBUser user){
-		System.out.println("mej");
+	public void showResultFrame(DBUser user){
+		String frameLabel = "Użytkownik, id:"+String.valueOf(user.getIdUser());
 		JResultPane resultFrame = new JResultPane(normal, frameLabel, user);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -241,7 +241,8 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		resultFrame.setVisible(true);
 	}
 	
-	public void showResultFrame(String frameLabel, DBUserDevice userDevice){
+	public void showResultFrame(DBUserDevice userDevice){
+		String frameLabel = "Urządzenie użytkownika, id:"+String.valueOf(userDevice.getIdDevice());
 		JResultPane resultFrame = new JResultPane(normal, frameLabel, userDevice);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -251,7 +252,8 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		resultFrame.setVisible(true);
 	}	
 	
-	public void showResultFrame(String frameLabel, DBNetworkDevice networkDevice){
+	public void showResultFrame(DBNetworkDevice networkDevice){
+		String frameLabel = "Urządzenie sieciowe, id:"+String.valueOf(networkDevice.getIdDevice());
 		JResultPane resultFrame = new JResultPane(normal, frameLabel, networkDevice);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -296,7 +298,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>(){
 	            @Override
 	            protected String doInBackground() throws Exception {
-	    			dbUtil = new DBUtil();
 	    			if(tmp == 0)
 	    				userResultList = castList(DBUser.class, dbUtil.findUserOrDevice(category[tmp], criterium1[tmp2], textField[tmp].getText()));
 	    			else if(tmp == 1)
@@ -400,7 +401,14 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			log.info("Wciśnięto przycisk wyswietl");
 			final int selectedRow = resultTable.getSelectedRow();
 			if(selectedRow != -1){
-				showResultFrame("meh", userDeviceResultList.get(0));
+				int row = resultTable.getSelectedRow();
+				int cat = cb[0].getSelectedIndex();
+				if(cat == 0)
+					showResultFrame(userResultList.get(row));
+				else if(cat == 1)
+					showResultFrame(userDeviceResultList.get(row));
+				else if(cat == 2)
+					showResultFrame(networkDeviceResultList.get(row));
 			}
 		}
 		
