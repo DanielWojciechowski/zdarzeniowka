@@ -8,12 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingWorker;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -31,6 +34,34 @@ public class JDSPanel extends JPanel implements ActionListener {
 	}
 	
 	public void paint(Font font){
+		List<Object[]> countList = new LinkedList<Object[]>();
+		SwingWorker<List<Object[]>, Void> worker = new SwingWorker<List<Object[]>, Void>(){
+
+            @Override
+            protected List<Object[]> doInBackground() throws Exception {
+            	List<Object[]> list = dbUtil.countUsersForAllRooms();
+				return list;
+            }
+		};
+		worker.execute();
+		try {
+			countList = worker.get();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		int[] countTab = new int[36];
+		for(Object[] counter: countList){
+			int n = (int) counter[0];
+			if(n > 0 && n <=12)
+				countTab[n-1] = (int)(long)counter[1];
+			else if(n > 100 && n <=112)
+				countTab[n-89] = (int)(long)counter[1];
+			else if(n > 200 && n <=212)
+				countTab[n-177] = (int)(long)counter[1];
+	     }
+		int roomIter = 0;
+		
 		this.normal = font;
 		dsPanel0 = new JPanel();
 		dsPanel1 = new JPanel();
@@ -59,7 +90,8 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, dbUtil.countUsersInRoom(stage+i));
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, countTab[roomIter]);
+				roomIter++;
 				b.addActionListener(this);
 				dsPanel0.add(b,c);
 				c.gridx++;
@@ -77,7 +109,8 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, dbUtil.countUsersInRoom(stage+i));
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, countTab[roomIter]);
+				roomIter++;
 				b.addActionListener(this);
 				dsPanel1.add(b,c);
 				c.gridx++;
@@ -95,7 +128,8 @@ public class JDSPanel extends JPanel implements ActionListener {
 				c.insets = cInsets1;
 			}
 			for(int i=1;i<=6;i++){
-				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, dbUtil.countUsersInRoom(stage+i));
+				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, countTab[roomIter]);
+				roomIter++;
 				b.addActionListener(this);
 				dsPanel2.add(b,c);
 				c.gridx++;

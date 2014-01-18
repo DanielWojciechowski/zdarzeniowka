@@ -365,6 +365,24 @@ public class DBUtil {
         }
 		return count;
 	}
+	
+	public List<Object[]> countUsersForAllRooms(){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		List<Object[]> resultList = null;
+		try{
+        	trans = session.beginTransaction();
+        	Query q = session.createQuery("select roomNo, count(idUser) from DBUser group by roomNo");
+        	resultList = (List<Object[]>)q.list();
+        	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		return resultList;
+	}
 
 	/**
 	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
