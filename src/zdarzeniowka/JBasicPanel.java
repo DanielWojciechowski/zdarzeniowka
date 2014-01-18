@@ -41,6 +41,14 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		initiate(font);
 	}
 	
+	 public void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, 
+			 DBPort port) {}
+
+	 public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, 
+			 String otherInfo){}
+
+	 public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){}
+
 	public JBasicPanel(Font font, boolean whatever){
 		super();
 		initiate(font);
