@@ -366,6 +366,7 @@ public class DBUtil {
 		return count;
 	}
 	
+	
 	/**
 	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
 	 * @param clazz typ na jaki ma być rzutowana lista
@@ -378,4 +379,5 @@ public class DBUtil {
 	      r.add(clazz.cast(o));
 	    return r;
 	}	
+
 }
