@@ -240,7 +240,7 @@ public class DBUtil {
         	device.setConfiguration(configuration);
         	device.setOtherInfo(otherInfo);
         	session.update(device);
-        	String qs = "Update UserDevice set idUser = :idUser where idDevice = :idDevice";
+        	String qs = "Update userdevice set idUser = :idUser where idDevice = :idDevice";
         	SQLQuery q = session.createSQLQuery(qs);
         	q.setParameter("idDevice", idDevice);
         	q.setParameter("idUser", idUser);
@@ -365,7 +365,6 @@ public class DBUtil {
         }
 		return count;
 	}
-	
 	/**
 	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
 	 * @param clazz typ na jaki ma być rzutowana lista

@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
@@ -184,6 +185,11 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 			            		((JUserDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
 			            	else if(tmp == 2)
 			            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
+		            	}
+		            	else{
+		            		JOptionPane.showMessageDialog(cardAddingPanel, "Dodawanie nie powiodło się!", "Błąd dodawania", 
+		        					JOptionPane.ERROR_MESSAGE);
+		        			log.error("Błąd dodawania");
 		            	}
 		            }
 		       };

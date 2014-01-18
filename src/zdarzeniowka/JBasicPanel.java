@@ -31,7 +31,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 	protected Insets insets1, insets0;
 	protected Font normal;
 	protected boolean editable;
-	private Logger  log = Logger.getLogger(JBasicPanel.class);
+	Logger  log = Logger.getLogger(JBasicPanel.class);
 	
 	public JBasicPanel(Font font) {
 		super();
@@ -151,7 +151,6 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 				}
 				checker.add(tmp>0);
 			}
-			
 		}
 		
 		if(checker.contains(false)){
@@ -165,5 +164,4 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 			return true;
 		}
 	}
-
 }

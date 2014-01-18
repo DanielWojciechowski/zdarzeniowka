@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,9 +15,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 public class JNetworkDevicePanel extends JBasicPanel  {
 	private static final long serialVersionUID = 8913270095466798762L;
+	DBUtil dbUtil = new DBUtil();
+	private char[] deviceTypes = {'k','p','r','a','i','s'};
 
 	public JNetworkDevicePanel(Font font) {
 		super(font);
@@ -174,14 +178,45 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		}
 		if (source == okButton){
 			Object[] options = {"Tak","Nie",};
-			int n = JOptionPane.showOptionDialog(
-				    this,
-				    "Czy na pewno chcesz potwierdzić?",
-				    "Potwierdź zmiany.",
-				    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
-                    options[1]);
-			if (n == 0) {
-				this.editabling(false, 2);
+			if(checkForm(2)){
+				int n = JOptionPane.showOptionDialog(
+					    this,
+					    "Czy na pewno chcesz potwierdzić?",
+					    "Potwierdź zmiany.",
+					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
+	                    options[1]);
+				if (n == 0) {
+					this.editabling(false, 2);
+					
+					SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
+			            @Override
+			            protected Boolean doInBackground() throws Exception {
+			    			dbUtil = new DBUtil();
+			    			JTextField[] tf = textFields;
+			    			boolean conf = (cb[0].getSelectedIndex() == 0);
+			    			int typeInd = cb[0].getSelectedIndex();
+			    			String s = textArea.getText();
+			    			return dbUtil.updateNetworkDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s, Integer.parseInt(tf[2].getText()));
+			    		}
+			            
+			            @Override
+			            protected void done() {
+			            	Boolean result = null;
+			            	try {
+			            		result = this.get();
+							} catch (InterruptedException | ExecutionException e1) {
+								log.error("Błąd SWING Workera");
+								e1.printStackTrace();
+							}	
+			            	if (result == null){
+			            		JOptionPane.showMessageDialog(topPanel, "Aktualizacja danych nie powiodła się!", "Błąd aktualizacji", 
+			        					JOptionPane.ERROR_MESSAGE);
+			        			log.error("Błąd aktualizacji");
+			            	}
+			            }
+			       };
+			       	worker.execute();
+				}
 			}
 		}
 		

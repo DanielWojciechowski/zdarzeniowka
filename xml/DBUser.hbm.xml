@@ -10,7 +10,7 @@
         <id name="idUser" type="int" column="idUser">
             <generator class="native" />
         </id>
-         <set name="devices" cascade="all">
+         <set name="devices" cascade="all" lazy="false">
 			<key column="idUser"/>
 			<one-to-many class="zdarzeniowka.DBUserDevice"/>
 		</set>
@@ -19,7 +19,7 @@
 		 <property name="email" column="email" type="string"/>
 		 <property name="albumNo" column="albumNo" type="int"/>
 		 <property name="roomNo" column="roomNo" type="int"/>
-		 <many-to-one name="port" column="idPort" unique="true" class="zdarzeniowka.DBPort" not-null="true"/>
+		 <many-to-one name="port" column="idPort" unique="true" class="zdarzeniowka.DBPort" not-null="true" lazy="false"/>
 		
          	
     </class>
