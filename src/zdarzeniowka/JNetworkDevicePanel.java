@@ -19,7 +19,6 @@ import javax.swing.SwingWorker;
 
 public class JNetworkDevicePanel extends JBasicPanel  {
 	private static final long serialVersionUID = 8913270095466798762L;
-	DBUtil dbUtil = new DBUtil();
 	private char[] deviceTypes = {'k','p','r','a','i','s'};
 
 	public JNetworkDevicePanel(Font font) {

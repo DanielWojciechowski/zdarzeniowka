@@ -294,6 +294,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            	}
 	            	else if(cat == category[1]){
 	            		log.info("Listowanie Urządzeń Usera, liczba wyników: "+ userDeviceResultList.size());
+	            		deviceModel.setRowCount(0);
 	            		for(Iterator<DBUserDevice> iter = userDeviceResultList.iterator(); iter.hasNext();){
 	            			DBUserDevice device = iter.next();
 	            			deviceModel.addRow(new Object[]{String.valueOf(device.getIdDevice()),
@@ -303,6 +304,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	            	}
 	            	else if(cat == category[2]){
 	            		log.info("Listowanie Urządzeń Sieciowych, liczba wyników: "+ networkDeviceResultList.size());
+	            		deviceModel.setRowCount(0);
 	            		for(Iterator<DBNetworkDevice> iter = networkDeviceResultList.iterator(); iter.hasNext();){
 	            			DBNetworkDevice device = iter.next();
 	            			deviceModel.addRow(new Object[]{String.valueOf(device.getIdDevice()),

@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 
@@ -32,6 +34,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 	protected Font normal;
 	protected boolean editable;
 	Logger  log = Logger.getLogger(JBasicPanel.class);
+	DBUtil dbUtil = new DBUtil();
 	
 	public JBasicPanel(Font font) {
 		super();
@@ -163,5 +166,66 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 			log.error("Dodawanie w toku");
 			return true;
 		}
+	}
+	
+	public void remove(Object obj){
+		log.info("start DELETING");
+		Object[] options = {"Tak","Nie",};
+		int n = JOptionPane.showOptionDialog(this, "Czy na pewno chcesz usunąć?", 
+				"Potwierdź usuwanie", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, 
+				null, options, options[1]);
+		if (n == 0) {
+			final int index = getObjIndex(obj);
+			final String cat = getObjCategory(obj);
+			log.info(index + " "+ cat);
+			
+			SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
+	            @Override
+	            protected Boolean doInBackground() throws Exception {
+	            	return dbUtil.removeUserOrDevice(cat, index);
+	            }
+	            @Override
+	            protected void done() {
+	            	boolean conf = false;
+					try {
+						conf = get();
+					} catch (InterruptedException | ExecutionException e) {
+						log.error("Błąd SWING Workera");
+						e.printStackTrace();
+					}
+	            	if(conf){
+	            		log.info("Usunięto!");
+	            	}
+	            	else{
+	            		log.error("Usuwanie nie powiodło się");
+	            		JOptionPane.showMessageDialog(topPanel,
+	            			    "Usuwanie nie powiodło się!",
+	            			    "Błąd usuwania",
+	            			    JOptionPane.ERROR_MESSAGE);
+	            	}
+	            }
+	       };
+	       	worker.execute();
+		}
+	}
+	public int getObjIndex(Object obj){
+		int index = 0;
+		if(obj.getClass() == JUserPanel.class)
+			index = Integer.parseInt(((JUserPanel)obj).textFields[3].getText());
+		else if(obj.getClass() == JUserDevicePanel.class)
+			index = Integer.parseInt(((JUserDevicePanel)obj).textFields[2].getText());
+		else if(obj.getClass() == JNetworkDevicePanel.class)
+			index = Integer.parseInt(((JNetworkDevicePanel)obj).textFields[2].getText());
+		return index;
+	}
+	public String getObjCategory(Object obj){
+		String cat = null;
+		if(obj.getClass() == JUserPanel.class)
+			cat = "DBUser";
+		else if(obj.getClass() == JUserDevicePanel.class)
+			cat = "DBUserDevice";
+		else if(obj.getClass() == JNetworkDevicePanel.class)
+			cat = "DBNetworkDevice";
+		return cat;
 	}
 }

@@ -342,7 +342,7 @@ public class DBUtil {
 	}
 	/**
 	 * Funkcja zwracająca liczbę osób w pokoju
-	 * @param roomNo numer pokoju z którego zliczamy użytkownikó
+	 * @param roomNo numer pokoju z którego zliczamy użytkowników
 	 * @return liczba użytkownikó w pokoju
 	 */
 	public int countUsersInRoom(int roomNo){

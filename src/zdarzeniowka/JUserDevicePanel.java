@@ -20,7 +20,6 @@ import javax.swing.SwingWorker;
 
 public class JUserDevicePanel extends JBasicPanel{
 	private static final long serialVersionUID = 9083184852370768151L;
-	DBUtil dbUtil = new DBUtil();
 	private char[] deviceTypes = {'k','p','r','a','i','s'};
 	
 	public JUserDevicePanel(Font font, boolean editable){
@@ -227,6 +226,10 @@ public class JUserDevicePanel extends JBasicPanel{
 			       	worker.execute();
 				}
 			}
+		}
+		else if(source == deleteButton){
+			log.info(this.getClass());
+			remove((Object)this);
 		}
 		
 	}
