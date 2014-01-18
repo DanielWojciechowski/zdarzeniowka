@@ -6,6 +6,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -137,8 +140,8 @@ public class JDSPanel extends JPanel implements ActionListener {
 	}
 	
 
-	public void showRoomFrame(String buttonText, int usersInRoom){
-		JRoomFrame roomFrame = new JRoomFrame(normal, "Pokój nr " + buttonText, usersInRoom);
+	public void showRoomFrame(String buttonText, List<DBUser> userList){
+		JRoomFrame roomFrame = new JRoomFrame(normal, "Pokój nr " + buttonText, userList);
 		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		roomFrame.setLocation(400, 200);
 		roomFrame.setResizable(false);
@@ -151,9 +154,16 @@ public class JDSPanel extends JPanel implements ActionListener {
 		Object source = e.getSource();
 		if (source instanceof JRoomButton){
 			String buttonText = ((JRoomButton) source).getText();
-			showRoomFrame(buttonText, ((JRoomButton) source).getUsersInRoom());
+			List<DBUser> userList = castList(DBUser.class, dbUtil.findUserOrDevice("DBUser", "roomNo",((JRoomButton) source).getText()));
+			showRoomFrame(buttonText, userList);
 		}
-		
 	}
+	
+	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+	    List<T> r = new ArrayList<T>(c.size());
+	    for(Object o: c)
+	      r.add(clazz.cast(o));
+	    return r;
+	}	
 
 }

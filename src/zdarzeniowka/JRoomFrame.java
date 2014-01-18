@@ -28,33 +28,33 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private List<JUserDevicePanel> userDevicePanel;
 	private JButton showDeviceButton, showUserButton;
 	private GridBagConstraints c, cpane, csrane;
-	private Font normal;
-	
+	private Font normal;	
 	
 	public JRoomFrame(Font font, String text){
 		super(text);
-		initiate(3, font);
+		List<DBUser> userList = new LinkedList<DBUser>();
+		initiate(userList, font);
 	}
 	
-	public JRoomFrame(Font font, String text, int value){
+	public JRoomFrame(Font font, String text, List<DBUser> userList){
 		super(text);
-		if(value <= 0 || value > 3) {
+		if(userList.size() <= 0 || userList.size() > 3) {
             throw new IllegalArgumentException("Too many users in room!");
         }
-		initiate(value, font);
+		initiate(userList, font);
 	}
 	
-	public void initiate(int index, Font font){
+	private void initiate(List<DBUser> userList, Font font){
 		this.setLayout(new GridBagLayout());
 		Dimension d = new Dimension(455,278);
 		userDevicePanel = new LinkedList<JUserDevicePanel>();
 		cardDevice = new JPanel(new GridBagLayout());
 		cardUser = new JPanel(new GridBagLayout());
-		upane = new JPanel[index];
-		dpane = new JPanel[index];
-		device = new byte[index];
-		userPanel = new JUserPanel[index];
-		scrollpane = new JScrollPane[index];
+		upane = new JPanel[userList.size()];
+		dpane = new JPanel[userList.size()];
+		device = new byte[userList.size()];
+		userPanel = new JUserPanel[userList.size()];
+		scrollpane = new JScrollPane[userList.size()];
 		normal = font;
 		tabbedUserPane = new JTabbedPane();
 		tabbedUserPane.setFont(normal);
@@ -75,9 +75,11 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		cpane.fill = GridBagConstraints.BOTH;
 		cpane.anchor = GridBagConstraints.LAST_LINE_END;
 		int deviceIndex = 0;
-		for (int i = 0; i < index; i++){
+		
+		for (int i = 0; i < userList.size(); i++){
+			DBUser user = userList.get(i);
+			device[i] = (byte) userList.get(i).getDevices().size();
 			cpane.ipadx = 0;
-			device[i] = 5; //tu ma brać ile jest urzadzen itego uzytkownika
 			upane[i] = new JPanel();
 			upane[i].setLayout(new GridBagLayout());
 			dpane[i] = new JPanel();
@@ -86,10 +88,14 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			cpane.gridy = 0;
 			cpane.gridwidth = 1;
 			upane[i].add(userPanel[i], cpane);
-			tabbedUserPane.add("Id osoby",upane[i]);	
+			tabbedUserPane.add("Użytkownik "+String.valueOf(user.getIdUser()),upane[i]);
+			
+			userPanel[i].setForm(user.getFirstName(), user.getLastName(), user.getEmail(), user.getIdUser(), user.getRoomNo(), user.getAlbumNo(), user.getPort());
 			
 			for(int j = 0; j < device[i]; j++){
 				userDevicePanel.add(new JUserDevicePanel(normal, false));
+				DBUserDevice dev = user.getDevices().iterator().next();
+				userDevicePanel.get(i).setForm(dev.getMac(), dev.getIp(), dev.getIdDevice(), user.getIdUser(), dev.isConfiguration(), dev.getType(), dev.getOtherInfo());
 				csrane.gridy = 2*j;
 				dpane[i].add(userDevicePanel.get(deviceIndex), csrane);
 				csrane.gridy = 2*j + 1;
@@ -105,7 +111,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			scrollpane[i].setMinimumSize(d);
 			scrollpane[i].setMaximumSize(d);
 			scrollpane[i].setBorder(null);
-			tabbedDevicePane.add("Id osoby",scrollpane[i]);
+			tabbedDevicePane.add("Użytkownik "+String.valueOf(user.getIdUser()),scrollpane[i]);
 			
 		}
 		c.anchor = GridBagConstraints.LAST_LINE_END;
@@ -144,9 +150,4 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			this.validate();
 		}
 	}
-
-
-	
-	
-
 }

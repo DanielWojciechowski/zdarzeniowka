@@ -1,20 +1,21 @@
 package zdarzeniowka;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 public class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
+	DBUtil dbUtil = new DBUtil();
 	
 	public JUserPanel(Font font){
 		super(font);	
@@ -96,6 +97,7 @@ public class JUserPanel extends JBasicPanel {
 		
 	}
 	
+	@Override
 	public void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, DBPort port){
 		textFields[0].setText(name);
 		textFields[1].setText(lastName);
@@ -103,7 +105,7 @@ public class JUserPanel extends JBasicPanel {
 		textFields[3].setText(String.valueOf(userId));
 		textFields[4].setText(String.valueOf(roomNo));
 		textFields[5].setText(String.valueOf(albumNo));
-		textFields[6].setText(String.valueOf(port.getIdPort()));	
+		textFields[6].setText(String.valueOf(port.getPortNo()));	
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -113,15 +115,43 @@ public class JUserPanel extends JBasicPanel {
 			}
 			if (source == okButton){
 				Object[] options = {"Tak","Nie",};
-				int n = JOptionPane.showOptionDialog(
-					    this,
-					    "Czy na pewno chcesz potwierdzić?",
-					    "Potwierdź zmiany.",
-					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
-	                    options[1]);
-				if (n == 0) {
-					this.editabling(false, 3);
+				if(checkForm(0)){
+					int n = JOptionPane.showOptionDialog(
+						    this,
+						    "Czy na pewno chcesz potwierdzić?",
+						    "Potwierdź zmiany.",
+						    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
+		                    options[1]);
+					if (n == 0) {
+						this.editabling(false, 3);
+						
+						SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
+				            @Override
+				            protected Boolean doInBackground() throws Exception {
+				    			dbUtil = new DBUtil();
+					    			JTextField[] tf = textFields;
+					    			return dbUtil.updateUser(tf[0].getText(), tf[1].getText(), tf[2].getText(), Integer.parseInt(tf[4].getText()), Integer.parseInt(tf[5].getText()), Integer.parseInt(tf[6].getText()), Integer.parseInt(tf[3].getText()));
+				    		}
+				            
+				            @Override
+				            protected void done() {
+				            	Boolean result = null;
+				            	try {
+				            		result = this.get();
+								} catch (InterruptedException | ExecutionException e1) {
+									log.error("Błąd SWING Workera");
+									e1.printStackTrace();
+								}	
+				            	if (result == null){
+				            		JOptionPane.showMessageDialog(topPanel, "Aktualizacja danych nie powiodła się!", "Błąd aktualizacji", 
+				        					JOptionPane.ERROR_MESSAGE);
+				        			log.error("Błąd aktualizacji");
+				            	}
+				            }
+				       };
+				       	worker.execute();
+					}
 				}
-			}
+			}	
 	}
 }

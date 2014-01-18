@@ -6,16 +6,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
-import org.hibernate.metamodel.domain.Superclass;
 
 public class JRoomButton extends JButton{
 	private static final long serialVersionUID = 7475937080439185047L;

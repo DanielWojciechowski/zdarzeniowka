@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,10 +15,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 
 public class JUserDevicePanel extends JBasicPanel{
 	private static final long serialVersionUID = 9083184852370768151L;
+	DBUtil dbUtil = new DBUtil();
+	private char[] deviceTypes = {'k','p','r','a','i','s'};
 	
 	public JUserDevicePanel(Font font, boolean editable){
 		super(font, editable);
@@ -148,15 +152,15 @@ public class JUserDevicePanel extends JBasicPanel{
 		}
 	}
 	
-	
+	@Override
 	public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, String otherInfo){
 		textFields[0].setText(mac);
 		textFields[1].setText(ip);
 		textFields[2].setText(String.valueOf(idDevice));
 		textFields[3].setText(String.valueOf(idUser));
 		if(configuration)
-			cb[0].setSelectedIndex(1);
-		else cb[0].setSelectedIndex(0);
+			cb[0].setSelectedIndex(0);
+		else cb[0].setSelectedIndex(1);
 		switch (type){
 			case 'k': //komp
 				cb[1].setSelectedIndex(0);
@@ -183,14 +187,45 @@ public class JUserDevicePanel extends JBasicPanel{
 		}
 		if (source == okButton){
 			Object[] options = {"Tak","Nie",};
-			int n = JOptionPane.showOptionDialog(
-				    this,
-				    "Czy na pewno chcesz potwierdzić?",
-				    "Potwierdź zmiany.",
-				    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
-                    options[1]);
-			if (n == 0) {
-				this.editabling(false, 2);
+			if(checkForm(1)){
+				int n = JOptionPane.showOptionDialog(
+					    this,
+					    "Czy na pewno chcesz potwierdzić?",
+					    "Potwierdź zmiany.",
+					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
+	                    options[1]);
+				if (n == 0) {
+					this.editabling(false, 2);
+					
+					SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
+			            @Override
+			            protected Boolean doInBackground() throws Exception {
+			    			dbUtil = new DBUtil();
+			    			JTextField[] tf = textFields;
+			    			boolean conf = (cb[0].getSelectedIndex() == 0);
+			    			int typeInd = cb[0].getSelectedIndex();
+			    			String s = textArea.getText();
+			    			return dbUtil.updateUserDevice(tf[0].getText(), tf[1].getText(), deviceTypes[typeInd], conf, s, Integer.parseInt(tf[3].getText()),Integer.parseInt(tf[2].getText()));
+			    		}
+			            
+			            @Override
+			            protected void done() {
+			            	Boolean result = null;
+			            	try {
+			            		result = this.get();
+							} catch (InterruptedException | ExecutionException e1) {
+								log.error("Błąd SWING Workera");
+								e1.printStackTrace();
+							}	
+			            	if (result == null){
+			            		JOptionPane.showMessageDialog(topPanel, "Aktualizacja danych nie powiodła się!", "Błąd aktualizacji", 
+			        					JOptionPane.ERROR_MESSAGE);
+			        			log.error("Błąd aktualizacji");
+			            	}
+			            }
+			       };
+			       	worker.execute();
+				}
 			}
 		}
 		
