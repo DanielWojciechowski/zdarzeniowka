@@ -11,6 +11,7 @@
 
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://db4free.net/zdarzeniowka</property>
+        <!-- property name="hibernate.connection.url">jdbc:mysql://localhost/zdarzeniowka</property -->
         <property name="hibernate.connection.username">zdarzeniowka</property>
         <property name="hibernate.connection.password">kotek123</property>
         <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>

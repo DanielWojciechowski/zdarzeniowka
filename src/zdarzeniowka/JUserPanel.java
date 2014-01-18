@@ -15,7 +15,6 @@ import javax.swing.SwingWorker;
 
 public class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
-	DBUtil dbUtil = new DBUtil();
 	
 	public JUserPanel(Font font){
 		super(font);	
@@ -97,7 +96,6 @@ public class JUserPanel extends JBasicPanel {
 		
 	}
 	
-	@Override
 	public void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, DBPort port){
 		textFields[0].setText(name);
 		textFields[1].setText(lastName);
@@ -153,5 +151,9 @@ public class JUserPanel extends JBasicPanel {
 					}
 				}
 			}	
+			else if(source == deleteButton){
+				log.info(this.getClass());
+				remove((Object)this);
+			}
 	}
 }

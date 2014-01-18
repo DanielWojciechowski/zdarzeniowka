@@ -19,7 +19,6 @@ import javax.swing.SwingWorker;
 
 public class JNetworkDevicePanel extends JBasicPanel  {
 	private static final long serialVersionUID = 8913270095466798762L;
-	DBUtil dbUtil = new DBUtil();
 	private char[] deviceTypes = {'k','p','r','a','i','s'};
 
 	public JNetworkDevicePanel(Font font) {
@@ -142,7 +141,6 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		}	
 	}
 	
-	@Override
 	public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){
 		textFields[0].setText(mac);
 		textFields[1].setText(ip);
