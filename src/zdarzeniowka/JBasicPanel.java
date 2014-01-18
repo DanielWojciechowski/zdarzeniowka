@@ -134,7 +134,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 			}catch(java.lang.NumberFormatException e){
 				checker.add(false);
 			}
-			checker.add((tmp>0 && tmp<=12) || (tmp>100 && tmp<=112) || (tmp>200 && tmp<=212));
+			checker.add(((tmp>0 && tmp<=12) || (tmp>100 && tmp<=112) || (tmp>200 && tmp<=212)) && (dbUtil.countUsersInRoom(tmp)<3));
 			tmp = 0;
 			try{
 				tmp = Integer.parseInt(textFields[5].getText());

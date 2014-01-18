@@ -326,7 +326,7 @@ public class DBUtil {
 		int idUser = -1;
 		try{
         	trans = session.beginTransaction();
-	    	String qs = "Select idUser From UserDevice where idDevice = :idDevice";
+	    	String qs = "Select idUser From userdevice where idDevice = :idDevice";
 	    	SQLQuery q = session.createSQLQuery(qs);
 	    	q.setParameter("idDevice", idDevice);
 	    	List<Integer> list = castList(Integer.class, q.list());
