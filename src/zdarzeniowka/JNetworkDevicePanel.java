@@ -141,11 +141,10 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		}	
 	}
 	
-	public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, String otherInfo){
+	public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){
 		textFields[0].setText(mac);
 		textFields[1].setText(ip);
 		textFields[2].setText(String.valueOf(idDevice));
-		textFields[3].setText(String.valueOf(idUser));
 		if(configuration)
 			cb[0].setSelectedIndex(1);
 		else cb[0].setSelectedIndex(0);

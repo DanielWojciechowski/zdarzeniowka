@@ -44,7 +44,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		initiate(userList, font);
 	}
 	
-	public void initiate(List<DBUser> userList, Font font){
+	private void initiate(List<DBUser> userList, Font font){
 		this.setLayout(new GridBagLayout());
 		Dimension d = new Dimension(455,278);
 		userDevicePanel = new LinkedList<JUserDevicePanel>();

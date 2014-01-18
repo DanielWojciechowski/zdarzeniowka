@@ -151,7 +151,6 @@ public class JUserDevicePanel extends JBasicPanel{
 		}
 	}
 	
-	
 	public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, String otherInfo){
 		textFields[0].setText(mac);
 		textFields[1].setText(ip);

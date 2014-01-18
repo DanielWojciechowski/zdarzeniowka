@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -99,6 +100,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
     	deleteButton = new JButton("Usun");
     	deleteButton.addActionListener(this);
     	showButton = new JButton("Wyświetl");
+    	showButton.addActionListener(this);
     	result = new JLabel("Wyniki:");
     	result.setFont(normal);
     	buttonPanel.setLayout(new GridBagLayout());
@@ -226,6 +228,37 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private void clearForm(int n){
 			textField[n].setText("");
 			cb[n+1].setSelectedIndex(0);
+	}
+	
+	public void showResultFrame(String frameLabel, DBUser user){
+		System.out.println("mej");
+		JResultPane resultFrame = new JResultPane(normal, frameLabel, user);
+		resultFrame.setVisible(true);
+		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		resultFrame.setLocation(400, 200);
+		resultFrame.setResizable(false);
+		resultFrame.pack();
+		resultFrame.setVisible(true);
+	}
+	
+	public void showResultFrame(String frameLabel, DBUserDevice userDevice){
+		JResultPane resultFrame = new JResultPane(normal, frameLabel, userDevice);
+		resultFrame.setVisible(true);
+		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		resultFrame.setLocation(400, 200);
+		resultFrame.setResizable(false);
+		resultFrame.pack();
+		resultFrame.setVisible(true);
+	}	
+	
+	public void showResultFrame(String frameLabel, DBNetworkDevice networkDevice){
+		JResultPane resultFrame = new JResultPane(normal, frameLabel, networkDevice);
+		resultFrame.setVisible(true);
+		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		resultFrame.setLocation(400, 200);
+		resultFrame.setResizable(false);
+		resultFrame.pack();
+		resultFrame.setVisible(true);
 	}
 
 	@Override
@@ -363,6 +396,14 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 				}
 			}
 		}
+		else if(source == showButton){
+			log.info("Wciśnięto przycisk wyswietl");
+			final int selectedRow = resultTable.getSelectedRow();
+			if(selectedRow != -1){
+				showResultFrame("meh", userDeviceResultList.get(0));
+			}
+		}
+		
 	}
 	
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
