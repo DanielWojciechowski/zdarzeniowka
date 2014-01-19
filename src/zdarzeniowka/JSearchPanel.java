@@ -56,6 +56,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			columnNames0 = {"Id", "Imie", "Nazwisko", "Pokój", "Nr Albumu"}, 
 			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
 	private DefaultTableModel userModel, deviceModel;
+	private JDSPanel dsPanel;
 	
 	private DBUtil dbUtil = new DBUtil();
 	private String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"},
@@ -66,9 +67,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	private List<DBNetworkDevice> networkDeviceResultList = null;
     private Logger  log = Logger.getLogger(JSearchPanel.class);
 	
-	public JSearchPanel(Font font){
+	public JSearchPanel(Font font, JDSPanel dsPanel){
 		super();
 		initiate(font);
+		this.dsPanel = dsPanel;
 		paint();
 
 	}
@@ -380,8 +382,17 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 							}
 			            	if(conf){
 			            		log.info("Usunięto!");
-			            		if(cat == 0) 
+			            		if(cat == 0) {
 			            			userModel.removeRow(selectedRow);
+			    					String roomNo = (String) userModel.getValueAt(selectedRow, 3);
+			    					log.info(roomNo);
+			    					for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
+			    						if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
+			    							dsPanel.decreaseCountTabAt(Integer.parseInt(roomNo));
+			    							dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
+			    						}
+			    					}
+			    				}
 			            		else if(cat == 1 || cat == 2) 
 			            			deviceModel.removeRow(selectedRow);
 			            	}
@@ -394,6 +405,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			            	}
 			            }
 			       };
+			       
 			       	worker.execute();
 				}
 			}
