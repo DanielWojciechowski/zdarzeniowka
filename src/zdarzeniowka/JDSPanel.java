@@ -1,6 +1,9 @@
 package zdarzeniowka;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -25,9 +29,11 @@ public class JDSPanel extends JPanel implements ActionListener {
 	private JPanel dsPanel0, dsPanel1, dsPanel2 = new JPanel();
 	private GridBagConstraints c;
 	private Insets cInsets1, cInsets2, cInsets3, cInsets4;
+	private  List<JRoomButton> roomButton;
 	private Border border;
 	private Font normal;
 	private DBUtil dbUtil = new DBUtil();
+	private int[] countTab ;
 	
 	public JDSPanel(Font font){
 		paint(font);
@@ -50,7 +56,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			e.printStackTrace();
 		}
 		
-		int[] countTab = new int[36];
+		countTab = new int[36];
 		for(Object[] counter: countList){
 			int n = (int) counter[0];
 			if(n > 0 && n <=12)
@@ -61,7 +67,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 				countTab[n-177] = (int)(long)counter[1];
 	     }
 		int roomIter = 0;
-		
+	    roomButton = new ArrayList<JRoomButton>();
 		this.normal = font;
 		dsPanel0 = new JPanel();
 		dsPanel1 = new JPanel();
@@ -91,6 +97,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			}
 			for(int i=1;i<=6;i++){
 				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, countTab[roomIter]);
+				roomButton.add(b);
 				roomIter++;
 				b.addActionListener(this);
 				dsPanel0.add(b,c);
@@ -110,6 +117,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			}
 			for(int i=1;i<=6;i++){
 				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, countTab[roomIter]);
+				roomButton.add(b);
 				roomIter++;
 				b.addActionListener(this);
 				dsPanel1.add(b,c);
@@ -129,6 +137,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			}
 			for(int i=1;i<=6;i++){
 				JRoomButton b = new JRoomButton(String.valueOf(stage+i), normal, countTab[roomIter]);
+				roomButton.add(b);
 				roomIter++;
 				b.addActionListener(this);
 				dsPanel2.add(b,c);
@@ -213,4 +222,29 @@ public class JDSPanel extends JPanel implements ActionListener {
 	    return r;
 	}	
 
+	public List<JRoomButton> getRoomButton(){
+		return this.roomButton;
+	}
+	
+	public int getCountTabAt(int index){
+		return countTab[index];
+	}
+	
+	public void increaseCountTabAt(int index){
+		if(index > 0 && index <=12)
+			countTab[index-1]++;
+		else if(index > 100 && index <=112)
+			countTab[index-89]++;
+		else if(index > 200 && index <=212)
+			countTab[index-177]++;
+     }
+	
+	public void decreaseCountTabAt(int index){
+		if(index > 0 && index <=12)
+			countTab[index-1]--;
+		else if(index > 100 && index <=112)
+			countTab[index-89]--;
+		else if(index > 200 && index <=212)
+			countTab[index-177]--;
+     }
 }

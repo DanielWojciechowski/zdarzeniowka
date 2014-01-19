@@ -3,6 +3,8 @@ package zdarzeniowka;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -12,8 +14,6 @@ public class JChart extends JComponent{
 	private static final long serialVersionUID = -5878170992402917036L;
 	private int x1, x2, y1, y2, x11, x22, y11, y22;
 	private Color color1, color2;
-	private JScrollPane scrollPane;
-	private JPanel pane;
 	
 	
 	public JChart(int height, int width){
@@ -23,7 +23,6 @@ public class JChart extends JComponent{
 		setPreferredSize(d);
 		color1 = Color.red;
 		color2 = Color.blue;
-		pane = new JPanel();
 		x11 = 0;
 		x22 = 0;
 		y11 = 0;

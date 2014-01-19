@@ -1,6 +1,7 @@
 package zdarzeniowka;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,7 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import javassist.expr.Instanceof;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,7 +27,8 @@ import org.apache.log4j.Logger;
 public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	
 	private static final long serialVersionUID = -2513979177576640749L;
-	private JPanel[] addingPanel, buttonPanel, panel;	
+	private JPanel[] addingPanel, buttonPanel;
+	private JBasicPanel[] panel;	
 	private JPanel cardAddingPanel;
 	private JComboBox<String> addingCB;
 	private GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
@@ -33,20 +38,22 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 			OPTION3 = "Dodaj sprzęt sieciowy";
 	private String comboBoxItems[] = {OPTION1, OPTION2, OPTION3}; 
 	private Font normal;
+	private JDSPanel dsPanel;
 	
 	private DBUtil dbUtil = null;
 	private Logger  log = Logger.getLogger(JAddPanel.class);
 	private char[] deviceTypes = {'k','p','r','a','i','s'};
 	
-	public JAddPanel(Font font){
+	public JAddPanel(Font font, JDSPanel dsPanel){
 		super();
+		this.dsPanel = dsPanel;
 		paint(font);
 	}
 
 	void paint(Font font){
 		addingPanel = new JPanel[3];
 		buttonPanel = new JPanel[3];
-		panel = new JPanel[3];	
+		panel = new JBasicPanel[3];	
 		capane = new GridBagConstraints();
 		cbutton = new GridBagConstraints();
 		c = new GridBagConstraints();
@@ -194,15 +201,29 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 		            }
 		       };
 		       	worker.execute();
+		       	boolean tmp2 = false;
 		       	try {
-					worker.get();
+		       		if (worker.get() != null){
+		       			tmp2 = true;
+		       		}
+					
 				} catch (InterruptedException | ExecutionException e1) {
 					e1.printStackTrace();
 				}
+		       	if (tmp == 0 && tmp2){
+					String roomNo = panel[0].getRoomNo();
+					for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
+						if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
+							dsPanel.increaseCountTabAt(Integer.parseInt(roomNo));
+							dsPanel.getRoomButton().get(i).increaseUsersInRoom();
+						}
+					}
+				}
 			}
-			else{
-				
-			}
+			else{}
+			
+			
+			
 		}
 		else if(source == clearButton[tmp]){
 			log.info("Naciśnięto przycisk Wyczyść!");

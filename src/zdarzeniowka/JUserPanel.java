@@ -102,6 +102,11 @@ public class JUserPanel extends JBasicPanel {
 		textFields[6].setText(String.valueOf(port.getPortNo()));	
 	}
 	
+	@Override
+	public String getRoomNo(){
+		return textFields[4].getText();
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 			if (source == editButton){
