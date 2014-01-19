@@ -46,7 +46,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	
 	private void initiate(List<DBUser> userList, Font font){
 		this.setLayout(new GridBagLayout());
-		Dimension d = new Dimension(455,278);
+		Dimension d = new Dimension(460,286);
 		userDevicePanel = new LinkedList<JUserDevicePanel>();
 		cardDevice = new JPanel(new GridBagLayout());
 		cardUser = new JPanel(new GridBagLayout());
@@ -116,14 +116,14 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		}
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		c.insets = new Insets(10,0,0,10);
-		c.ipadx = 8;
+		c.ipadx = 9;
 		cardUser.add(showDeviceButton,c);
 		c.ipadx = 0;
 		c.insets = new Insets(12,0,0,10);
 		cardDevice.add(showUserButton,c);
 		
 		c.gridy = 1;
-		c.insets = new Insets(12,0,0,0);
+		c.insets = new Insets(0,0,0,0);
 		cardUser.add(tabbedUserPane,c);
 		cardDevice.add(tabbedDevicePane,c);
 		this.add(cardUser);		

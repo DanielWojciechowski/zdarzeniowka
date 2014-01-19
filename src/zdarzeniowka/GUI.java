@@ -90,7 +90,7 @@ public class GUI{
 		frame = new JFrame("System ewidencyjny sieci komputerowej w DS - AC&DW"); 
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("icons/cat.png"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize((new Dimension(600, 500))); 
+		frame.setMinimumSize((new Dimension(555, 485))); 
 		frame.setLocation(250, 50);
 		
 		addComponents();

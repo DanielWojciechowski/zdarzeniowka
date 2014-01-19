@@ -16,8 +16,8 @@ import javax.swing.JProgressBar;
 public class LoadingFrame extends JFrame{
 	private static final long serialVersionUID = 6749328366168616302L;
 	private JProgressBar progressBar;
-	private JLabel label1, label2;
-	private Dimension d = new Dimension(200,130);
+	private JLabel label1;
+	private Dimension d = new Dimension(300,95);
 	private GridBagConstraints c;
 	private Font font;
 	
@@ -42,16 +42,12 @@ public class LoadingFrame extends JFrame{
 		progressBar.setIndeterminate(true);
 		label1 = new JLabel("Ładowanie bazy danych!");
 		label1.setFont(font);
-		label2 = new JLabel("Proszę czekać...");
-		label2.setFont(font);
 		c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(10, 10, 0, 10);
 		this.add(label1, c);
-		//c.insets = new Insets(10, 10, 10, 10);
 		c.gridy = 1;
-		this.add(label2, c);
-		c.gridy = 2;
 		c.ipady = 5;
+		c.insets = new Insets(5, 10, 10, 10);
 		this.add(progressBar, c);
 		c.gridy = 2;
 		c.ipadx = 0;

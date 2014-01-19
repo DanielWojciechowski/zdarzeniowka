@@ -20,66 +20,50 @@ public class JChart extends JComponent{
 		x22 = 0;
 		y11 = 0;
 		y22 = 0;
-		x1 = 10;
-		x2 = 30;
+		x1 = 20;
+		x2 = 20;
 		y1 = 40;
 		y2 = 30;
 	}
 	
-	public void setX1(int value){
-		this.x11 = this.x1;
-		this.x1 = value;
-	}
-	
-	public void setX2(int value){
-		this.x22 = this.x2;
-		this.x2 = value;
-	}
-	
 	public void setY1(int value){
 		this.y11 = this.y1;
+		this.x11 = this.x1;
+		this.x1 += 50;
 		this.y1 = value;
 	}
 	
 	public void setY2(int value){
 		this.y22 = this.y2;
+		this.x22 = this.x2;
+		this.x2 += 50;
 		this.y2 = value;
 	}
-	
-	public void set(int x1, int y1){
-		this.x11 = this.x1;
-		this.y11 = this.y1;
-		this.x1 = x1;
-		this.y1 = y1;
-	}
-	
-	public void set2(int x2, int y2){
-		this.x22 = this.x2;
-		this.y22 = this.y2;
-		this.x2 = x2;
-		this.y2 = y2;
-	}
-	
+		
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		int height = this.getHeight();
 		int width = this.getWidth();
 		g.setColor(Color.white);
 		g.drawRect(0, 0, width-1, height-1);
-		int hor = 10, vert = 10;
+		int hor = 50, vert = 20;
 		while (hor < height) {
-	       g.drawLine(1, hor, width-1, hor);
-	       hor += 10;
+	       g.drawLine(0, hor, width, hor);
+	       hor += 50;
 	    }
 	    while (vert < width) {
-	       g.drawLine(vert, 1 , vert, height-1);
-	       vert += 10;
+	       g.drawLine(vert, 0 , vert, height);
+	       vert += 20;
 	    }
+
 	    g.setColor(Color.red);
-	    g.drawLine(x11, y11, x1, y1);
+	    g.drawLine(x11, height-y11, x1, height-y1);
 
 	    g.setColor(Color.blue);
 	    g.drawLine(x22, y22, x2, y2);
+	    if(x1 > width || x2 > width){
+	    	this.setSize(x1+width, height);
+	    }
 	   // g.drawLine(0, 0, 500, 300);
 	  }
 	

@@ -146,10 +146,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	csearch.gridx = 1;
         	csearch.insets = insets1;
         	if(i == 0){
-        		csearch.ipadx = 243;
+        		csearch.ipadx = 245;
         	}
         	else {
-        		csearch.ipadx = 270;
+        		csearch.ipadx = 272;
         	}
         	searchPane[i].add(cb[i+1], csearch);
         	csearch.ipadx = 0;
@@ -160,10 +160,8 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	searchPane[i].add(label2[i], csearch);
         	csearch.gridx = 1;
         	csearch.insets = insets1;
-        	csearch.ipady = 6;
         	csearch.anchor = GridBagConstraints.LINE_START;
         	searchPane[i].add(textField[i], csearch);
-        	csearch.ipadx = 0;
         	csearch.ipady = 0;
         	csearch.insets = insets0;
         	csearch.anchor = GridBagConstraints.LINE_END;
@@ -214,10 +212,10 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         this.add(cardSearchPanel, cpane);
         cpane.gridy = 1;
         cpane.anchor = GridBagConstraints.LINE_END;
-        cpane.insets = new Insets(10,0,0,15);
+        cpane.insets = new Insets(10,0,0,20);
     	this.add(resultPane, cpane);
     	cpane.gridy = 2;
-    	cpane.insets = new Insets(0,0,50,15);
+    	cpane.insets = new Insets(0,0,50,20);
         this.add(buttonPanel, cpane);
 		
         cardSearchPanel.add(searchPanel[0], OPTION1);
@@ -232,7 +230,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public void showResultFrame(DBUser user){
 		String frameLabel = "Użytkownik, id:"+String.valueOf(user.getIdUser());
-		JResultPane resultFrame = new JResultPane(normal, frameLabel, user);
+		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, user);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);
@@ -243,7 +241,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public void showResultFrame(DBUserDevice userDevice){
 		String frameLabel = "Urządzenie użytkownika, id:"+String.valueOf(userDevice.getIdDevice());
-		JResultPane resultFrame = new JResultPane(normal, frameLabel, userDevice);
+		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, userDevice);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);
@@ -254,7 +252,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public void showResultFrame(DBNetworkDevice networkDevice){
 		String frameLabel = "Urządzenie sieciowe, id:"+String.valueOf(networkDevice.getIdDevice());
-		JResultPane resultFrame = new JResultPane(normal, frameLabel, networkDevice);
+		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, networkDevice);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);

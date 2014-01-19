@@ -39,7 +39,7 @@ public class JReportPanel extends JPanel {
 		normal = font;
 		cbPane = new JPanel();
 		buttonPane = new JPanel();
-		chart = new JChart(500, 600);
+		chart = new JChart(600, 290);
 		scrollPane = new JScrollPane(chart);
 		saveButton = new JButton("Zapisz do pliku");
 		crpane = new GridBagConstraints();
@@ -62,8 +62,8 @@ public class JReportPanel extends JPanel {
         cb[1] = new JComboBox<String>(comboBox1);
         cb[0].setFont(normal);
         cb[1].setFont(normal);
-        cb[0].setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla bla blaBla bla bla bla bla b");
-        cb[1].setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla bla blaBla bla bla bla bla b");
+        cb[0].setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla bla blaBla bla bla bla bla bla bla");
+        cb[1].setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla bla blaBla bla bla bla bla bla bla");
         label[0] = new JLabel("Wybierz okres:");
         label[1] = new JLabel("Wybierz dane: ");
         label[2] = new JLabel("Przepustowość");
@@ -93,11 +93,10 @@ public class JReportPanel extends JPanel {
 
 
         crpane.insets = new Insets(10,10,0,0);
-        crpane.anchor = GridBagConstraints.NORTH;
+        crpane.anchor = GridBagConstraints.LINE_END;
         crpane.gridwidth = 2;
         this.add(cbPane, crpane);
         crpane.gridy = 1;
-        crpane.anchor = GridBagConstraints.LINE_END;
         this.add(buttonPane, crpane);
         crpane.gridy = 2;
         crpane.gridwidth = 1;
