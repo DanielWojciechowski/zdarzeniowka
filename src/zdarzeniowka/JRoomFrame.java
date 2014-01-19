@@ -46,7 +46,9 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	
 	private void initiate(List<DBUser> userList, Font font){
 		this.setLayout(new GridBagLayout());
-		Dimension d = new Dimension(460,286);
+
+
+		Dimension d;
 		userDevicePanel = new LinkedList<JUserDevicePanel>();
 		cardDevice = new JPanel(new GridBagLayout());
 		cardUser = new JPanel(new GridBagLayout());
@@ -89,7 +91,8 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			cpane.gridwidth = 1;
 			upane[i].add(userPanel[i], cpane);
 			tabbedUserPane.add("Użytkownik "+String.valueOf(user.getIdUser()),upane[i]);
-			
+
+			d = new Dimension(458, 260);
 			userPanel[i].setForm(user.getFirstName(), user.getLastName(), user.getEmail(), user.getIdUser(), user.getRoomNo(), user.getAlbumNo(), user.getPort());
 			
 			for(int j = 0; j < device[i]; j++){
@@ -100,12 +103,13 @@ public class JRoomFrame extends JFrame implements ActionListener {
 				dpane[i].add(userDevicePanel.get(deviceIndex), csrane);
 				csrane.gridy = 2*j + 1;
 				JSeparator separator = new JSeparator();
-				if (j < device[i] - 1){
+				if (j <= device[i] - 1){
 					separator.setPreferredSize(new Dimension(435,1));
+					dpane[i].add(separator, csrane);
 				}
-				dpane[i].add(separator, csrane);
 				deviceIndex++;
 			}
+			
 			scrollpane[i] = new JScrollPane(dpane[i]);
 			scrollpane[i].setPreferredSize(d);
 			scrollpane[i].setMinimumSize(d);
@@ -116,10 +120,10 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		}
 		c.anchor = GridBagConstraints.LAST_LINE_END;
 		c.insets = new Insets(10,0,0,10);
-		c.ipadx = 9;
+		c.ipadx = 10;
 		cardUser.add(showDeviceButton,c);
 		c.ipadx = 0;
-		c.insets = new Insets(12,0,0,10);
+		c.insets = new Insets(12,0,0,13);
 		cardDevice.add(showUserButton,c);
 		
 		c.gridy = 1;
