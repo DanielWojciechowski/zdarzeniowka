@@ -51,10 +51,8 @@ public class JUserPanel extends JBasicPanel {
         	ctop.anchor = GridBagConstraints.LINE_END;
 			ctop.gridx = 0;
 			ctop.gridy = i;
-			ctop.ipady = 0;
 			topPanel.add(labels[i], ctop);
 			ctop.insets = insets1;
-			ctop.ipady = 5;
 			ctop.anchor = GridBagConstraints.LINE_START;
 			ctop.gridx = 1;
 			ctop.gridwidth = 4;
@@ -65,21 +63,19 @@ public class JUserPanel extends JBasicPanel {
 			cbot.anchor = GridBagConstraints.LINE_END;
 			cbot.gridx = 0;
 			cbot.gridy = i;
-			cbot.ipady = 0;
 			botPanel.add(labels[i], cbot);
 			cbot.insets = insets1;
 			cbot.anchor = GridBagConstraints.LINE_START;
 			cbot.gridx = 1;
-			cbot.ipady = 6;
 			botPanel.add(textFields[i], cbot);	
 			cbot.anchor = GridBagConstraints.LINE_END;
 			cbot.gridx = 2;
+			cbot.insets = new Insets(0,15,10,0);
 			cbot.gridy = i;
-			cbot.ipady = 0;
 			botPanel.add(labels[i+1], cbot);
 			cbot.anchor = GridBagConstraints.LINE_START;
+			cbot.insets = insets1;
 			cbot.gridx = 3;
-			cbot.ipady = 6;
 			botPanel.add(textFields[i+1], cbot);	
 		}
 		cpane.anchor = GridBagConstraints.LINE_END;
