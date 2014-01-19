@@ -194,11 +194,6 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 		            }
 		       };
 		       	worker.execute();
-		       	try {
-					worker.get();
-				} catch (InterruptedException | ExecutionException e1) {
-					e1.printStackTrace();
-				}
 			}
 			else{
 				
