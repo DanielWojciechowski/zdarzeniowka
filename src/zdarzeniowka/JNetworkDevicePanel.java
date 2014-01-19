@@ -39,6 +39,7 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		textFields = new JTextField[3];
 		textArea = new JTextArea();
 	    textArea.setLineWrap(true);
+        textArea.setFont(normal);
 	    textArea.setEditable(editable);
 	    scrollPane = new JScrollPane(textArea);
 	    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -161,6 +162,7 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 			case 's': //serwer
 				cb[1].setSelectedIndex(5);
 		}
+		textArea.setText(otherInfo);
 	}
 	
 	@Override

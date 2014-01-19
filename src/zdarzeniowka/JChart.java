@@ -5,17 +5,25 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class JChart extends JComponent{
 	private static final long serialVersionUID = -5878170992402917036L;
 	private int x1, x2, y1, y2, x11, x22, y11, y22;
+	private Color color1, color2;
+	private JScrollPane scrollPane;
+	private JPanel pane;
+	
 	
 	public JChart(int height, int width){
 		super();
 		Dimension d = new Dimension(height, width);
 		setMinimumSize(d);
 		setPreferredSize(d);
-		//setMaximumSize(d);
+		color1 = Color.red;
+		color2 = Color.blue;
+		pane = new JPanel();
 		x11 = 0;
 		x22 = 0;
 		y11 = 0;
@@ -24,6 +32,7 @@ public class JChart extends JComponent{
 		x2 = 20;
 		y1 = 40;
 		y2 = 30;
+		
 	}
 	
 	public void setY1(int value){
@@ -55,16 +64,14 @@ public class JChart extends JComponent{
 	       g.drawLine(vert, 0 , vert, height);
 	       vert += 20;
 	    }
-
-	    g.setColor(Color.red);
+	    g.setColor(color1);
 	    g.drawLine(x11, height-y11, x1, height-y1);
 
-	    g.setColor(Color.blue);
-	    g.drawLine(x22, y22, x2, y2);
+	    g.setColor(color2);
+	    g.drawLine(x22, height-y22, x2, height-y2);
 	    if(x1 > width || x2 > width){
 	    	this.setSize(x1+width, height);
 	    }
-	   // g.drawLine(0, 0, 500, 300);
 	  }
 	
 	

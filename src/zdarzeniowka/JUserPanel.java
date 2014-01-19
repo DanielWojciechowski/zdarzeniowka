@@ -34,7 +34,7 @@ public class JUserPanel extends JBasicPanel {
 		String[] stringLabel = {"Imię:", "Nazwisko:", "Adres e-mail:", "Id użytkownika:", 
 				"Numer pokoju:", "Numer albumu:", "Numer portu:"};
 		for(int i = 0; i < 7; i++){
-			if (i < 3){
+			if (i < 3){ 
 				textFields[i] = new JTextField(27);
 			}
 			else {
