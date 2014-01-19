@@ -29,7 +29,7 @@ public class DBUtil {
     }*/
     
     public DBUtil(){
-    	log = Logger.getLogger(DBUtil.class);
+    	log = Logger.getLogger(DBUtil.class);    	
     }
     public DBUtil(boolean startFactory){
     	factory = SessionFactoryUtil.getSessionFactory();

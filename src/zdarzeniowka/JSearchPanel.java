@@ -23,8 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,7 +37,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			OPTION3 = "Wyszukaj sprzet sieciowy";
 	private JPanel cardSearchPanel, resultPane, buttonPanel;;
 	private Font normal;
-	private JTable resultTable;
+	private JMyTable resultTable;
 	private JScrollPane scrollPane;
 	private JPanel[] searchPanel, searchPane;
     private JLabel[] label, label2;
@@ -76,7 +76,13 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	public void initiate(Font font){
 		userModel = new DefaultTableModel(columnNames0,0);
     	deviceModel = new DefaultTableModel(columnNames1, 0);
-		resultTable = new JTable(userModel);
+		resultTable = new JMyTable();
+		resultTable.setModel(userModel);
+		resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
+		resultTable.getTableHeader().setReorderingAllowed(false);
+		//resultTable.setEnabled(false);
+		//resultTable.setRowSelectionAllowed(true);
+		
 		scrollPane = new JScrollPane(resultTable);
 		searchPanel = new JPanel[3];
 		searchPane = new JPanel[3];
@@ -417,6 +423,5 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	    for(Object o: c)
 	      r.add(clazz.cast(o));
 	    return r;
-	}	
-		
+	}
 }

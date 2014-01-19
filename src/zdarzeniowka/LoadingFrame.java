@@ -40,7 +40,7 @@ public class LoadingFrame extends JFrame{
 		c = new GridBagConstraints();
 		progressBar = new JProgressBar(40, 290);
 		progressBar.setIndeterminate(true);
-		label1 = new JLabel("Ładowanie bazy danych!");
+		label1 = new JLabel("Łączenie z bazą danych!");
 		label1.setFont(font);
 		c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(10, 10, 0, 10);
