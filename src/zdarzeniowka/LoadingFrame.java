@@ -6,12 +6,16 @@ import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.Timer;
 
 public class LoadingFrame extends JFrame{
 	private static final long serialVersionUID = 6749328366168616302L;
@@ -20,6 +24,7 @@ public class LoadingFrame extends JFrame{
 	private Dimension d = new Dimension(300,95);
 	private GridBagConstraints c;
 	private Font font;
+	private boolean cond = true;
 	
 	public LoadingFrame(){
 		super("AC&DW");
@@ -57,6 +62,20 @@ public class LoadingFrame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
+		ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+            	if(cond){
+            		JOptionPane.showMessageDialog(progressBar, "Połączenie z bazą danych nie powiodło się!", 
+            				"Błąd połączenia", JOptionPane.ERROR_MESSAGE);
+            		System.exit(0);
+            	}
+            }
+        };
+        Timer timer = new Timer( 15000 , taskPerformer);
+        timer.setRepeats(false);
+        timer.start();
 	}
-
+	public void setCond(){
+		cond = false;
+	}
 }

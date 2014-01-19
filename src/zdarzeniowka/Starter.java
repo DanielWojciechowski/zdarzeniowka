@@ -18,7 +18,9 @@ public class Starter {
 		LoadingFrame lframe = new LoadingFrame();
 		DOMConfigurator.configure("xml/log4j.xml");
 		new DBUtil(true);
+		lframe.setCond();
 		lframe.dispose();
+		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			GUI gui = new GUI();
 			@Override
