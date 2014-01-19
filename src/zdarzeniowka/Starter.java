@@ -10,17 +10,11 @@ public class Starter {
 		try {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} 
-		catch (UnsupportedLookAndFeelException e) {
-		   
-		}
-		catch (ClassNotFoundException e) {
-		   
-		}
-		catch (InstantiationException e) {
-		   
-		}
-		catch (IllegalAccessException e) {
-		}
+		catch (UnsupportedLookAndFeelException e) {}
+		catch (ClassNotFoundException e) {}
+		catch (InstantiationException e) {}
+		catch (IllegalAccessException e) {}
+		
 		LoadingFrame lframe = new LoadingFrame();
 		DOMConfigurator.configure("xml/log4j.xml");
 		new DBUtil(true);

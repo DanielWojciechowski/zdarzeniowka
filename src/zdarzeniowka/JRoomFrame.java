@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
+
+import org.apache.log4j.Logger;
 
 public class JRoomFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -8038078091109185534L;
@@ -30,6 +33,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private GridBagConstraints c, cpane, csrane;
 	private Font normal;	
 	
+	Logger  log = Logger.getLogger(JRoomFrame.class);
 	public JRoomFrame(Font font, String text){
 		super(text);
 		List<DBUser> userList = new LinkedList<DBUser>();
@@ -91,20 +95,22 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			tabbedUserPane.add("Użytkownik "+String.valueOf(user.getIdUser()),upane[i]);
 			
 			userPanel[i].setForm(user.getFirstName(), user.getLastName(), user.getEmail(), user.getIdUser(), user.getRoomNo(), user.getAlbumNo(), user.getPort());
-			
-			for(int j = 0; j < device[i]; j++){
+
+			int j1=0;
+			for(Iterator<DBUserDevice> iter = user.getDevices().iterator(); iter.hasNext();){
 				userDevicePanel.add(new JUserDevicePanel(normal, false));
-				DBUserDevice dev = user.getDevices().iterator().next();
-				userDevicePanel.get(i).setForm(dev.getMac(), dev.getIp(), dev.getIdDevice(), user.getIdUser(), dev.isConfiguration(), dev.getType(), dev.getOtherInfo());
-				csrane.gridy = 2*j;
+				DBUserDevice dev = (DBUserDevice) iter.next();
+				userDevicePanel.get(deviceIndex).setForm(dev.getMac(), dev.getIp(), dev.getIdDevice(), user.getIdUser(), dev.isConfiguration(), dev.getType(), dev.getOtherInfo());
+				csrane.gridy = 2*j1;
 				dpane[i].add(userDevicePanel.get(deviceIndex), csrane);
-				csrane.gridy = 2*j + 1;
+				csrane.gridy = 2*j1 + 1;
 				JSeparator separator = new JSeparator();
-				if (j < device[i] - 1){
+				if (j1 < device[i] - 1){
 					separator.setPreferredSize(new Dimension(435,1));
 				}
 				dpane[i].add(separator, csrane);
 				deviceIndex++;
+				j1++;
 			}
 			scrollpane[i] = new JScrollPane(dpane[i]);
 			scrollpane[i].setPreferredSize(d);

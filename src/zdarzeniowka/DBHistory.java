@@ -5,13 +5,13 @@ import java.sql.Date;
 public class DBHistory {
 	private int idHistory;
 	private Date date;
-	private double userDataUse;
+	private double dataUse;
 	
 	public DBHistory() {}
 	
 	public DBHistory(Date date, double userDataUse) {
 		this.date = date;
-		this.userDataUse = userDataUse;
+		this.dataUse = userDataUse;
 	}
 
 	public int getIdHistory() {
@@ -26,11 +26,11 @@ public class DBHistory {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public double getUserDataUse() {
-		return userDataUse;
+	public double getDataUse() {
+		return dataUse;
 	}
-	public void setUserDataUse(double userDataUse) {
-		this.userDataUse = userDataUse;
+	public void setDataUse(double userDataUse) {
+		this.dataUse = userDataUse;
 	}
 
 }

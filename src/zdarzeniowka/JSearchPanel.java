@@ -80,9 +80,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		resultTable.setModel(userModel);
 		resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
 		resultTable.getTableHeader().setReorderingAllowed(false);
-		//resultTable.setEnabled(false);
-		//resultTable.setRowSelectionAllowed(true);
-		
 		scrollPane = new JScrollPane(resultTable);
 		searchPanel = new JPanel[3];
 		searchPane = new JPanel[3];

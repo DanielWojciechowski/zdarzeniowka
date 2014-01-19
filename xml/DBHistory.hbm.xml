@@ -12,7 +12,7 @@
         </id>
         
          <property name="date" column="date" type="date"/>       
-         <property name="userDataUse" column="userDataUse" type="double"/>
+         <property name="dataUse" column="dataUse" type="double"/>
          	
     </class>
 </hibernate-mapping>
