@@ -45,7 +45,7 @@ public class GUI{
 		tabbedPane.setFont(normal);
 		dsPanel = new JDSPanel(normal);
 		addPanel= new JAddPanel(normal, dsPanel);
-		searchPanel = new JSearchPanel(normal);
+		searchPanel = new JSearchPanel(normal, dsPanel);
 		reportPanel = new JReportPanel(normal);
 		frame.setLayout(new GridBagLayout());
 		
