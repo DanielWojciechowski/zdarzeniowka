@@ -185,10 +185,23 @@ public class JDSPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
+		final Object source = e.getSource();
 		if (source instanceof JRoomButton){
 			String buttonText = ((JRoomButton) source).getText();
-			List<DBUser> userList = castList(DBUser.class, dbUtil.findUserOrDevice("DBUser", "roomNo",((JRoomButton) source).getText()));
+			List<DBUser> userList = null;
+			SwingWorker<List<DBUser>, Void> worker = new SwingWorker<List<DBUser>, Void>(){
+	            @Override
+	            protected List<DBUser> doInBackground() throws Exception {
+	            	List<DBUser> list = castList(DBUser.class, dbUtil.findUserOrDevice("DBUser", "roomNo",((JRoomButton) source).getText()));
+					return list;
+	            }
+			};
+			worker.execute();
+			try {
+				userList = worker.get();
+			} catch (InterruptedException | ExecutionException e1) {
+				e1.printStackTrace();
+			}
 			showRoomFrame(buttonText, userList);
 		}
 	}
