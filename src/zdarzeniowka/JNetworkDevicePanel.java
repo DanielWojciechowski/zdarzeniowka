@@ -34,7 +34,7 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 
 	public void paint(){
 		this.setLayout(new GridBagLayout());
-		Insets insets2 = new Insets(0,35,10,0);
+		Insets insets2 = new Insets(0,28, 10,0);
 		labels = new JLabel[6];
 		textFields = new JTextField[3];
 		textArea = new JTextArea();
@@ -70,10 +70,8 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 	    	ctop.anchor = GridBagConstraints.LINE_END;
 			ctop.gridx = 0;
 			ctop.gridy = i;
-			ctop.ipady = 0;
 			topPanel.add(labels[i], ctop);
 			ctop.insets = insets1;
-			ctop.ipady = 6;
 			ctop.anchor = GridBagConstraints.LINE_START;
 			ctop.gridx = 1;
 			ctop.gridwidth = 4;
@@ -83,21 +81,19 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 0;
 		cbot.gridy = 2;
-		cbot.ipady = 0;
 		botPanel.add(labels[2], cbot);
 		cbot.insets = insets1;
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 1;
-		cbot.ipady = 6;
+		cbot.ipadx = 4;
 		botPanel.add(cb[0], cbot);	
+		cbot.ipadx = 0;
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 2;
-		cbot.ipady = 0;
 		cbot.insets = insets2;
 		botPanel.add(labels[3], cbot);
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 3;
-		cbot.ipady = 6;
 		cbot.insets = insets1;
 		textFields[2].setEditable(false);
 		botPanel.add(textFields[2], cbot);
@@ -106,23 +102,22 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 0;
 		cbot.gridy = 3;
-		cbot.ipady = 0;
 		botPanel.add(labels[4], cbot);
 		cbot.insets = insets1;
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridwidth = 3;
 		cbot.gridx = 1;
-		cbot.ipady = 6;
+		cbot.ipadx = 4;
 		botPanel.add(cb[1], cbot);	
+		cbot.ipadx = 0;
 		
-		cbot.insets = new Insets(20,0,10,0);
+		cbot.insets = new Insets(20,0,0,0);
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 0;
 		cbot.gridy = 4;
-		cbot.ipady = 0;
 		cbot.gridwidth = 1;
 		botPanel.add(labels[5], cbot);
-		cbot.insets = new Insets(20,20,10,0);
+		cbot.insets = new Insets(20,20,0,0);
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 1;
 		cbot.gridwidth = 3;
