@@ -1,6 +1,7 @@
 package zdarzeniowka;
 
 import java.awt.ComponentOrientation;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -18,7 +19,7 @@ import javax.swing.JScrollPane;
 public class JReportPanel extends JPanel {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
-	private JPanel cbPane, buttonPane;
+	private JPanel cbPane, crPane;
 	private JChart chart;
 	private JScrollPane scrollPane;
 	private JButton saveButton;
@@ -38,8 +39,8 @@ public class JReportPanel extends JPanel {
 	public void paint(Font font){
 		normal = font;
 		cbPane = new JPanel();
-		buttonPane = new JPanel();
-		chart = new JChart(600, 290);
+		crPane = new JPanel();
+		chart = new JChart(600, 240);
 		scrollPane = new JScrollPane(chart);
 		saveButton = new JButton("Zapisz do pliku");
 		crpane = new GridBagConstraints();
@@ -53,10 +54,10 @@ public class JReportPanel extends JPanel {
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(500, 310));
+        scrollPane.setPreferredSize(new Dimension(500, 260));
         this.setLayout(new GridBagLayout());
         cbPane.setLayout(new GridBagLayout());
-        buttonPane.setLayout(new GridBagLayout());
+        crPane.setLayout(new GridBagLayout());
         saveButton.setFont(normal);
         cb[0] = new JComboBox<String>(comboBox0);
         cb[1] = new JComboBox<String>(comboBox1);
@@ -86,10 +87,11 @@ public class JReportPanel extends JPanel {
     		cbpane.anchor = GridBagConstraints.LINE_START;
     		cbpane.gridx = 1;
     		cbPane.add(cb[i], cbpane);
-        	}
-		
-        cbutton.insets = insets0;
-        buttonPane.add(saveButton, cbutton);
+        }
+
+		cbpane.anchor = GridBagConstraints.LINE_END;
+        cbpane.gridy = 2;
+        cbPane.add(saveButton, cbpane);
 
 
         crpane.insets = new Insets(10,10,0,0);
@@ -97,7 +99,7 @@ public class JReportPanel extends JPanel {
         crpane.gridwidth = 2;
         this.add(cbPane, crpane);
         crpane.gridy = 1;
-        this.add(buttonPane, crpane);
+        this.add(crPane, crpane);
         crpane.gridy = 2;
         crpane.gridwidth = 1;
         this.add(t, crpane);
@@ -106,6 +108,7 @@ public class JReportPanel extends JPanel {
         this.add(scrollPane, crpane);
         crpane.gridy = 3;
         this.add(label[3], crpane);
+        crpane.gridy = 4;
 	}
 	
 	public JChart getJChart(){

@@ -48,41 +48,61 @@ public class JRoomButton extends JButton{
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.CENTER;
 		this.add(label,c);
-		icon = new ImageIcon[value];
+		icon = new ImageIcon[3];
 		icon = setIcons();
 		
 	}
 	
+	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		this.width = getWidth(); 
 		this.height = getHeight(); 
-		for (int i = 0; i < this.usersInRoom; i++){
+		if (usersInRoom > 0) {
+			icon[0].paintIcon(this, g, width-15, height-14);
+			if (usersInRoom > 1){
+				icon[1].paintIcon(this, g, width-15, height-14-17);
+				if (usersInRoom > 2){
+					icon[2].paintIcon(this, g, width-15, height-13-2*17);
+				}
+			}
+
+		}
+		
+		
+		/*
+		int value = usersInRoom;
+		for (int i = 0; i < value; i++){
 			if (i == 2){
 				icon[i].paintIcon(this, g, width-15, height-13-i*17);
 			}
-			else {
+			else if (i == 0 || i == 1) {
 				icon[i].paintIcon(this, g, width-15, height-14-i*17);;
 			}		
-		}
+		}*/
 	}
 	
-	public int setUsersInRoom(int users){
-		return this.usersInRoom = users;
+	public void increaseUsersInRoom(){
+		this.usersInRoom++;
 	}
+	
+	public void decreaseUsersInRoom(){
+		this.usersInRoom--;
+	}
+	
 	public int getUsersInRoom(){
-		return usersInRoom;
+		return this.usersInRoom;
 	}
 	
 	public ImageIcon[] setIcons(){
-		for (int i = 0; i < this.usersInRoom; i++){
-			icon[i] =new ImageIcon("icons/available.png");
+		for (int i = 0; i < 3; i++){
+			icon[i] = new ImageIcon("icons/available.png");
 		}
 		return icon;
 	}
 	
 	public Color[] setColor(){
-		for (int i = 0; i < this.usersInRoom; i++){
+		for (int i = 0; i < 3; i++){
 			color[i] = new Color(0f,1f,0f, 0.9f);
 		}
 		return color;
@@ -91,6 +111,7 @@ public class JRoomButton extends JButton{
 	public String getText(){
 		return txt;
 	}
+
 	
 }
 

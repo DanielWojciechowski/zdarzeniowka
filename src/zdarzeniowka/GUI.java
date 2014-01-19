@@ -21,7 +21,7 @@ public class GUI{
 	private JFrame frame;
 	private JAddPanel addPanel;
 	private JSearchPanel searchPanel;
-	private JDSPanel dsPanel;
+	private  JDSPanel dsPanel;
 	private JReportPanel reportPanel;
 	private JTabbedPane tabbedPane;
 	private Font header, normal, italic;
@@ -44,7 +44,7 @@ public class GUI{
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
 		dsPanel = new JDSPanel(normal);
-		addPanel= new JAddPanel(normal);
+		addPanel= new JAddPanel(normal, dsPanel);
 		searchPanel = new JSearchPanel(normal);
 		reportPanel = new JReportPanel(normal);
 		frame.setLayout(new GridBagLayout());

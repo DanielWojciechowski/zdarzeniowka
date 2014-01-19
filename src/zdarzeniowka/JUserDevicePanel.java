@@ -40,6 +40,7 @@ public class JUserDevicePanel extends JBasicPanel{
 		textArea = new JTextArea();
         textArea.setLineWrap(true);
         textArea.setEditable(editable);
+        textArea.setFont(normal);
         scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -169,6 +170,7 @@ public class JUserDevicePanel extends JBasicPanel{
 			case 'i': //inne
 				cb[1].setSelectedIndex(4);
 		}
+		textArea.setText(otherInfo);
 	}
 
 	@Override

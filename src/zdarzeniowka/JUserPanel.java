@@ -34,7 +34,7 @@ public class JUserPanel extends JBasicPanel {
 		String[] stringLabel = {"Imię:", "Nazwisko:", "Adres e-mail:", "Id użytkownika:", 
 				"Numer pokoju:", "Numer albumu:", "Numer portu:"};
 		for(int i = 0; i < 7; i++){
-			if (i < 3){
+			if (i < 3){ 
 				textFields[i] = new JTextField(27);
 			}
 			else {
@@ -100,6 +100,11 @@ public class JUserPanel extends JBasicPanel {
 		textFields[4].setText(String.valueOf(roomNo));
 		textFields[5].setText(String.valueOf(albumNo));
 		textFields[6].setText(String.valueOf(port.getPortNo()));	
+	}
+	
+	@Override
+	public String getRoomNo(){
+		return textFields[4].getText();
 	}
 	
 	public void actionPerformed(ActionEvent e) {

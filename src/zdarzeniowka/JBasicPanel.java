@@ -226,6 +226,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 			index = Integer.parseInt(((JNetworkDevicePanel)obj).textFields[2].getText());
 		return index;
 	}
+	
 	public String getObjCategory(Object obj){
 		String cat = null;
 		if(obj.getClass() == JUserPanel.class)
@@ -235,5 +236,9 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		else if(obj.getClass() == JNetworkDevicePanel.class)
 			cat = "DBNetworkDevice";
 		return cat;
+	}
+	
+	public String getRoomNo(){
+		return "meh";
 	}
 }

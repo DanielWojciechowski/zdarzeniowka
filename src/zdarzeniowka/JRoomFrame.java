@@ -42,9 +42,9 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	
 	public JRoomFrame(Font font, String text, List<DBUser> userList){
 		super(text);
-		if(userList.size() <= 0 || userList.size() > 3) {
+		/*if(userList.size() <= 0 || userList.size() > 3) {
             throw new IllegalArgumentException("Too many users in room!");
-        }
+        }*/
 		initiate(userList, font);
 	}
 	
