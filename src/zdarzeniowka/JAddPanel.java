@@ -187,13 +187,18 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 			            		((JNetworkDevicePanel)panel[tmp]).textFields[2].setText(String.valueOf(id));
 		            	}
 		            	else{
-		            		JOptionPane.showMessageDialog(cardAddingPanel, "Dodawanie nie powiodło się!", "Błąd dodawania", 
-		        					JOptionPane.ERROR_MESSAGE);
+		            		JOptionPane.showMessageDialog(cardAddingPanel, "Dodawanie nie powiodło się! Sprawdź poprawność danych.", 
+		            				"Błąd dodawania", JOptionPane.ERROR_MESSAGE);
 		        			log.error("Błąd dodawania");
 		            	}
 		            }
 		       };
 		       	worker.execute();
+		       	try {
+					worker.get();
+				} catch (InterruptedException | ExecutionException e1) {
+					e1.printStackTrace();
+				}
 			}
 			else{
 				

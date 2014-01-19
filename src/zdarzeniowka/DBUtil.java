@@ -30,8 +30,6 @@ public class DBUtil {
     
     public DBUtil(){
     	log = Logger.getLogger(DBUtil.class);
-    	log.info("Nowa instancja");
-    	
     }
     public DBUtil(boolean startFactory){
     	factory = SessionFactoryUtil.getSessionFactory();
@@ -373,7 +371,7 @@ public class DBUtil {
 		try{
         	trans = session.beginTransaction();
         	Query q = session.createQuery("select roomNo, count(idUser) from DBUser group by roomNo");
-        	resultList = (List<Object[]>)q.list();
+        	resultList = (List<Object[]>) q.list();
         	trans.commit();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();

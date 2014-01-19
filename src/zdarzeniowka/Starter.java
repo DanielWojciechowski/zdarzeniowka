@@ -8,6 +8,7 @@ public class Starter {
 		
 		DOMConfigurator.configure("xml/log4j.xml");
 		new DBUtil(true);
+		lframe.dispose();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			GUI gui = new GUI();
 			@Override
