@@ -35,19 +35,16 @@ public class JChart extends JComponent{
 		this.repaint();
 	}
 	
-/*	public void setY2(int value){
-	}*/
-		
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		int height = this.getHeight();
 		int width = this.getWidth();
 		g.setColor(Color.white);
 		g.drawRect(0, 0, width-1, height-1);
-		int hor = 50, vert = 20;
+		int hor = 40, vert = 30;
 		while (hor < height) {
 	       g.drawLine(0, hor, width, hor);
-	       hor += 50;
+	       hor += 40;
 	    }
 	    while (vert < width) {
 	       g.drawLine(vert, 0 , vert, height);
@@ -58,12 +55,7 @@ public class JChart extends JComponent{
 	    int[] ipy = convertIntegers(py);
 	    ipy = heightChanger(ipy, height);
 	    g.drawPolyline(ipx, ipy, ipx.length);	    
-	    g.setColor(color2);
-	   // g.drawLine(x22, height-y22, x2, height-y2);
-	   // if(x1 > width || x2 > width){
-	    	//this.setSize((int)(k.getX()+width), height);
-	   // }
-	    	
+	    g.setColor(color2);	    	
 	  }
 	public static int[] convertIntegers(List<Integer> integers){
 	    int[] ret = new int[integers.size()];

@@ -34,7 +34,7 @@ public class JReportPanel extends JPanel {
 			DBUtil dbUtil = new DBUtil();
             @Override
             protected Void doInBackground() throws Exception {
-            	int[] tab = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+            	int[] tab = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
         		Generator g = new Generator(tab, chart);
         		g.run();
 				return null;
@@ -47,7 +47,7 @@ public class JReportPanel extends JPanel {
 		normal = font;
 		cbPane = new JPanel();
 		crPane = new JPanel();
-		chart = new JChart(600, 250);
+		chart = new JChart(600, 240);
 		scrollPane = new JScrollPane(chart);
 		saveButton = new JButton("Zapisz do pliku");
 		crpane = new GridBagConstraints();
@@ -59,7 +59,7 @@ public class JReportPanel extends JPanel {
     	insets0 = new Insets(0,0,10,0);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(500, 270));
+        scrollPane.setPreferredSize(new Dimension(500, 260));
         this.setLayout(new GridBagLayout());
         cbPane.setLayout(new GridBagLayout());
         crPane.setLayout(new GridBagLayout());
@@ -72,7 +72,7 @@ public class JReportPanel extends JPanel {
         cb[1].setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla bla blaBla bla bla bla bla bla bla");
         label[0] = new JLabel("Wybierz okres:");
         label[1] = new JLabel("Wybierz dane: ");
-        label[2] = new JLabel("Przepustowość");
+        label[2] = new JLabel("Transfer");
         label[3] = new JLabel("Czas");
         label[0].setFont(normal);
         label[1].setFont(normal);
