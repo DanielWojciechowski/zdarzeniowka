@@ -107,6 +107,10 @@ public class JUserPanel extends JBasicPanel {
 		textFields[6].setText(String.valueOf(port.getPortNo()));	
 	}
 	
+	public String getUserId(){
+		return textFields[3].getText();
+	}
+	
 	@Override
 	public String getRoomNo(){
 		return textFields[4].getText();
@@ -158,6 +162,7 @@ public class JUserPanel extends JBasicPanel {
 				}
 			}	
 			else if(source == deleteButton){
+				int id = Integer.parseInt(textFields[3].getText());
 				log.info(this.getClass());
 				remove((Object)this);
 	    		String roomNo = this.textFields[4].getText();
@@ -168,14 +173,15 @@ public class JUserPanel extends JBasicPanel {
 	    				dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
 	    			}
 	    		}
-	    		if (rframe != null){
+	    		if (frame != null){
+	    			frame.refreshUsers(id);
+	    			frame.revalidate();
+	    		}
+	    		else if (rframe != null){
 	    			rframe.deleteFromResultTable();
 	    			rframe.dispose();
 	    		}
-	    		else {
-	    			frame.repaint();
-	    			this.repaint();
-	    		}
+	  
 	    		
 			}
 	}
