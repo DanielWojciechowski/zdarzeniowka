@@ -215,7 +215,8 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		}
 	}
 	
-	public void remove(Object obj){
+	public boolean remove(Object obj){
+		boolean removed = false;
 		log.info("start DELETING");
 		Object[] options = {"Tak","Nie",};
 		int n = JOptionPane.showOptionDialog(this, "Czy na pewno chcesz usunąć?", 
@@ -253,7 +254,15 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 	            }
 	       };
 	       	worker.execute();
+	       	try {
+				if (worker.get()){
+					removed = true;
+				}
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
 		}
+		return removed;
 	}
 	public int getObjIndex(Object obj){
 		int index = 0;
