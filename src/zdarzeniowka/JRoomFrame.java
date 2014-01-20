@@ -7,9 +7,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
@@ -37,7 +40,6 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private Font normal;	
 	private JDSPanel dsPanel; 
 	private Logger  log = Logger.getLogger(JRoomFrame.class);
-	private DBUtil dbUtil = new DBUtil();
 	
 	public JRoomFrame(Font font, String text){
 		super(text);
@@ -158,15 +160,31 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			this.dispose();
 	}
 	
-	public void refreshDevices(JUserDevicePanel userDevice){
-		for (int i = 0; i < userDevicePanel.size(); i++){
-			if (userDevice == userDevicePanel.get(i)){
-				this.userDevicePanel.remove(i);
-				this.remove(cardDevice);
-				//initiate(normal);
-			}	
+	public void refreshDevices(JUserDevicePanel userDevicePanel){
+		int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
+		DBUser user = null;
+		// = new ArrayList<DBUserDevice>();
+		for (int i = 0; i < userList.size(); i++){
+			user = userList.get(i);
+			if (user.getIdUser() == userId){
+				List<DBUserDevice> devices = new ArrayList<DBUserDevice>();
+				devices.addAll(user.getDevices());
+				numberOfDevices = devices.size();
+				for (int j = 0; j < devices.size(); j++){
+					if (devices.get(j).getIdDevice() == userDevicePanel.getDeviceId()){
+						devices.remove(j);
+						log.info(devices.size());
+						Set<DBUserDevice> dbd = new HashSet<DBUserDevice>(devices);
+						user.setDevices(dbd);
+						log.info(user.getDevices().size());
+						userList.set(i, user);
+						initiate(normal);
+					}
+				}
+				numberOfDevices--;
+			}
 		}
-		if (userDevicePanel.size() == 0){
+		if (numberOfDevices == 0){
 			this.setContentPane(cardUser);
 		}
 		else {
