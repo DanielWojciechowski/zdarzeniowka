@@ -20,8 +20,7 @@ public class JReportPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private JButton saveButton;
 	private GridBagConstraints crpane, cbpane, cbutton;
-	private String[] comboBox0 = {"Jakis okres ", "Jakis okres"},
-			comboBox1 = {"Jakies dane", "Jakies dane"};
+	private String[] comboBox0 = {"Jakis okres ", "Jakis okres"}, comboBox1 = {"Jakies dane", "Jakies dane"};
     private JComboBox<String>[] cb;
     private JLabel[] label;
 	JXTransformer t;

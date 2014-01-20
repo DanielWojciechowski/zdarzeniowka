@@ -230,10 +230,15 @@ public class JUserDevicePanel extends JBasicPanel{
 		}
 		else if(source == deleteButton){
 			log.info(this.getClass());
+			JUserDevicePanel d = this;
 			remove((Object)this);
 			if (rframe != null){
     			rframe.deleteFromResultTable();
     			rframe.dispose();
+    		}
+			else if (frame != null){
+    			frame.refreshDevices(d);
+    			frame.revalidate();
     		}
 		}
 		

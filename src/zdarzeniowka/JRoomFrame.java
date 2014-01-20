@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 
@@ -29,16 +31,18 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private JScrollPane[] scrollpane;
 	private JUserPanel[] userPanel;
 	private List<JUserDevicePanel> userDevicePanel;
+	private List<DBUser> userList;
 	private JButton showDeviceButton, showUserButton;
 	private GridBagConstraints c, cpane, csrane;
 	private Font normal;	
 	private JDSPanel dsPanel; 
-	Logger  log = Logger.getLogger(JRoomFrame.class);
+	private Logger  log = Logger.getLogger(JRoomFrame.class);
+	private DBUtil dbUtil = new DBUtil();
 	
 	public JRoomFrame(Font font, String text){
 		super(text);
 		List<DBUser> userList = new LinkedList<DBUser>();
-		initiate(userList, font);
+		initiate(font);
 	}
 	
 	public JRoomFrame(Font font, String text, List<DBUser> userList, JDSPanel dsPanel){
@@ -48,10 +52,11 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		if(userList.size() <= 0 || userList.size() > 3) {
             throw new IllegalArgumentException("Too many users in room!");
         }
-		initiate(userList, font);
+		this.userList = userList;
+		initiate(font);
 	}
 	
-	private void initiate(List<DBUser> userList, Font font){
+	private void initiate(Font font){
 		this.setLayout(new GridBagLayout());
 		Dimension d;
 		userDevicePanel = new LinkedList<JUserDevicePanel>();
@@ -138,6 +143,37 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		cardUser.add(tabbedUserPane,c);
 		cardDevice.add(tabbedDevicePane,c);
 		this.add(cardUser);		
+	}
+	
+	public void refreshUsers(int id){
+		for (int i = 0; i < userList.size(); i++){
+			if (id == userList.get(i).getIdUser()){
+				this.userList.remove(i);
+				this.remove(cardUser);
+				initiate(normal);
+				this.revalidate();
+			}	
+		}
+		if (userList.size() == 0)
+			this.dispose();
+	}
+	
+	public void refreshDevices(JUserDevicePanel userDevice){
+		for (int i = 0; i < userDevicePanel.size(); i++){
+			if (userDevice == userDevicePanel.get(i)){
+				this.userDevicePanel.remove(i);
+				this.remove(cardDevice);
+				//initiate(normal);
+			}	
+		}
+		if (userDevicePanel.size() == 0){
+			this.setContentPane(cardUser);
+		}
+		else {
+			this.setContentPane(cardDevice);
+		}
+		this.revalidate();
+			
 	}
 
 	@Override
