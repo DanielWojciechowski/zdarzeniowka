@@ -3,14 +3,20 @@ package zdarzeniowka;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JComponent;
 
+import org.apache.log4j.Logger;
+
 public class JChart extends JComponent{
 	private static final long serialVersionUID = -5878170992402917036L;
-	private int x1, x2, y1, y2, x11, x22, y11, y22;
 	private Color color1, color2;
-	
+	private Logger  log = Logger.getLogger(JChart.class);
+	private ArrayList<Integer> px = new ArrayList<Integer>();
+	private ArrayList<Integer> py = new ArrayList<Integer>();
 	
 	public JChart(int height, int width){
 		super();
@@ -19,30 +25,18 @@ public class JChart extends JComponent{
 		setPreferredSize(d);
 		color1 = Color.red;
 		color2 = Color.blue;
-		x11 = 0;
-		x22 = 0;
-		y11 = 0;
-		y22 = 0;
-		x1 = 20;
-		x2 = 20;
-		y1 = 40;
-		y2 = 30;
-		
+		px.add(0);
+		py.add(0);
 	}
 	
-	public void setY1(int value){
-		this.y11 = this.y1;
-		this.x11 = this.x1;
-		this.x1 += 50;
-		this.y1 = value;
+	public void setY1(int value,int time){
+		px.add((px.get(px.size()-1))+time);
+		py.add(value);
+		this.repaint();
 	}
 	
-	public void setY2(int value){
-		this.y22 = this.y2;
-		this.x22 = this.x2;
-		this.x2 += 50;
-		this.y2 = value;
-	}
+/*	public void setY2(int value){
+	}*/
 		
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -57,19 +51,31 @@ public class JChart extends JComponent{
 	    }
 	    while (vert < width) {
 	       g.drawLine(vert, 0 , vert, height);
-	       vert += 20;
+	       vert += 30;
 	    }
 	    g.setColor(color1);
-	    g.drawLine(x11, height-y11, x1, height-y1);
-
+	    int[] ipx = convertIntegers(px);
+	    int[] ipy = convertIntegers(py);
+	    ipy = heightChanger(ipy, height);
+	    g.drawPolyline(ipx, ipy, ipx.length);	    
 	    g.setColor(color2);
-	    g.drawLine(x22, height-y22, x2, height-y2);
-	    if(x1 > width || x2 > width){
-	    	this.setSize(x1+width, height);
-	    }
+	   // g.drawLine(x22, height-y22, x2, height-y2);
+	   // if(x1 > width || x2 > width){
+	    	//this.setSize((int)(k.getX()+width), height);
+	   // }
+	    	
 	  }
-	
-	
-	
-
+	public static int[] convertIntegers(List<Integer> integers){
+	    int[] ret = new int[integers.size()];
+	    Iterator<Integer> iterator = integers.iterator();
+	    for (int i = 0; i < ret.length; i++){
+	        ret[i] = iterator.next().intValue();
+	    }
+	    return ret;
+	}
+	public int[] heightChanger(int[] tab, int height){
+		for(int i = 0; i < tab.length; i++)
+			tab[i] = height - tab[i]*4;
+		return tab;
+	}
 }

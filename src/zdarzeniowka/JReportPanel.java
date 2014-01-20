@@ -30,25 +30,24 @@ public class JReportPanel extends JPanel {
 		super();
 		paint(font);
 		
-		/*SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 			DBUtil dbUtil = new DBUtil();
             @Override
             protected Void doInBackground() throws Exception {
-            	int[] tab = {1,2,3,4,5,6,7,8,9,10};
+            	int[] tab = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
         		Generator g = new Generator(tab, chart);
         		g.run();
 				return null;
             }
 		};
 		worker.execute();
-		*/
 	}
 	
 	private void paint(Font font){
 		normal = font;
 		cbPane = new JPanel();
 		crPane = new JPanel();
-		chart = new JChart(600, 240);
+		chart = new JChart(600, 250);
 		scrollPane = new JScrollPane(chart);
 		saveButton = new JButton("Zapisz do pliku");
 		crpane = new GridBagConstraints();
@@ -60,7 +59,7 @@ public class JReportPanel extends JPanel {
     	insets0 = new Insets(0,0,10,0);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(500, 260));
+        scrollPane.setPreferredSize(new Dimension(500, 270));
         this.setLayout(new GridBagLayout());
         cbPane.setLayout(new GridBagLayout());
         crPane.setLayout(new GridBagLayout());
@@ -111,10 +110,6 @@ public class JReportPanel extends JPanel {
         crpane.gridy = 3;
         this.add(label[3], crpane);
         crpane.gridy = 4;
-	}
-	
-	public JChart getJChart(){
-		return this.chart;
 	}
 
 }
