@@ -8,6 +8,9 @@ import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
+import org.hibernate.cfg.annotations.reflection.XMLContext.Default;
 
 public class JResultFrame extends JFrame{
 	private static final long serialVersionUID = -7670041249218891721L;
@@ -15,25 +18,31 @@ public class JResultFrame extends JFrame{
 	private JScrollPane scrollPane;
 	private GridBagConstraints c;
 	private DBUtil util;
-
-	public JResultFrame(Font font, String txt, DBUser user){
+	private JDSPanel dsPanel;
+	private JMyTable resultTable; 
+	
+	public JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
 		super(txt);
-		result = new JUserPanel(font, false);
+		this.resultTable = resultTable;
+		this.dsPanel = dsPanel;
+		result = new JUserPanel(font, false, dsPanel, this);
 		result.setForm(user.getFirstName(), user.getLastName(), user.getEmail(), user.getIdUser(), user.getRoomNo(), user.getAlbumNo(), user.getPort());
 		initiate(false);
 	}
 	
-	public JResultFrame(Font font, String txt, DBUserDevice userDevice){
+	public JResultFrame(Font font, String txt, DBUserDevice userDevice, JMyTable resultTable){
 		super(txt);
+		this.resultTable = resultTable;
 		util = new DBUtil();
-		result = new JUserDevicePanel(font, false);
+		result = new JUserDevicePanel(font, false, this);
 		result.setForm(userDevice.getMac(), userDevice.getIp(), userDevice.getIdDevice(), util.getDeviceUser(userDevice.getIdDevice()), userDevice.isConfiguration(), userDevice.getType(), userDevice.getOtherInfo());
 		initiate(true);
 	}
 	
-	public JResultFrame(Font font, String txt, DBNetworkDevice networkDevice){
+	public JResultFrame(Font font, String txt, DBNetworkDevice networkDevice, JMyTable resultTable){
 		super(txt);
-		result = new JNetworkDevicePanel(font, false);
+		this.resultTable = resultTable;
+		result = new JNetworkDevicePanel(font, false, this);
 		result.setForm(networkDevice.getMac(), networkDevice.getIp(), networkDevice.getIdDevice(), networkDevice.isConfiguration(), networkDevice.getType(), networkDevice.getOtherInfo());
 		initiate(true);
 	}
@@ -59,6 +68,11 @@ public class JResultFrame extends JFrame{
 	
 	public JBasicPanel getResult(){
 		return result;
+	}
+	
+	public void deleteFromResultTable(){
+		DefaultTableModel tableModel = (DefaultTableModel) this.resultTable.getModel();
+		tableModel.removeRow(this.resultTable.getSelectedRow());
 	}
 	
 

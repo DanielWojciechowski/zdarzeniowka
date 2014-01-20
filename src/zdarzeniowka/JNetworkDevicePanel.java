@@ -26,13 +26,13 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		paint();
 	}
 		
-	public JNetworkDevicePanel(Font font, boolean editable){
-		super(font, editable);
+	public JNetworkDevicePanel(Font font, boolean editable, JResultFrame rframe){
+		super(font, editable, rframe);
 		paint();
 		editabling(editable, 2);
 	}
 
-	public void paint(){
+	private void paint(){
 		this.setLayout(new GridBagLayout());
 		Insets insets2 = new Insets(0,28, 10,0);
 		labels = new JLabel[6];
@@ -171,7 +171,7 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		if (source == editButton){
 			this.editabling(true, 2);
 		}
-		if (source == okButton){
+		else if (source == okButton){
 			Object[] options = {"Tak","Nie",};
 			if(checkForm(2)){
 				int n = JOptionPane.showOptionDialog(
@@ -213,6 +213,13 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 			       	worker.execute();
 				}
 			}
+		}
+		else if (source == deleteButton){
+			remove((Object)this);
+			if (rframe != null){
+    			rframe.deleteFromResultTable();
+    			rframe.dispose();
+    		}
 		}
 		
 	}

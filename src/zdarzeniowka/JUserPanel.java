@@ -15,14 +15,19 @@ import javax.swing.SwingWorker;
 
 public class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
-	
 	public JUserPanel(Font font){
 		super(font);	
 		paint();
 	}
 	
-	public JUserPanel(Font font, boolean editable){
-		super(font, editable);
+	public JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JRoomFrame frame){
+		super(font, editable, dsPanel, frame);
+		paint();
+		editabling(editable, 3);
+	}
+	
+	public JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JResultFrame frame){
+		super(font, editable, dsPanel, frame);
 		paint();
 		editabling(editable, 3);
 	}
@@ -155,6 +160,23 @@ public class JUserPanel extends JBasicPanel {
 			else if(source == deleteButton){
 				log.info(this.getClass());
 				remove((Object)this);
+	    		String roomNo = this.textFields[4].getText();
+	    		log.info(roomNo);
+	    		for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
+	    			if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
+	    				dsPanel.decreaseCountTabAt(Integer.parseInt(roomNo));
+	    				dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
+	    			}
+	    		}
+	    		if (rframe != null){
+	    			rframe.deleteFromResultTable();
+	    			rframe.dispose();
+	    		}
+	    		else {
+	    			frame.repaint();
+	    			this.repaint();
+	    		}
+	    		
 			}
 	}
 }

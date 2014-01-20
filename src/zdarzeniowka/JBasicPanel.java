@@ -33,6 +33,9 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 	protected Insets insets1, insets0;
 	protected Font normal;
 	protected boolean editable;
+	protected JDSPanel dsPanel;
+	protected JRoomFrame frame;
+	protected JResultFrame rframe;
 	Logger  log = Logger.getLogger(JBasicPanel.class);
 	DBUtil dbUtil = new DBUtil();
 	
@@ -41,17 +44,67 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		initiate(font);
 	}
 	
+	public JBasicPanel(Font font, boolean whatever, JDSPanel dsPanel, JRoomFrame frame){
+		super();
+		initiate(font);
+		addButtons();
+		this.dsPanel = dsPanel;
+		this.frame = frame;	
+	}
+	
+	public JBasicPanel(Font font, boolean whatever, JDSPanel dsPanel, JResultFrame rframe){
+		super();
+		initiate(font);
+		addButtons();
+		this.dsPanel = dsPanel;
+		this.rframe = rframe;	
+	}
+	
+	public JBasicPanel(Font font, boolean whatever, JResultFrame rframe){
+		super();
+		this.rframe = rframe;	
+		initiate(font);
+		addButtons();
+	}
+
+	public JBasicPanel(Font font, boolean whatever, JRoomFrame frame){
+		super();
+		this.frame = frame;	
+		initiate(font);
+		addButtons();
+	}
+
+	public JBasicPanel(Font font, boolean whatever){
+		super();
+		initiate(font);
+		addButtons();
+	}
+	
+	
 	 public void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, 
 			 DBPort port) {}
 
 	 public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, 
 			 String otherInfo){}
 
-	 public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){}
-
-	public JBasicPanel(Font font, boolean whatever){
-		super();
-		initiate(font);
+	
+	public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){}
+	
+	private void initiate(Font font){
+		normal = font;
+		editable = true;
+		topPanel = new JPanel();
+		botPanel = new JPanel();
+		topPanel.setLayout(new GridBagLayout());
+		botPanel.setLayout(new GridBagLayout());
+		cpane = new GridBagConstraints();
+		ctop = new GridBagConstraints();
+		cbot = new GridBagConstraints();
+		insets1 = new Insets(0,20,10,0);
+		insets0 = new Insets(0,0,10,0);
+	}
+	
+	private void addButtons(){
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		cbutton = new GridBagConstraints();
@@ -72,21 +125,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		cbutton.gridx = 1;
 		buttonPanel.add(okButton, cbutton);
 		cbutton.gridx = 2;
-		buttonPanel.add(deleteButton, cbutton);		
-	}
-	
-	public void initiate(Font font){
-		normal = font;
-		editable = true;
-		topPanel = new JPanel();
-		botPanel = new JPanel();
-		topPanel.setLayout(new GridBagLayout());
-		botPanel.setLayout(new GridBagLayout());
-		cpane = new GridBagConstraints();
-		ctop = new GridBagConstraints();
-		cbot = new GridBagConstraints();
-		insets1 = new Insets(0,20,10,0);
-		insets0 = new Insets(0,0,10,0);
+		buttonPanel.add(deleteButton, cbutton);
 	}
 	
 	public void setTextField(int index, String text){ //ma rzucac wyjatek jezeli indeks przekracza tablice

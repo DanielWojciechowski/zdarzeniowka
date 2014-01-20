@@ -184,7 +184,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 	
 
 	public void showRoomFrame(String buttonText, List<DBUser> userList){
-		JRoomFrame roomFrame = new JRoomFrame(normal, "Pokój nr " + buttonText, userList);
+		JRoomFrame roomFrame = new JRoomFrame(normal, "Pokój nr " + buttonText, userList, this);
 		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		roomFrame.setLocation(400, 200);
 		roomFrame.setResizable(false);

@@ -19,11 +19,11 @@ import javax.swing.JTabbedPane;
 public class GUI{
 
 	private JFrame frame;
-	private JAddPanel addPanel;
-	private JSearchPanel searchPanel;
-	private  JDSPanel dsPanel;
-	private JReportPanel reportPanel;
-	private JTabbedPane tabbedPane;
+	private static JAddPanel addPanel;
+	private static JSearchPanel searchPanel;
+	private static JDSPanel dsPanel;
+	private static JReportPanel reportPanel;
+	private static JTabbedPane tabbedPane;
 	private Font header, normal, italic;
 	
 	private void initiate(){

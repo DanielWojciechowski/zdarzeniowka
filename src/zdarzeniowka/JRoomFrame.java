@@ -32,26 +32,27 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private JButton showDeviceButton, showUserButton;
 	private GridBagConstraints c, cpane, csrane;
 	private Font normal;	
-	
+	private JDSPanel dsPanel; 
 	Logger  log = Logger.getLogger(JRoomFrame.class);
+	
 	public JRoomFrame(Font font, String text){
 		super(text);
 		List<DBUser> userList = new LinkedList<DBUser>();
 		initiate(userList, font);
 	}
 	
-	public JRoomFrame(Font font, String text, List<DBUser> userList){
+	public JRoomFrame(Font font, String text, List<DBUser> userList, JDSPanel dsPanel){
 		super(text);
-		/*if(userList.size() <= 0 || userList.size() > 3) {
+
+		this.dsPanel = dsPanel;
+		if(userList.size() <= 0 || userList.size() > 3) {
             throw new IllegalArgumentException("Too many users in room!");
-        }*/
+        }
 		initiate(userList, font);
 	}
 	
 	private void initiate(List<DBUser> userList, Font font){
 		this.setLayout(new GridBagLayout());
-
-
 		Dimension d;
 		userDevicePanel = new LinkedList<JUserDevicePanel>();
 		cardDevice = new JPanel(new GridBagLayout());
@@ -90,7 +91,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			upane[i].setLayout(new GridBagLayout());
 			dpane[i] = new JPanel();
 			dpane[i].setLayout(new GridBagLayout());
-			userPanel[i] = new JUserPanel(normal, false);
+			userPanel[i] = new JUserPanel(normal, false, dsPanel, this);
 			cpane.gridy = 0;
 			cpane.gridwidth = 1;
 			upane[i].add(userPanel[i], cpane);
@@ -101,7 +102,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 
 			int j1=0;
 			for(Iterator<DBUserDevice> iter = user.getDevices().iterator(); iter.hasNext();){
-				userDevicePanel.add(new JUserDevicePanel(normal, false));
+				userDevicePanel.add(new JUserDevicePanel(normal, false, this));
 				DBUserDevice dev = (DBUserDevice) iter.next();
 				userDevicePanel.get(deviceIndex).setForm(dev.getMac(), dev.getIp(), dev.getIdDevice(), user.getIdUser(), dev.isConfiguration(), dev.getType(), dev.getOtherInfo());
 				csrane.gridy = 2*j1;

@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class JReportPanel extends JPanel {
 	private static final long serialVersionUID = -6125026078942430487L;
@@ -36,7 +37,7 @@ public class JReportPanel extends JPanel {
 		paint(font);
 	}
 	
-	public void paint(Font font){
+	private void paint(Font font){
 		normal = font;
 		cbPane = new JPanel();
 		crPane = new JPanel();
@@ -50,8 +51,6 @@ public class JReportPanel extends JPanel {
         label = new JLabel[4];
     	insets1 = new Insets(0,20,10,0);
     	insets0 = new Insets(0,0,10,0);
-    	
-
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(500, 260));
@@ -74,8 +73,7 @@ public class JReportPanel extends JPanel {
         label[2].setFont(normal);
         label[3].setFont(normal);
     	t = new JXTransformer(label[2]);
-        t.rotate(Math.toRadians(-90));
-        
+        t.rotate(Math.toRadians(-90)); 
         for (int i = 0; i < 2; i++)
         	{
         	cbpane.insets = insets0;
@@ -88,12 +86,9 @@ public class JReportPanel extends JPanel {
     		cbpane.gridx = 1;
     		cbPane.add(cb[i], cbpane);
         }
-
 		cbpane.anchor = GridBagConstraints.LINE_END;
         cbpane.gridy = 2;
         cbPane.add(saveButton, cbpane);
-
-
         crpane.insets = new Insets(10,10,0,0);
         crpane.anchor = GridBagConstraints.LINE_END;
         crpane.gridwidth = 2;

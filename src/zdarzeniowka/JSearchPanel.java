@@ -37,7 +37,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			OPTION3 = "Wyszukaj sprzet sieciowy";
 	private JPanel cardSearchPanel, resultPane, buttonPanel;;
 	private Font normal;
-	private JMyTable resultTable;
+	private static JMyTable resultTable;
 	private JScrollPane scrollPane;
 	private JPanel[] searchPanel, searchPane;
     private JLabel[] label, label2;
@@ -122,12 +122,11 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	    resultTable.setFillsViewportHeight(true); 
 	}
 	
-	public void paint(){
+	private void paint(){
         for (int i = 0; i < 4; i++){
         	cb[i].setFont(normal);
         	if (i > 0) cb[i].addActionListener(this);
-        }        
-        
+        }         
         for (int i = 0; i < 3; i++){
         	searchPanel[i] = new JPanel();
     		searchPanel[i].setLayout(new GridBagLayout());
@@ -180,8 +179,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         	c.anchor = GridBagConstraints.CENTER;
         	searchPanel[i].add(searchPane[i], c);        	
 	    }
-        
-		cresult.gridheight = 0;
+     	cresult.gridheight = 0;
 		cresult.fill = GridBagConstraints.BOTH;
     	cresult.ipadx = 0;
     	cresult.ipady = 0;
@@ -195,7 +193,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
     	cresult.gridx = 1;
     	cresult.ipady = 75;
     	resultPane.add(scrollPane, cresult);
-
         cbutton.anchor = GridBagConstraints.FIRST_LINE_END;
         cbutton.gridy = 0;
         cbutton.gridx = 0;
@@ -204,8 +201,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         buttonPanel.add(showButton, cbutton);
         cbutton.gridx = 1;
         cbutton.ipadx = 20;
-        buttonPanel.add(deleteButton, cbutton);
-          	
+        buttonPanel.add(deleteButton, cbutton);          	
         cpane.anchor = GridBagConstraints.NORTH;
         cpane.weightx = 1;
     	cpane.weighty = 1;
@@ -221,13 +217,12 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
     	this.add(resultPane, cpane);
     	cpane.gridy = 2;
     	cpane.insets = new Insets(0,0,50,20);
-        this.add(buttonPanel, cpane);
-		
+        this.add(buttonPanel, cpane);	
         cardSearchPanel.add(searchPanel[0], OPTION1);
         cardSearchPanel.add(searchPanel[1], OPTION2);
         cardSearchPanel.add(searchPanel[2], OPTION3);
 	}
-	
+		
 	private void clearForm(int n){
 			textField[n].setText("");
 			cb[n+1].setSelectedIndex(0);
@@ -235,7 +230,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public void showResultFrame(DBUser user){
 		String frameLabel = "Użytkownik, id:"+String.valueOf(user.getIdUser());
-		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, user);
+		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, user, dsPanel, resultTable);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);
@@ -246,7 +241,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public void showResultFrame(DBUserDevice userDevice){
 		String frameLabel = "Urządzenie użytkownika, id:"+String.valueOf(userDevice.getIdDevice());
-		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, userDevice);
+		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, userDevice, resultTable);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);
@@ -257,7 +252,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	
 	public void showResultFrame(DBNetworkDevice networkDevice){
 		String frameLabel = "Urządzenie sieciowe, id:"+String.valueOf(networkDevice.getIdDevice());
-		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, networkDevice);
+		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, networkDevice, resultTable);
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);
@@ -383,8 +378,8 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			            	if(conf){
 			            		log.info("Usunięto!");
 			            		if(cat == 0) {
-			            			userModel.removeRow(selectedRow);
 			    					String roomNo = (String) userModel.getValueAt(selectedRow, 3);
+			            			userModel.removeRow(selectedRow);
 			    					log.info(roomNo);
 			    					for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
 			    						if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){

@@ -22,8 +22,14 @@ public class JUserDevicePanel extends JBasicPanel{
 	private static final long serialVersionUID = 9083184852370768151L;
 	private char[] deviceTypes = {'k','p','r','a','i','s'};
 	
-	public JUserDevicePanel(Font font, boolean editable){
-		super(font, editable);
+	public JUserDevicePanel(Font font, boolean editable, JResultFrame rframe){
+		super(font, editable, rframe);
+		paint();
+		editabling(editable, 2);
+	}
+	
+	public JUserDevicePanel(Font font, boolean editable, JRoomFrame frame){
+		super(font, editable, frame);
 		paint();
 		editabling(editable, 2);
 	}
@@ -225,6 +231,10 @@ public class JUserDevicePanel extends JBasicPanel{
 		else if(source == deleteButton){
 			log.info(this.getClass());
 			remove((Object)this);
+			if (rframe != null){
+    			rframe.deleteFromResultTable();
+    			rframe.dispose();
+    		}
 		}
 		
 	}
