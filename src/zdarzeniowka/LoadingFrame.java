@@ -71,7 +71,7 @@ public class LoadingFrame extends JFrame{
             	}
             }
         };
-        Timer timer = new Timer( 15000 , taskPerformer);
+        Timer timer = new Timer( 15000, taskPerformer);
         timer.setRepeats(false);
         timer.start();
 	}

@@ -27,7 +27,8 @@ public class Starter {
 			public void run() {
 				gui.showGUI();	
 			}
-			});
-
+		});
+		
+		
 	}
 }

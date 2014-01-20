@@ -1,22 +1,17 @@
 package zdarzeniowka;
 
-import java.awt.ComponentOrientation;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
+import javax.swing.SwingWorker;
 public class JReportPanel extends JPanel {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
@@ -35,6 +30,20 @@ public class JReportPanel extends JPanel {
 	public JReportPanel(Font font){
 		super();
 		paint(font);
+		
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+			DBUtil dbUtil = new DBUtil();
+            @Override
+            protected Void doInBackground() throws Exception {
+            	int[] tab = {1,2,3,4,5,6,7,8,9,10};
+        		Generator g = new Generator(tab, chart);
+        		g.run();
+				return null;
+            }
+		};
+		worker.execute();
+		
+		
 	}
 	
 	private void paint(Font font){

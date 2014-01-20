@@ -3,12 +3,8 @@ package zdarzeniowka;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class JChart extends JComponent{
 	private static final long serialVersionUID = -5878170992402917036L;
