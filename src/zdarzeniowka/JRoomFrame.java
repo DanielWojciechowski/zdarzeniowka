@@ -160,10 +160,13 @@ public class JRoomFrame extends JFrame implements ActionListener {
 			this.dispose();
 	}
 	
+	public void moveUsers(int id){
+
+	}
+	
 	public void refreshDevices(JUserDevicePanel userDevicePanel){
 		int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
 		DBUser user = null;
-		// = new ArrayList<DBUserDevice>();
 		for (int i = 0; i < userList.size(); i++){
 			user = userList.get(i);
 			if (user.getIdUser() == userId){

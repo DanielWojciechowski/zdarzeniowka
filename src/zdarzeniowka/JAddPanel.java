@@ -218,9 +218,6 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 				}
 			}
 			else{}
-			
-			
-			
 		}
 		else if(source == clearButton[tmp]){
 			log.info("Naciśnięto przycisk Wyczyść!");

@@ -15,6 +15,8 @@ import javax.swing.SwingWorker;
 
 public class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
+	private int oldRoomNo = -1;
+	
 	public JUserPanel(Font font){
 		super(font);	
 		paint();
@@ -119,6 +121,7 @@ public class JUserPanel extends JBasicPanel {
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
 			if (source == editButton){
+				oldRoomNo = Integer.parseInt(this.textFields[4].getText());
 				this.editabling(true, 3);
 			}
 			if (source == okButton){
@@ -158,31 +161,53 @@ public class JUserPanel extends JBasicPanel {
 				            }
 				       };
 				       	worker.execute();
+					    int roomNo = Integer.parseInt(this.textFields[4].getText());
+
+			       		log.info("Stary numer " + oldRoomNo + "nowy numer " + roomNo);
+				       	if ((oldRoomNo != roomNo) && (frame != null)){
+				       		for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
+				       			if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == roomNo){
+					       			dsPanel.increaseCountTabAt(roomNo);
+									dsPanel.getRoomButton().get(i).increaseUsersInRoom();
+						       		dsPanel.getRoomButton().get(i).repaint();
+				       			}
+				       			else if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == oldRoomNo){
+				       				dsPanel.decreaseCountTabAt(oldRoomNo);
+									dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
+						       		dsPanel.getRoomButton().get(i).repaint();
+				       			}
+				       		}
+				       		frame.refreshUsers(Integer.parseInt(this.getUserId()));
+				       		frame.repaint();
+				       	}
 					}
 				}
 			}	
 			else if(source == deleteButton){
 				int id = Integer.parseInt(textFields[3].getText());
 				log.info(this.getClass());
-				remove((Object)this);
+				boolean removed = remove((Object)this);
 	    		String roomNo = this.textFields[4].getText();
 	    		log.info(roomNo);
-	    		for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
-	    			if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
-	    				dsPanel.decreaseCountTabAt(Integer.parseInt(roomNo));
-	    				dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
-	    			}
-	    		}
-	    		if (frame != null){
-	    			frame.refreshUsers(id);
-	    			frame.revalidate();
-	    		}
-	    		else if (rframe != null){
-	    			rframe.deleteFromResultTable();
-	    			rframe.dispose();
-	    		}
-	  
-	    		
-			}
-	}
+	    		if (removed){
+	    			for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
+		    			if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
+		    				dsPanel.decreaseCountTabAt(Integer.parseInt(roomNo));
+		    				dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
+		    			}
+		    		}
+		    		if (frame != null){
+		    			frame.refreshUsers(id);
+		    			frame.revalidate();
+		    		}
+		    		else if (rframe != null){
+		    			rframe.deleteFromResultTable();
+		    			rframe.dispose();
+		    		}
+		  
+		    		
+				}
+
+	    	}
+		}
 }

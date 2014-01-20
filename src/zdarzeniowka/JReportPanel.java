@@ -30,7 +30,7 @@ public class JReportPanel extends JPanel {
 		super();
 		paint(font);
 		
-		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+		/*SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 			DBUtil dbUtil = new DBUtil();
             @Override
             protected Void doInBackground() throws Exception {
@@ -40,7 +40,7 @@ public class JReportPanel extends JPanel {
 				return null;
             }
 		};
-		worker.execute();
+		worker.execute();*/
 	}
 	
 	private void paint(Font font){
