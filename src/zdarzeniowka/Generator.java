@@ -54,12 +54,12 @@ public class Generator implements Runnable {
 				dataUse[usr][1] = (double)dataUse[usr][1] + randomValue;
 				if(limit>max)
 					limit = max;
-				log.info(usr + " " +randomValue);
+				//log.info(usr + " " +randomValue);
 				
 			}
 			
 			log.info("Suma: " + (int)Math.round(MAX_BANDWITH-max));
-			chart.setY1((int)Math.round(MAX_BANDWITH-max));
+			chart.setY1((int)Math.round(MAX_BANDWITH-max), TIME);
 			log.info("=====================");
 			max = MAX_BANDWITH;
 			limit=LIMIT;
