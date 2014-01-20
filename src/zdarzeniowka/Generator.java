@@ -1,34 +1,32 @@
 package zdarzeniowka;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
 
 public class Generator implements Runnable {
-	Object[][] dataUse;
 	private final static int TIME = 5;
-	private final static int MAX_BANDWITH = (int) (10.0*TIME);
-	private final static int LIMIT = 3;
+	private final static int MAX_BANDWITH = 10*TIME;
+	private final static int LIMIT = 1*TIME;
+	Object[][] dataUse;
+	private JChart chart;
 	
 	private Logger  log = Logger.getLogger(Generator.class);
 	
 	public static void main (String[] args) {  
 		int[] tab = {1,2,3,4,5,6,7,8,9,10};
-		Generator g = new Generator(tab);
+		Generator g = new Generator(tab, new JChart(0, 0));
 		g.run();
 	}
 	
-	public Generator(int[] userTable){
+	public Generator(int[] userTable, JChart chart){
 		dataUse = new Object[userTable.length][2];
+		this.chart = chart;
 		for(int i = 0; i < userTable.length; i++){
 			dataUse[i][0] = userTable[i];
 			dataUse[i][1] = 0.0;
 		}
-	}
-
-	public Generator() {
 	}
 
 	@Override
@@ -53,11 +51,15 @@ public class Generator implements Runnable {
 				randomValue = min + (limit - min) * r.nextDouble();
 				randomValue = Math.floor((randomValue*100))/100;
 				max-=randomValue;
+				dataUse[usr][1] = (double)dataUse[usr][1] + randomValue;
 				if(limit>max)
 					limit = max;
 				log.info(usr + " " +randomValue);
+				
 			}
-			log.info("Suma: " + (MAX_BANDWITH-max));
+			
+			log.info("Suma: " + (int)Math.round(MAX_BANDWITH-max));
+			chart.setY1((int)Math.round(MAX_BANDWITH-max));
 			log.info("=====================");
 			max = MAX_BANDWITH;
 			limit=LIMIT;

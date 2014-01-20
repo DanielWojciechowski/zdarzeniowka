@@ -48,7 +48,6 @@ public class GUI{
 		searchPanel = new JSearchPanel(normal, dsPanel);
 		reportPanel = new JReportPanel(normal);
 		frame.setLayout(new GridBagLayout());
-		
 	}
 	
 	public void addComponents(){

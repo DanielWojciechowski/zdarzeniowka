@@ -28,7 +28,7 @@ public class Starter {
 				gui.showGUI();	
 			}
 		});
-		Generator g = new Generator();
-
+		
+		
 	}
 }
