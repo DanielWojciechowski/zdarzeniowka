@@ -14,27 +14,27 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SwingWorker;
-
-import com.mysql.jdbc.log.Log;
+import javax.swing.border.EtchedBorder;
 
 public class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
-	private JPanel cbPane, crPane;
+	private JPanel cbPane, crPane, chartPane;
 	private JChart chart;
 	private JButton saveButton;
-	private GridBagConstraints crpane, cbp, csp;
+	private GridBagConstraints crpane, cbp, csp, cp;
 	private String[] comboBox0 = {"Zużycie sieci ogółem", "Zużycie sieci wg użytkowników"}, comboBox1 = {"Jakies dane", "Jakies dane"};
     private JComboBox<String> cb;
     private JSpinner[] spinner;
@@ -64,19 +64,22 @@ public class JReportPanel extends JPanel implements ActionListener {
 		normal = font;
 		cbPane = new JPanel();
 		crPane = new JPanel();
+		chartPane = new JPanel();
 		chart = new JChart(450, 240);
 		
 		saveButton = new JButton("Zapisz do pliku");
 		crpane = new GridBagConstraints();
 		cbp = new GridBagConstraints();
 		csp = new GridBagConstraints();
+		cp = new GridBagConstraints();
         cb = new JComboBox<String>(comboBox0);
-        label = new JLabel[5];
+        label = new JLabel[8];
     	insets1 = new Insets(0,20,10,0);
     	insets0 = new Insets(0,0,10,0);
         this.setLayout(new GridBagLayout());
         cbPane.setLayout(new GridBagLayout());
         crPane.setLayout(new GridBagLayout());
+        chartPane.setLayout(new GridBagLayout());
         saveButton.setFont(normal);
         saveButton.addActionListener(this);
         cb.setFont(normal);
@@ -84,14 +87,20 @@ public class JReportPanel extends JPanel implements ActionListener {
         label[0] = new JLabel("Wybierz okres od:");
         label[1] = new JLabel("do:");
         label[2] = new JLabel("Wybierz dane: ");
-        label[3] = new JLabel("Transfer [MB]");
-        label[4] = new JLabel("Czas [s]");
+        label[3] = new JLabel("20MB/s");
+        label[4] = new JLabel("0");
+        label[5] = new JLabel("90");
+        label[6] = new JLabel("Transfer [MB]");
+        label[7] = new JLabel("Czas [s]");
         label[0].setFont(normal);
         label[1].setFont(normal);
         label[2].setFont(normal);
         label[3].setFont(normal);
         label[4].setFont(normal);
-    	t = new JXTransformer(label[3]);
+        label[5].setFont(normal);
+        label[6].setFont(normal);
+        label[7].setFont(normal);
+    	t = new JXTransformer(label[6]);
         t.rotate(Math.toRadians(-90)); 
         
         //dbutil = new DBUtil();
@@ -128,38 +137,66 @@ public class JReportPanel extends JPanel implements ActionListener {
         csp.gridx = 3;
         crPane.add(spinner[1], csp);
         
-        cbp.insets = insets0;
-        cbp.gridy = 1;
-        cbp.gridx = 0;
-    	cbp.anchor = GridBagConstraints.LINE_END;
-    	cbPane.add(label[2], cbp);
-    	cbp.insets = insets1;
-    	cbp.anchor = GridBagConstraints.LINE_START;
-    	cbp.gridx = 1;
-    	cbPane.add(cb, cbp);
-		cbp.anchor = GridBagConstraints.LINE_END;
-        cbp.gridy = 2;
-        cbp.insets = new Insets(10, 10, 0, 0);
-        cbPane.add(saveButton, cbp);
+        csp.insets = insets0;
+        csp.gridy = 1;
+        csp.gridx = 0;
+    	csp.anchor = GridBagConstraints.LINE_END;
+    	crPane.add(label[2], csp);
+    	csp.insets = insets1;
+    	csp.anchor = GridBagConstraints.LINE_START;
+    	csp.gridx = 1;
+    	csp.gridwidth = 3;
+    	crPane.add(cb, csp);
+		csp.anchor = GridBagConstraints.LINE_END;
+        csp.gridy = 2;
+        csp.gridx = 3;
+        csp.gridwidth = 0;
+        csp.insets = new Insets(10, 10, 0, 0);
+        crPane.add(saveButton, csp);
+        //crPane.setBorder(BorderFactory.createLineBorder(Color.black));
         
-        crpane.insets = new Insets(10,0,0,40);
-        crpane.anchor = GridBagConstraints.LINE_END;
+        cp.insets = new Insets(30, 10, 0, 0);
+        cp.anchor = GridBagConstraints.FIRST_LINE_END;
+        chartPane.add(label[3], cp);
+        cp.insets = new Insets(0, 10, 0, 0);
+        cp.ipady = 0;
+        cp.gridx = 1;
+        cp.gridwidth = 3;
+        chartPane.add(chart, cp);
+        cp.gridwidth = 1;
+        cp.gridx = 1;
+        cp.gridy = 1;
+        chartPane.add(label[4], cp);
+        cp.gridx = 3;
+        chartPane.add(label[5], cp);
+        
+        JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
+        separator.setPreferredSize(new Dimension(600,1));
+        separator.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+        
         crpane.gridwidth = 2;
+        crpane.insets = new Insets(10,0,0,0);
+        crpane.anchor = GridBagConstraints.LINE_END;
         this.add(crPane, crpane);
         crpane.gridy = 1;
         this.add(cbPane, crpane);
         crpane.gridy = 2;
-        crpane.gridwidth = 1;
-        this.add(t, crpane);
-        crpane.gridx = 1;
+        crpane.insets = new Insets(20,0,20,0);
         crpane.anchor = GridBagConstraints.CENTER;
-        crpane.insets = new Insets(20, 0, 0, 0);
-        this.add(chart, crpane);
-
-        crpane.gridwidth = 0;
+        crpane.gridwidth = 4;
+        this.add(separator, crpane);
+        crpane.anchor = GridBagConstraints.LINE_END;
         crpane.gridy = 3;
-        this.add(label[4], crpane);
+        crpane.gridwidth = 1;
+        crpane.insets = new Insets(0, 0, 0, 0);
+        this.add(t, crpane);
+        crpane.anchor = GridBagConstraints.CENTER;
+        this.add(chartPane, crpane);
+        crpane.gridwidth = 0;
         crpane.gridy = 4;
+        crpane.insets = new Insets(0, 0, 10, 0);
+        this.add(label[7], crpane);
+        crpane.gridy = 5;
 	}
 
 	@Override
