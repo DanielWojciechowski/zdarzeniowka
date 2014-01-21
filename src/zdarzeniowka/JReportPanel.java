@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,7 +35,7 @@ public class JReportPanel extends JPanel {
 			DBUtil dbUtil = new DBUtil();
             @Override
             protected Void doInBackground() throws Exception {
-            	int[] tab = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30};
+            	List<Integer> tab = dbUtil.getAllUsersIds();
         		Generator g = new Generator(tab, chart);
         		g.run();
 				return null;
