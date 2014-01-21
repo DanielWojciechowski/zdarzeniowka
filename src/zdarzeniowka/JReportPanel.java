@@ -84,8 +84,8 @@ public class JReportPanel extends JPanel implements ActionListener {
         label[0] = new JLabel("Wybierz okres od:");
         label[1] = new JLabel("do:");
         label[2] = new JLabel("Wybierz dane: ");
-        label[3] = new JLabel("Przepustowość");
-        label[4] = new JLabel("Czas");
+        label[3] = new JLabel("Transfer [MB]");
+        label[4] = new JLabel("Czas [s]");
         label[0].setFont(normal);
         label[1].setFont(normal);
         label[2].setFont(normal);
