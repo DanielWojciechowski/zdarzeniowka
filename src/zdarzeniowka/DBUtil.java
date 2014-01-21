@@ -22,12 +22,20 @@ import org.hibernate.criterion.Restrictions;
  */
 public class DBUtil {
     private static SessionFactory factory = null;
-    private Logger  log;
+    private static Logger log;
     
-   /* public static void main(String[] args){
+    public static void main(String[] args){
     	DBUtil db = new DBUtil(true);
-    	db.countUsersInRoom(108);
-    }*/
+    	/*List<Object[]> list = db.report1("2014-01-18", "2014-01-22");
+    	log.info("elementów "+list.size());
+    	for(Object[] counter: list){
+    		log.info(counter[0]+" "+ counter[1]);
+    	}
+    	Date d = db.getLatestDate();
+    	log.info(d);*/
+    	
+    	
+    }
     
     public DBUtil(){
     	log = Logger.getLogger(DBUtil.class);    	
@@ -448,7 +456,7 @@ public class DBUtil {
 		Date earliestDate = null;
 		try{
         	trans = session.beginTransaction();
-	    	String qs = "Select TOP 1 date From history order by date desc";
+	    	String qs = "Select date From history order by date asc LIMIT 1";
 	    	SQLQuery q = session.createSQLQuery(qs);
 	    	earliestDate = (Date) q.uniqueResult();
 	    	trans.commit();
@@ -472,7 +480,7 @@ public class DBUtil {
 		Date latestDate = null;
 		try{
         	trans = session.beginTransaction();
-	    	String qs = "Select TOP 1 date From history order by date asc";
+	    	String qs = "Select date From history order by date desc LIMIT 1";
 	    	SQLQuery q = session.createSQLQuery(qs);
 	    	latestDate = (Date) q.uniqueResult();
 	    	trans.commit();
@@ -484,6 +492,29 @@ public class DBUtil {
         }
 		return latestDate;
 	}
-
-
+	
+	public List<Object[]> report2(String date1, String date2){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		List<Object[]> resultList = null;
+		try{
+        	trans = session.beginTransaction();
+	    	String qs = "select user.idUser, sum(dataUse) as du from history "
+	    			+ "left join user on history.idPort=user.idPort "
+	    			+ "where (history.date between :date1 and :date2) and user.idUser IS  NOT NULL "
+	    			+ "group by history.idPort ";
+	    	SQLQuery q = session.createSQLQuery(qs);
+	    	q.setParameter("date1", date1);
+	    	q.setParameter("date2", date2);
+	    	resultList = (List<Object[]>) q.list();
+	    	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		log.info("Report2 wykonano "+resultList.size());
+		return resultList;
+	}
 }

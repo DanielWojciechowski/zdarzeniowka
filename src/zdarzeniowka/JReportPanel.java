@@ -20,13 +20,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SwingWorker;
-
-import com.mysql.jdbc.log.Log;
 
 public class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;

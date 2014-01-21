@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 public class Generator implements Runnable {
 	private final static int TIME = 5;
-	private final static int DB_REFRESH_TIME = 30;
+	private final static int DB_REFRESH_TIME = 60;
 	private final static int MAX_BANDWITH = 10*TIME;
 	private final static int LIMIT = 1*TIME;
 	Object[][] dataUse, du2;
