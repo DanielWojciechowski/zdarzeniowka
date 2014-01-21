@@ -5,12 +5,19 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -18,7 +25,9 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SwingWorker;
 
-public class JReportPanel extends JPanel {
+import com.mysql.jdbc.log.Log;
+
+public class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
 	private JPanel cbPane, crPane;
@@ -37,7 +46,7 @@ public class JReportPanel extends JPanel {
 		super();
 		paint(font);
 		
-		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+		/*SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 			DBUtil dbUtil = new DBUtil();
             @Override
             protected Void doInBackground() throws Exception {
@@ -47,14 +56,14 @@ public class JReportPanel extends JPanel {
 				return null;
             }
 		};
-		worker.execute();
+		worker.execute();*/
 	}
 	
 	private void paint(Font font){
 		normal = font;
 		cbPane = new JPanel();
 		crPane = new JPanel();
-		chart = new JChart(450, 280);
+		chart = new JChart(450, 240);
 		
 		saveButton = new JButton("Zapisz do pliku");
 		crpane = new GridBagConstraints();
@@ -68,6 +77,7 @@ public class JReportPanel extends JPanel {
         cbPane.setLayout(new GridBagLayout());
         crPane.setLayout(new GridBagLayout());
         saveButton.setFont(normal);
+        saveButton.addActionListener(this);
         cb.setFont(normal);
         cb.setPrototypeDisplayValue("Bla bla bla bla bla bla bla bla bla bla wow such bla");
         label[0] = new JLabel("Wybierz okres od:");
@@ -149,6 +159,41 @@ public class JReportPanel extends JPanel {
         crpane.gridy = 3;
         this.add(label[4], crpane);
         crpane.gridy = 4;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton source = (JButton) e.getSource();
+		Date start = (Date) spinner[0].getValue();
+		Date end = (Date) spinner[1].getValue();
+		char data;
+		if (cb.getSelectedIndex() == 0){
+			data = '0';
+		}
+		else {
+			data = '1';
+		}
+		System.out.println(end.toString() + " " + start.toString() + " "+ data);
+		if (source == saveButton){
+			JFileChooser fileChooser = new JFileChooser();
+			if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+            	String fileName = file.getPath();
+				if(!fileName.endsWith(".txt")) {	
+					file = new File(fileName + ".txt");
+				}
+                try {
+                    FileWriter out = new FileWriter(file);
+                    //String pom = textArea.getText();        
+                    //out.write(pom.replaceAll("\n", System.getProperty("line.separator")));
+                    out.close();
+                } catch (IOException e1) {
+                   JOptionPane.showMessageDialog(this, "Nie moge zapisac pliku " +file.getAbsolutePath());
+                    return;
+                }
+			}
+		}
+		
 	}
 
 }
