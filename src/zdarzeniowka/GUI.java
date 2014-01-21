@@ -55,7 +55,7 @@ public class GUI{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel topPane = new JPanel();
-		JLabel label = new JLabel("Jestem ładnym programem.");
+		JLabel label = new JLabel("System ewidencyjny i symulator sieci akademickiej.");
 		JLabel label2 = new JLabel("Version 1. beta");
 		label.setFont(header);
 		label2.setFont(italic);
@@ -86,7 +86,7 @@ public class GUI{
 	}
 	
 	public void showGUI(){
-		frame = new JFrame("System ewidencyjny sieci komputerowej w DS - AC&DW"); 
+		frame = new JFrame("AC&DW"); 
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("icons/cat.png"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize((new Dimension(555, 485))); 

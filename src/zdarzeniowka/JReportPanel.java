@@ -23,7 +23,6 @@ public class JReportPanel extends JPanel {
 	private Font normal;
 	private JPanel cbPane, crPane;
 	private JChart chart;
-	private JScrollPane scrollPane;
 	private JButton saveButton;
 	private GridBagConstraints crpane, cbp, csp;
 	private String[] comboBox0 = {"Zużycie sieci ogółem", "Zużycie sieci wg użytkowników"}, comboBox1 = {"Jakies dane", "Jakies dane"};
@@ -55,8 +54,8 @@ public class JReportPanel extends JPanel {
 		normal = font;
 		cbPane = new JPanel();
 		crPane = new JPanel();
-		chart = new JChart(600, 250);
-		scrollPane = new JScrollPane(chart);
+		chart = new JChart(450, 280);
+		
 		saveButton = new JButton("Zapisz do pliku");
 		crpane = new GridBagConstraints();
 		cbp = new GridBagConstraints();
@@ -65,9 +64,6 @@ public class JReportPanel extends JPanel {
         label = new JLabel[5];
     	insets1 = new Insets(0,20,10,0);
     	insets0 = new Insets(0,0,10,0);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(500, 270));
         this.setLayout(new GridBagLayout());
         cbPane.setLayout(new GridBagLayout());
         crPane.setLayout(new GridBagLayout());
@@ -147,7 +143,7 @@ public class JReportPanel extends JPanel {
         crpane.gridx = 1;
         crpane.anchor = GridBagConstraints.CENTER;
         crpane.insets = new Insets(20, 0, 0, 0);
-        this.add(scrollPane, crpane);
+        this.add(chart, crpane);
 
         crpane.gridwidth = 0;
         crpane.gridy = 3;
