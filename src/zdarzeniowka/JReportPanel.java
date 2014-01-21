@@ -28,6 +28,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SwingWorker;
 import javax.swing.border.EtchedBorder;
 
+
 public class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
