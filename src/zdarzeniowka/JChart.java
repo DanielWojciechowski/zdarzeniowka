@@ -17,6 +17,7 @@ public class JChart extends JComponent{
 	private Logger  log = Logger.getLogger(JChart.class);
 	private ArrayList<Integer> px = new ArrayList<Integer>();
 	private ArrayList<Integer> py = new ArrayList<Integer>();
+	private int sum = 0, avg = 0;
 	
 	public JChart(int height, int width){
 		super();
@@ -32,6 +33,7 @@ public class JChart extends JComponent{
 	public void setY1(int value,int time){
 		px.add((px.get(px.size()-1))+time);
 		py.add(value);
+		sum+=value;
 		this.repaint();
 	}
 	
@@ -50,12 +52,19 @@ public class JChart extends JComponent{
 	       g.drawLine(vert, 0 , vert, height);
 	       vert += 30;
 	    }
-	    g.setColor(color1);
+	    g.setColor(color2);
+
+	    
 	    int[] ipx = convertIntegers(px);
 	    int[] ipy = convertIntegers(py);
 	    ipy = heightChanger(ipy, height);
+	    g.setColor(color2);	 
+	    avg = sum/(ipx.length);
+	    log.info("AVG "+avg);
+	    g.drawLine(0, height-avg*4, width-1, height-avg*4);
+	    g.setColor(color1);
 	    g.drawPolyline(ipx, ipy, ipx.length);	    
-	    g.setColor(color2);	    	
+   	
 	  }
 	public static int[] convertIntegers(List<Integer> integers){
 	    int[] ret = new int[integers.size()];

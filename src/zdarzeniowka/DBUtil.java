@@ -130,7 +130,6 @@ public class DBUtil {
 		Integer userId = null;
 		try{
         	trans = session.beginTransaction();
-        	
         	Criteria crit = session.createCriteria(DBPort.class);
         	crit.add(Restrictions.eq("portNo", portNo));
         	DBPort port = (DBPort) crit.uniqueResult();
@@ -382,6 +381,49 @@ public class DBUtil {
         }
 		return resultList;
 	}
+	
+	public List<Integer> getAllUsersIds(){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		List<Integer> resultList = null;
+		try{
+        	trans = session.beginTransaction();
+        	Query q = session.createQuery("select idUser from DBUser");
+        	resultList = q.list();
+        	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		return resultList;
+	}
+	
+	public void updateTransfer(Object[][] dataUse){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		try{
+        	trans = session.beginTransaction();
+        	DBUser user;
+        	for(int i=0; i<dataUse.length; i++){
+        		int j = (int) dataUse[i][0];
+        		user = (DBUser) session.byId(DBUser.class).getReference(j);
+        		log.info("du "+dataUse[i][1]);
+        		user.getPort().setDataUse((double)(user.getPort().getDataUse()+(double)dataUse[i][1]));
+        		session.update(user);
+        	}
+        	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	log.error("Błąd uaktualniania transferu!");
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		log.info("Zaaktualizowano transfer");
+	}
+	
 
 	/**
 	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
