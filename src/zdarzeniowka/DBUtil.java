@@ -25,13 +25,13 @@ public class DBUtil {
     private static Logger log;
     
     public static void main(String[] args){
-    	DBUtil db = new DBUtil(true);
-    	/*List<Object[]> list = db.report1("2014-01-18", "2014-01-22");
+    	/*DBUtil db = new DBUtil(true);
+    	List<Object[]> list = db.report1("2014-01-18", "2014-01-22");
     	log.info("elementów "+list.size());
     	for(Object[] counter: list){
     		log.info(counter[0]+" "+ counter[1]);
-    	}
-    	Date d = db.getLatestDate();
+    	}*/
+    	/*Date d = db.getLatestDate();
     	log.info(d);*/
     	
     	
@@ -493,13 +493,45 @@ public class DBUtil {
 		return latestDate;
 	}
 	
+	public List<Object[]> report1(String date1, String date2){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		List<Object[]> resultList = null;
+		try{
+        	trans = session.beginTransaction();
+	    	String qs = "select CAST(history.date AS DATE), sum(dataUse) from history "
+	    			+ "where history.date between :date1 and :date2 "
+	    			+ "group by CAST(history.date AS DATE) ";
+	    	SQLQuery q = session.createSQLQuery(qs);
+	    	q.setParameter("date1", date1);
+	    	q.setParameter("date2", date2);
+	    	resultList = (List<Object[]>) q.list();
+	    	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		log.info("Report1 wykonano "+resultList.size());
+		return resultList;
+	}
+	
+	/*
+	 select CAST(history.date AS DATE) as day, sum(dataUse) as du 
+from history
+where history.date between '2014-01-18' and CURDATE()+1
+group by CAST(history.date AS DATE)
+	 
+	 */
+	
 	public List<Object[]> report2(String date1, String date2){
 		Session session = factory.openSession();
 		Transaction trans = null;
 		List<Object[]> resultList = null;
 		try{
         	trans = session.beginTransaction();
-	    	String qs = "select user.idUser, sum(dataUse) as du from history "
+	    	String qs = "select user.idUser, sum(dataUse) from history "
 	    			+ "left join user on history.idPort=user.idPort "
 	    			+ "where (history.date between :date1 and :date2) and user.idUser IS  NOT NULL "
 	    			+ "group by history.idPort ";
