@@ -2,6 +2,7 @@ package zdarzeniowka;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -394,5 +395,53 @@ public class DBUtil {
 	      r.add(clazz.cast(o));
 	    return r;
 	}	
+	
+	/**
+	 * funkcja zwracająca najwczesniejsza date w tabeli History
+	 * @return najwczesniejsza data
+	 */
+	public Date getEarliestDate(){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		Date earliestDate = null;
+		try{
+        	trans = session.beginTransaction();
+	    	String qs = "Select TOP 1 date From history order by date desc";
+	    	SQLQuery q = session.createSQLQuery(qs);
+	    	earliestDate = (Date) q.uniqueResult();
+	    	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		
+		return earliestDate;
+	}
+	
+	/**
+	 * funkcja zwracająca najpozniejsza date w tabeli History
+	 * @return najpozniejsza data
+	 */
+	public Date getLatestDate(){
+		Session session = factory.openSession();
+		Transaction trans = null;
+		Date latestDate = null;
+		try{
+        	trans = session.beginTransaction();
+	    	String qs = "Select TOP 1 date From history order by date asc";
+	    	SQLQuery q = session.createSQLQuery(qs);
+	    	latestDate = (Date) q.uniqueResult();
+	    	trans.commit();
+		}catch(HibernateException ex){
+        	if(trans != null) trans.rollback();
+        	ex.printStackTrace();
+        }finally{
+        	session.close();
+        }
+		return latestDate;
+	}
+
 
 }
