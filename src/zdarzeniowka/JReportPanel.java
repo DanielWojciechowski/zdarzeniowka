@@ -1,5 +1,6 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -7,68 +8,47 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
-import javax.swing.SwingWorker;
 import javax.swing.border.EtchedBorder;
-
-import org.apache.log4j.Logger;
 
 
 public class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
 	private JPanel  topPane, chartPane, botPane;
-	private JChart chart;
-	private JButton saveButton;
+	JChart chart;
+	JButton saveButton;
 	private GridBagConstraints c, ctop, cchart, cbot;
 	private String[] comboBox0 = {"Zużycie sieci ogółem", "Zużycie sieci wg użytkowników"};
-    private JComboBox<String> cb;
-    private JSpinner[] spinner;
+    JComboBox<String> cb;
+    JSpinner[] spinner;
     private JLabel[] label;
 	private JXTransformer t;
 	private Insets insets1, insets0;
-	private DBUtil dbUtil =  new DBUtil();
-	private Date latestDate, earliestDate;
-	private Logger log = Logger.getLogger(JReportPanel.class);  
+	Date latestDate;
+	Date earliestDate;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	private Color color;
+	private Controller cont = new Controller();
 
     public JReportPanel(final Font font){
             super();
-            //paint(font);
-            
-            SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
-		        @Override
-		        protected Void doInBackground() throws Exception {
-		            latestDate = dbUtil.getEarliestDate();
-		            earliestDate = dbUtil.getLatestDate();
-		            paint(font);
-                List<Integer> tab = dbUtil.getAllUsersIds();
-                    Generator g = new Generator(tab, chart);
-                    g.run();
-                            return null;
-		        }
-            };
-            worker.execute();
+            cont.contJReportPanelStartGen(this, font);            
     }
 	
-	private void paint(Font font){
+	void paint(Font font){
 		normal = font;
 		botPane = new JPanel();
 		topPane = new JPanel();
@@ -110,9 +90,7 @@ public class JReportPanel extends JPanel implements ActionListener {
         label[7].setFont(normal);
     	t = new JXTransformer(label[6]);
         t.rotate(Math.toRadians(90)); 
-
-      /*  latestDate = dbUtil.getEarliestDate();
-        earliestDate = dbUtil.getLatestDate();*/
+        this.setComponentsBackground(color);
         
 		SpinnerModel model0 = new SpinnerDateModel(
 		        latestDate,
@@ -131,7 +109,6 @@ public class JReportPanel extends JPanel implements ActionListener {
 		spinner[1] = new JSpinner(model1);
 		spinner[0].setEditor(new JSpinner.DateEditor(spinner[0], "dd.MM.yyyy"));
 	    spinner[1].setEditor(new JSpinner.DateEditor(spinner[1], "dd.MM.yyyy"));
-	    //spinner[0].;
 	    spinner[0].setFont(normal);
 	    spinner[1].setFont(normal);
 	    spinner[0].setPreferredSize(new Dimension(130,22));
@@ -206,69 +183,20 @@ public class JReportPanel extends JPanel implements ActionListener {
         c.insets = new Insets(20,0,0,0);
         this.add(botPane, c);
 	}
-
+	public void setComponentsBackground(Color bg){
+		this.setBackground(bg);
+		topPane.setBackground(bg); 
+		chartPane.setBackground(bg); 
+		botPane.setBackground(bg);
+		t.setBackground(bg);
+	}
+	
+	public void setColor(Color c){
+		this.color = c;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton source = (JButton) e.getSource();
-		Date start = (Date) spinner[0].getValue();
-		Date end = (Date) spinner[1].getValue();
-		char data;
-		if (cb.getSelectedIndex() == 0){
-			data = '0';
-		}
-		else {
-			data = '1';
-		}
-		log.info(end.toString() + " " + start.toString() + " "+ data);
-		if (source == saveButton){
-			JFileChooser fileChooser = new JFileChooser();
-			if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-            	String fileName = file.getPath();
-				if(!fileName.endsWith(".txt")) {	
-					file = new File(fileName + ".txt");
-				}
-                final char choice = data;
-                FileWriter out = null;
-                try {
-                	out = new FileWriter(file);
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
-          
-                final FileWriter save = out;
-                final String d1 = sdf.format(start);
-				final String d2 = sdf.format(end.getTime() + 86400000);
-				log.info("Formated date " +d1 +" "+ d2);
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
-        		    @Override
-        		    protected Void doInBackground() throws Exception {
-        		    	List<Object[]> resultList = null;
-        		    	if(choice == '0'){
-        		    		resultList = dbUtil.report1(d1, d2);
-        		    		save.write("Data:\t\t| Transfer:" + System.getProperty("line.separator"));
-            		    	save.write("________________|__________" + System.getProperty("line.separator"));
-        		    	}
-        		    	else if(choice == '1'){
-        		    		resultList = dbUtil.report2(d1, d2);
-        		    		save.write("Użytk:\t| Transfer:" + System.getProperty("line.separator"));
-            		    	save.write("________|___________" + System.getProperty("line.separator"));
-        		    	}
-
-        		    	for(Object[] counter: resultList){
-        		    		save.write(counter[0]+"\t| "+Math.floor(((Double)counter[1]*100))/100 + System.getProperty("line.separator"));
-        		    	}
-        		    	
-        		    	save.close();
-        		    	return null;
-        		    }
-                };
-                    worker.execute();
-
-                
-			}
-		}
-		
+		cont.contJReportPanelAL(e, this);
 	}
-
 }

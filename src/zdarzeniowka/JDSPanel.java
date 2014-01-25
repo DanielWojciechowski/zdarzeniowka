@@ -1,5 +1,6 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,6 +34,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 	private Controller cont = new Controller();
 	
 	public JDSPanel(Font font){
+		super();
 		paint(font);
 	}
 	
@@ -182,6 +184,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 
 	public void showRoomFrame(String buttonText, List<DBUser> userList){
 		JRoomFrame roomFrame = new JRoomFrame(normal, "Pokój nr " + buttonText, userList, this);
+		roomFrame.setComponentsBackground(this.getBackground());
 		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		roomFrame.setLocation(400, 200);
 		roomFrame.setResizable(false);
@@ -192,6 +195,13 @@ public class JDSPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		cont.contDSPanelAL(e, this);
+	}
+	
+	public void setComponentsBackground(Color bg){
+		this.setBackground(bg);
+		dsPanel0.setBackground(bg);
+		dsPanel1.setBackground(bg);
+		dsPanel2.setBackground(bg);
 	}
 	
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {

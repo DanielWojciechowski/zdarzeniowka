@@ -1,6 +1,7 @@
 package zdarzeniowka;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -30,6 +31,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	JPanel cardSearchPanel;
 	private JPanel resultPane;
 	private JPanel buttonPanel;;
+
 	private Font normal;
 	static JMyTable resultTable;
 	private JScrollPane scrollPane;
@@ -217,6 +219,18 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         cardSearchPanel.add(searchPanel[1], OPTION2);
         cardSearchPanel.add(searchPanel[2], OPTION3);
 	}
+	
+	public void setComponentsBackground(Color bg){
+		this.setBackground(bg);
+		cardSearchPanel.setBackground(bg);
+		resultPane.setBackground(bg);
+		buttonPanel.setBackground(bg);
+		for (int i = 0; i < 3; i++){
+			searchPanel[i].setBackground(bg);
+			searchPane[i].setBackground(bg);
+		}
+		
+	}
 		
 	private void clearForm(int n){
 			textField[n].setText("");
@@ -226,6 +240,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	public void showResultFrame(DBUser user){
 		String frameLabel = "Użytkownik, id:"+String.valueOf(user.getIdUser());
 		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, user, dsPanel, resultTable);
+		resultFrame.setComponentsBackground(this.getBackground());
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);

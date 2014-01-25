@@ -1,11 +1,14 @@
 package zdarzeniowka;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -49,7 +52,7 @@ public class JResultFrame extends JFrame{
 		c = new GridBagConstraints();
 		
 		if (result instanceof JUserPanel){
-			c.insets = new Insets(10, 10, 10, 0);
+			c.insets = new Insets(10, 10, 10, 10);
 			this.add(result, c);	
 		}
 		else{
@@ -64,6 +67,19 @@ public class JResultFrame extends JFrame{
 	
 	public JBasicPanel getResult(){
 		return result;
+	}
+	
+	public void setComponentsBackground(Color bg){
+		this.getContentPane().setBackground(bg);
+		if (scrollPane != null){
+			scrollPane.getViewport().setBackground(bg);
+			Component[] bp = scrollPane.getViewport().getComponents();
+		    for (int i = 0; i < scrollPane.getComponentCount(); i++){
+		    	bp[i].setBackground(bg);
+		    }
+		}
+		result.setComponentsBackground(bg);	
+
 	}
 	
 	public void deleteFromResultTable(){

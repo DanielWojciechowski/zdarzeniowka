@@ -1,5 +1,6 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -149,13 +150,24 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		this.add(cardUser);		
 	}
 	
+	public void setComponentsBackground(Color bg){
+        for (int i = 0; i < userList.size(); i++){
+                upane[i].setBackground(bg);
+                dpane[i].setBackground(bg);
+                userPanel[i].setComponentsBackground(bg);
+        }
+        for (int i = 0; i < userDevicePanel.size(); i++){
+                userDevicePanel.get(i).setComponentsBackground(bg);
+        }
+	}
+	
 	public void refreshUsers(int id){
 		for (int i = 0; i < userList.size(); i++){
-			if (id == userList.get(i).getIdUser()){
-				this.userList.remove(i);
-				initiate(normal);
-			}	
-		}
+				if (id == userList.get(i).getIdUser()){
+					this.userList.remove(i);			
+					initiate(normal);
+				}	
+			}
 		if (userList.size() == 0)
 			this.dispose();
 		else {

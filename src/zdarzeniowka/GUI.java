@@ -7,7 +7,6 @@ import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -48,10 +47,14 @@ public class GUI{
 		addPanel= new JAddPanel(normal, dsPanel);
 		searchPanel = new JSearchPanel(normal, dsPanel);
 		reportPanel = new JReportPanel(normal);
-		dsPanel.setBackground(Color.white);
-		addPanel.setBackground(Color.white);
-		searchPanel.setBackground(Color.white);
-		reportPanel.setBackground(Color.white);
+
+		
+		
+		dsPanel.setComponentsBackground(Color.white);
+		addPanel.setComponentsBackground(Color.white);
+		searchPanel.setComponentsBackground(Color.white);
+		reportPanel.setColor(Color.white);
+		
 		frame.setLayout(new GridBagLayout());
 	}
 	
@@ -66,7 +69,7 @@ public class GUI{
 		label.setFont(header);
 		label2.setFont(italic);
 		topPane.setLayout(new GridBagLayout());
-		topPane.setBackground(SystemColor.cyan);
+		//topPane.setBackground(SystemColor.cyan);
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.insets = new Insets(0, 3, 0, 0);
 		topPane.add(label, c);

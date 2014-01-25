@@ -1,6 +1,7 @@
 package zdarzeniowka;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,10 +38,10 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	public JAddPanel(Font font, JDSPanel dsPanel){
 		super();
 		this.dsPanel = dsPanel;
-		paint(font);
+		paint(font);		
 	}
 
-	void paint(Font font){
+	public void paint(Font font){
 		addingPanel = new JPanel[3];
 		buttonPanel = new JPanel[3];
 		panel = new JBasicPanel[3];	
@@ -58,12 +59,14 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 		panel[0] = new JUserPanel(font);
 		panel[1] = new JUserDevicePanel(font);
 		panel[2] = new JNetworkDevicePanel(font);
-		
+
 		for(int i = 0; i < 3; i++){
 			addingPanel[i] = new JPanel();
 			addingPanel[i].setLayout(new GridBagLayout());
 			buttonPanel[i] = new JPanel();
 			buttonPanel[i].setLayout(new GridBagLayout());
+			
+			
 			confirmButton[i] = new JButton("Dodaj");
 			confirmButton[i].addActionListener(this);
 			clearButton[i] = new JButton("Wyczysc");
@@ -121,6 +124,16 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	public void itemStateChanged(ItemEvent e) {
 		cont.contJAddPanelISC(e, this);
 	}
+	
+	public void setComponentsBackground(Color bg){
+		this.setBackground(bg);
+		for (int i = 0; i < 3; i++){
+			panel[i].setComponentsBackground(bg);
+			addingPanel[i].setBackground(bg);
+			buttonPanel[i].setBackground(bg);
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		cont.contJAddPanelAL(e, this);

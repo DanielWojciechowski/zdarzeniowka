@@ -1,5 +1,6 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -125,6 +126,15 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		buttonPanel.add(okButton, cbutton);
 		cbutton.gridx = 2;
 		buttonPanel.add(deleteButton, cbutton);
+	}
+	
+	public void setComponentsBackground(Color bg){
+		this.setBackground(bg);
+		topPanel.setBackground(bg);
+		botPanel.setBackground(bg);
+		if (buttonPanel != null){
+			buttonPanel.setBackground(bg);
+		}
 	}
 	
 	public void setTextField(int index, String text){ //ma rzucac wyjatek jezeli indeks przekracza tablice
