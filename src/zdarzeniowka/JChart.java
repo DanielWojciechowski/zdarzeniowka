@@ -73,6 +73,7 @@ public class JChart extends JComponent{
 	    ipx = convertIntegers(px);
 	    g.setColor(color2);	 
 	    avg = sum/(ipx.length);
+
 	    log.info("AVG "+avg);
 	    g.setColor(color1);
 	    log.info("IPX size " + ipx.length + "ipy size " + ipy.length);
@@ -81,8 +82,9 @@ public class JChart extends JComponent{
 	    g.setColor(color2);
 	    g.drawLine(0, height-avg*SCALE, width-1, height-avg*SCALE);
 	    g.drawString("Średni transfer = " + String.valueOf(avg) + "MB/s", width - 123, 35);
-	  
-	}
+
+   	
+	  }
 	
 	public static int[] convertIntegers(List<Integer> integers){
 	    int[] ret = new int[integers.size()];

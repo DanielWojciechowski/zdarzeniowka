@@ -517,14 +517,6 @@ public class DBUtil {
 		return resultList;
 	}
 	
-	/*
-	 select CAST(history.date AS DATE) as day, sum(dataUse) as du 
-from history
-where history.date between '2014-01-18' and CURDATE()+1
-group by CAST(history.date AS DATE)
-	 
-	 */
-	
 	public List<Object[]> report2(String date1, String date2){
 		Session session = factory.openSession();
 		Transaction trans = null;
@@ -534,7 +526,7 @@ group by CAST(history.date AS DATE)
 	    	String qs = "select user.idUser, sum(dataUse) from history "
 	    			+ "left join user on history.idPort=user.idPort "
 	    			+ "where (history.date between :date1 and :date2) and user.idUser IS  NOT NULL "
-	    			+ "group by history.idPort ";
+	    			+ "group by history.idPort order by user.idUser";
 	    	SQLQuery q = session.createSQLQuery(qs);
 	    	q.setParameter("date1", date1);
 	    	q.setParameter("date2", date2);
