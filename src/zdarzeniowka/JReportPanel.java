@@ -1,7 +1,9 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -36,10 +38,10 @@ import javax.swing.border.EtchedBorder;
 public class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
-	private JPanel cbPane, crPane, chartPane;
+	private JPanel  topPane, chartPane, botPane;
 	private JChart chart;
 	private JButton saveButton;
-	private GridBagConstraints crpane, cbp, csp, cp;
+	private GridBagConstraints c, ctop, cchart, cbot;
 	private String[] comboBox0 = {"Zużycie sieci ogółem", "Zużycie sieci wg użytkowników"}, comboBox1 = {"Jakies dane", "Jakies dane"};
     private JComboBox<String> cb;
     private JSpinner[] spinner;
@@ -69,23 +71,23 @@ public class JReportPanel extends JPanel implements ActionListener {
 	
 	private void paint(Font font){
 		normal = font;
-		cbPane = new JPanel();
-		crPane = new JPanel();
+		botPane = new JPanel();
+		topPane = new JPanel();
 		chartPane = new JPanel();
 		chart = new JChart(450, 240);
 		
 		saveButton = new JButton("Zapisz do pliku");
-		crpane = new GridBagConstraints();
-		cbp = new GridBagConstraints();
-		csp = new GridBagConstraints();
-		cp = new GridBagConstraints();
+		c = new GridBagConstraints();
+		ctop = new GridBagConstraints();
+		cchart = new GridBagConstraints();
+		cbot = new GridBagConstraints();
         cb = new JComboBox<String>(comboBox0);
         label = new JLabel[8];
     	insets1 = new Insets(0,20,10,0);
     	insets0 = new Insets(0,0,10,0);
         this.setLayout(new GridBagLayout());
-        cbPane.setLayout(new GridBagLayout());
-        crPane.setLayout(new GridBagLayout());
+        botPane.setLayout(new GridBagLayout());
+        topPane.setLayout(new GridBagLayout());
         chartPane.setLayout(new GridBagLayout());
         saveButton.setFont(normal);
         saveButton.addActionListener(this);
@@ -108,7 +110,7 @@ public class JReportPanel extends JPanel implements ActionListener {
         label[6].setFont(normal);
         label[7].setFont(normal);
     	t = new JXTransformer(label[6]);
-        t.rotate(Math.toRadians(-90)); 
+        t.rotate(Math.toRadians(90)); 
 
         latestDate = dbUtil.getEarliestDate();
         earliestDate = dbUtil.getLatestDate();
@@ -136,77 +138,74 @@ public class JReportPanel extends JPanel implements ActionListener {
 	    spinner[0].setPreferredSize(new Dimension(130,22));
 	    spinner[1].setPreferredSize(new Dimension(130,22));
 
-        csp.anchor = GridBagConstraints.LINE_END;
-        csp.insets = insets0;
-        crPane.add(label[0], csp);
-        csp.insets = insets1;
-        csp.gridx = 1;
-        crPane.add(spinner[0], csp);
-        csp.gridx = 2;
-        crPane.add(label[1], csp);
-        csp.gridx = 3;
-        crPane.add(spinner[1], csp);
+        ctop.anchor = GridBagConstraints.LINE_END;
+        ctop.insets = insets0;
+        topPane.add(label[0], ctop);
+        ctop.insets = insets1;
+        ctop.gridx = 1;
+        topPane.add(spinner[0], ctop);
+        ctop.gridx = 2;
+        topPane.add(label[1], ctop);
+        ctop.gridx = 3;
+        topPane.add(spinner[1], ctop);
         
-        csp.insets = insets0;
-        csp.gridy = 1;
-        csp.gridx = 0;
-    	csp.anchor = GridBagConstraints.LINE_END;
-    	crPane.add(label[2], csp);
-    	csp.insets = insets1;
-    	csp.anchor = GridBagConstraints.LINE_START;
-    	csp.gridx = 1;
-    	csp.gridwidth = 3;
-    	crPane.add(cb, csp);
-		csp.anchor = GridBagConstraints.LINE_END;
-        csp.gridy = 2;
-        csp.gridx = 3;
-        csp.gridwidth = 0;
-        csp.insets = new Insets(10, 10, 0, 0);
-        crPane.add(saveButton, csp);
+        ctop.insets = insets0;
+        ctop.gridy = 1;
+        ctop.gridx = 0;
+    	ctop.anchor = GridBagConstraints.LINE_END;
+    	topPane.add(label[2], ctop);
+    	ctop.insets = insets1;
+    	ctop.anchor = GridBagConstraints.LINE_START;
+    	ctop.gridx = 1;
+    	ctop.gridwidth = 3;
+    	topPane.add(cb, ctop);
+		ctop.anchor = GridBagConstraints.LINE_END;
+        ctop.gridy = 2;
+        ctop.gridx = 3;
+        ctop.gridwidth = 0;
+        ctop.insets = new Insets(10, 10, 0, 0);
+        topPane.add(saveButton, ctop);
         //crPane.setBorder(BorderFactory.createLineBorder(Color.black));
         
-        cp.insets = new Insets(30, 10, 0, 0);
-        cp.anchor = GridBagConstraints.FIRST_LINE_END;
-        chartPane.add(label[3], cp);
-        cp.insets = new Insets(0, 10, 0, 0);
-        cp.ipady = 0;
-        cp.gridx = 1;
-        cp.gridwidth = 3;
-        chartPane.add(chart, cp);
-        cp.gridwidth = 1;
-        cp.gridx = 1;
-        cp.gridy = 1;
-        chartPane.add(label[4], cp);
-        cp.gridx = 3;
-        chartPane.add(label[5], cp);
+        cchart.insets = new Insets(30, 0, 0, 5);
+        cchart.anchor = GridBagConstraints.FIRST_LINE_END;
+        chartPane.add(label[3], cchart);
+        cchart.insets = new Insets(0, 0, 0, 0);
+        cchart.ipady = 0;
+        cchart.gridx = 1;
+        cchart.gridwidth = 3;
+        chartPane.add(chart, cchart);
+        cchart.gridwidth = 1;
+        cchart.gridx = 1;
+        cchart.gridy = 1;
+        chartPane.add(label[4], cchart);
+        cchart.gridx = 3;
+        chartPane.add(label[5], cchart);
+        
+       
+        cbot.anchor = GridBagConstraints.LINE_END;
+        cbot.gridwidth = 1;
+        cbot.insets = new Insets(0, 0, 0, 0);
+        botPane.add(chartPane, cbot);
+        cbot.anchor = GridBagConstraints.CENTER;
+        cbot.gridx = 1;
+        cbot.insets = new Insets(0, 0, 20, 0);
+        botPane.add(t, cbot);
+        cbot.gridx = 0;
+        cbot.gridwidth = 0;
+        cbot.gridy = 2;
+        botPane.add(label[7], cbot);
         
         JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
         separator.setPreferredSize(new Dimension(600,1));
         separator.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
         
-        crpane.gridwidth = 2;
-        crpane.insets = new Insets(10,0,0,0);
-        crpane.anchor = GridBagConstraints.CENTER;
-        this.add(crPane, crpane);
-        crpane.gridy = 1;
-        this.add(cbPane, crpane);
-        crpane.gridy = 2;
-        crpane.insets = new Insets(20,0,20,0);
-        crpane.anchor = GridBagConstraints.CENTER;
-        //crpane.gridwidth = 4;
-        //this.add(separator, crpane);
-        crpane.anchor = GridBagConstraints.LINE_END;
-        crpane.gridy = 3;
-        crpane.gridwidth = 1;
-        crpane.insets = new Insets(0, 0, 0, 0);
-        this.add(t, crpane);
-        crpane.anchor = GridBagConstraints.CENTER;
-        this.add(chartPane, crpane);
-        crpane.gridwidth = 0;
-        crpane.gridy = 4;
-        crpane.insets = new Insets(0, 0, 10, 0);
-        this.add(label[7], crpane);
-        crpane.gridy = 5;
+        c.insets = new Insets(10,0,0,0);
+        c.anchor = GridBagConstraints.CENTER;
+        this.add(topPane, c);
+        c.gridy = 1;
+        c.insets = new Insets(20,0,0,0);
+        this.add(botPane, c);
 	}
 
 	@Override

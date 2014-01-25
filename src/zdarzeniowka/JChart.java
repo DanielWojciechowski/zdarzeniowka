@@ -13,13 +13,14 @@ import org.apache.log4j.Logger;
 
 public class JChart extends JComponent{
 	private static final long serialVersionUID = -5878170992402917036L;
-	private Color color1, color2;
+	private Color color1, color2, background, line;
 	private Logger  log = Logger.getLogger(JChart.class);
 	private ArrayList<Integer> px = new ArrayList<Integer>();
 	private ArrayList<Integer> py = new ArrayList<Integer>();
 	private int sum = 0, avg = 0;
 	private int height, width;
 	private final static int SCALE = 10;
+	
 	public JChart(int height, int width){
 		super();
 		Dimension d = new Dimension(height, width);
@@ -27,6 +28,8 @@ public class JChart extends JComponent{
 		setPreferredSize(d);
 		color1 = Color.red;
 		color2 = Color.blue;
+		background = new Color(0,0,0,5);
+		line = new Color(128, 128, 128, 100);
 		px.add(0);
 		py.add(0);
 	}
@@ -48,8 +51,12 @@ public class JChart extends JComponent{
 		super.paintComponent(g);
 		width = this.getWidth();
 		height = this.getHeight();
-		g.setColor(Color.white);
+		g.setColor(line);
 		g.drawRect(0, 0, width-1, height-1);
+		g.setColor(background);
+		g.fillRect(1, 1, width-2, height-2);
+
+		g.setColor(line);
 		int hor = 40, vert = 25;
 		while (hor < height) {
 	       g.drawLine(0, hor, width, hor);
@@ -59,7 +66,7 @@ public class JChart extends JComponent{
 	       g.drawLine(vert, 0 , vert, height);
 	       vert += 25;
 	    }
-	    g.setColor(color2);
+	  
 	    int[] ipx = convertIntegers(px);
 	    int[] ipy = convertIntegers(py);
 	    ipy = heightChanger(ipy, height);
@@ -67,14 +74,17 @@ public class JChart extends JComponent{
 	    g.setColor(color2);	 
 	    avg = sum/(ipx.length);
 	    log.info("AVG "+avg);
-	    g.drawLine(0, height-avg*SCALE, width-1, height-avg*SCALE);
 	    g.setColor(color1);
 	    log.info("IPX size " + ipx.length + "ipy size " + ipy.length);
-	    g.drawPolyline(ipx, ipy, ipx.length);	    
-   	
-	  }
+	    g.drawPolyline(ipx, ipy, ipx.length);	  
+	    g.drawString("Transfer = " +py.get(0)+ "MB/s", width - 123, 15);
+	    g.setColor(color2);
+	    g.drawLine(0, height-avg*SCALE, width-1, height-avg*SCALE);
+	    g.drawString("Średni transfer = " + String.valueOf(avg) + "MB/s", width - 123, 35);
+	  
+	}
+	
 	public static int[] convertIntegers(List<Integer> integers){
-		
 	    int[] ret = new int[integers.size()];
 	    Iterator<Integer> iterator = integers.iterator();
 	    for (int i = 0; i < ret.length; i++){
