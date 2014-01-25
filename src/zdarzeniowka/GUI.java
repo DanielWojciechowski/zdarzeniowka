@@ -74,11 +74,6 @@ public class GUI{
 		tabbedPane.add("Wyszukaj", searchPanel);
 		tabbedPane.add("Raporty", reportPanel);
 		
-		tabbedPane.setBackgroundAt(0, Color.white);
-		tabbedPane.setBackgroundAt(1, Color.white);
-		tabbedPane.setBackgroundAt(2, Color.white);
-		tabbedPane.setBackgroundAt(3, Color.white);
-		
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridy = 1;
 		c.insets = new Insets(10, 0, 0, 0);

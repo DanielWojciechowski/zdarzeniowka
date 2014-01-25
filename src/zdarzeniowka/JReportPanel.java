@@ -42,7 +42,8 @@ public class JReportPanel extends JPanel implements ActionListener {
     private JLabel[] label;
 	private JXTransformer t;
 	private Insets insets1, insets0;
-    DBUtil dbUtil = new DBUtil();
+	private DBUtil dbUtil =  new DBUtil();
+	private Date latestDate, earliestDate;
 
     public JReportPanel(Font font){
             super();
@@ -51,6 +52,7 @@ public class JReportPanel extends JPanel implements ActionListener {
             SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
         @Override
         protected Void doInBackground() throws Exception {
+ 
                 List<Integer> tab = dbUtil.getAllUsersIds();
                     Generator g = new Generator(tab, chart);
                     g.run();
@@ -102,33 +104,32 @@ public class JReportPanel extends JPanel implements ActionListener {
         label[7].setFont(normal);
     	t = new JXTransformer(label[6]);
         t.rotate(Math.toRadians(-90)); 
-        
-        spinner = new JSpinner[2];
 
-        Date latestDate = new Date(5000000);
-        Date earliestDate =new Date(System.currentTimeMillis());
-        	
+        latestDate = dbUtil.getEarliestDate();
+        earliestDate = dbUtil.getLatestDate();
+        
 		SpinnerModel model0 = new SpinnerDateModel(
 		        latestDate,
-		        latestDate, //start
+		        new Date(latestDate.getTime() - 86400000), //start
 		        earliestDate, //end
 		        Calendar.DAY_OF_MONTH
 		); 
 		SpinnerModel model1 = new SpinnerDateModel(
 		        earliestDate,
-		        latestDate, //start
+		        new Date(latestDate.getTime() - 86400000), //start
 		        earliestDate, //end
 		        Calendar.DAY_OF_MONTH
 		);
+	    spinner = new JSpinner[2];
 		spinner[0] = new JSpinner(model0);
 		spinner[1] = new JSpinner(model1);
-
+		spinner[0].setEditor(new JSpinner.DateEditor(spinner[0], "dd.MM.yyyy"));
+	    spinner[1].setEditor(new JSpinner.DateEditor(spinner[1], "dd.MM.yyyy"));
+	    //spinner[0].;
 	    spinner[0].setFont(normal);
 	    spinner[1].setFont(normal);
 	    spinner[0].setPreferredSize(new Dimension(130,22));
 	    spinner[1].setPreferredSize(new Dimension(130,22));
-	    spinner[0].setEditor(new JSpinner.DateEditor(spinner[0], "dd.MM.yyyy"));
-	    spinner[1].setEditor(new JSpinner.DateEditor(spinner[1], "dd.MM.yyyy"));
 
         csp.anchor = GridBagConstraints.LINE_END;
         csp.insets = insets0;
@@ -180,15 +181,15 @@ public class JReportPanel extends JPanel implements ActionListener {
         
         crpane.gridwidth = 2;
         crpane.insets = new Insets(10,0,0,0);
-        crpane.anchor = GridBagConstraints.LINE_END;
+        crpane.anchor = GridBagConstraints.CENTER;
         this.add(crPane, crpane);
         crpane.gridy = 1;
         this.add(cbPane, crpane);
         crpane.gridy = 2;
         crpane.insets = new Insets(20,0,20,0);
         crpane.anchor = GridBagConstraints.CENTER;
-        crpane.gridwidth = 4;
-        this.add(separator, crpane);
+        //crpane.gridwidth = 4;
+        //this.add(separator, crpane);
         crpane.anchor = GridBagConstraints.LINE_END;
         crpane.gridy = 3;
         crpane.gridwidth = 1;
