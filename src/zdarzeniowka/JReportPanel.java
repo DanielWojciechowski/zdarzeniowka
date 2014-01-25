@@ -20,8 +20,11 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -206,7 +209,14 @@ public class JReportPanel extends JPanel implements ActionListener {
         c.insets = new Insets(20,0,0,0);
         this.add(botPane, c);
 	}
-
+	public void setComponentsBackground(Color bg){
+		this.setBackground(bg);
+		topPane.setBackground(bg); 
+		chartPane.setBackground(bg); 
+		botPane.setBackground(bg);
+		t.setBackground(bg);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
@@ -260,6 +270,7 @@ public class JReportPanel extends JPanel implements ActionListener {
         		    	}
         		    	
         		    	save.close();
+        		    	JOptionPane.showMessageDialog(new JFrame(), "Zapisano do pliku.");
         		    	return null;
         		    }
                 };

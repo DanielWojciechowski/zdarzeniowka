@@ -1,5 +1,6 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -52,7 +53,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 
 		this.dsPanel = dsPanel;
 		if(userList.size() <= 0 || userList.size() > 3) {
-            throw new IllegalArgumentException("Too many users in room!");
+            throw new IllegalArgumentException("Invalid number of users in room!");
         }
 		this.userList = userList;
 		initiate(font);
@@ -147,22 +148,32 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		this.add(cardUser);		
 	}
 	
-	public void refreshUsers(int id){
+	public void setComponentsBackground(Color bg){
 		for (int i = 0; i < userList.size(); i++){
-			if (id == userList.get(i).getIdUser()){
-				this.userList.remove(i);
-				this.remove(cardUser);
-				initiate(normal);
-				this.revalidate();
-			}	
+			upane[i].setBackground(bg);
+			dpane[i].setBackground(bg);
+			userPanel[i].setComponentsBackground(bg);
 		}
-		if (userList.size() == 0)
-			this.dispose();
+		for (int i = 0; i < userDevicePanel.size(); i++){
+			userDevicePanel.get(i).setComponentsBackground(bg);
+		}
 	}
 	
-	public void moveUsers(int id){
-
+	public void refreshUsers(int id){
+		for (int i = 0; i < userList.size(); i++){
+				if (id == userList.get(i).getIdUser()){
+					this.userList.remove(i);			
+					initiate(normal);
+				}	
+			}
+		if (userList.size() == 0)
+			this.dispose();
+		else {
+			this.setContentPane(cardUser);
+		}
+		this.revalidate();
 	}
+	
 	
 	public void refreshDevices(JUserDevicePanel userDevicePanel){
 		int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
@@ -193,8 +204,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		else {
 			this.setContentPane(cardDevice);
 		}
-		this.revalidate();
-			
+		this.revalidate();	
 	}
 
 	@Override
