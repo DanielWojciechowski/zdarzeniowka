@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -27,6 +27,8 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SwingWorker;
 import javax.swing.border.EtchedBorder;
+
+import org.apache.log4j.Logger;
 
 
 public class JReportPanel extends JPanel implements ActionListener {
@@ -44,20 +46,22 @@ public class JReportPanel extends JPanel implements ActionListener {
 	private Insets insets1, insets0;
 	private DBUtil dbUtil =  new DBUtil();
 	private Date latestDate, earliestDate;
+	private Logger log = Logger.getLogger(JReportPanel.class);  
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public JReportPanel(Font font){
             super();
             paint(font);
             
             SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
-        @Override
-        protected Void doInBackground() throws Exception {
- 
+		        @Override
+		        protected Void doInBackground() throws Exception {
+		 
                 List<Integer> tab = dbUtil.getAllUsersIds();
                     Generator g = new Generator(tab, chart);
                     g.run();
                             return null;
-        }
+		        }
             };
             worker.execute();
     }
@@ -216,7 +220,7 @@ public class JReportPanel extends JPanel implements ActionListener {
 		else {
 			data = '1';
 		}
-		System.out.println(end.toString() + " " + start.toString() + " "+ data);
+		log.info(end.toString() + " " + start.toString() + " "+ data);
 		if (source == saveButton){
 			JFileChooser fileChooser = new JFileChooser();
 			if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -225,15 +229,44 @@ public class JReportPanel extends JPanel implements ActionListener {
 				if(!fileName.endsWith(".txt")) {	
 					file = new File(fileName + ".txt");
 				}
+                final char choice = data;
+                FileWriter out = null;
                 try {
-                    FileWriter out = new FileWriter(file);
-                    //String pom = textArea.getText();        
-                    //out.write(pom.replaceAll("\n", System.getProperty("line.separator")));
-                    out.close();
-                } catch (IOException e1) {
-                   JOptionPane.showMessageDialog(this, "Nie moge zapisac pliku " +file.getAbsolutePath());
-                    return;
-                }
+                	out = new FileWriter(file);
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+          
+                final FileWriter save = out;
+                final String d1 = sdf.format(start);
+				final String d2 = sdf.format(end.getTime() + 86400000);
+				log.info("Formated date " +d1 +" "+ d2);
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+        		    @Override
+        		    protected Void doInBackground() throws Exception {
+        		    	List<Object[]> resultList = null;
+        		    	if(choice == '0'){
+        		    		resultList = dbUtil.report1(d1, d2);
+        		    		save.write("Data:\t\t| Transfer:" + System.getProperty("line.separator"));
+            		    	save.write("________________|__________" + System.getProperty("line.separator"));
+        		    	}
+        		    	else if(choice == '1'){
+        		    		resultList = dbUtil.report2(d1, d2);
+        		    		save.write("Użytk:\t| Transfer:" + System.getProperty("line.separator"));
+            		    	save.write("________|___________" + System.getProperty("line.separator"));
+        		    	}
+
+        		    	for(Object[] counter: resultList){
+        		    		save.write(counter[0]+"\t| "+Math.floor(((Double)counter[1]*100))/100 + System.getProperty("line.separator"));
+        		    	}
+        		    	
+        		    	save.close();
+        		    	return null;
+        		    }
+                };
+                    worker.execute();
+
+                
 			}
 		}
 		
