@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,6 +20,9 @@ import javax.swing.JSeparator;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+
+import zdarzeniowka.db.DBUser;
+import zdarzeniowka.db.DBUtil;
 
 public class JDSPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 5329098283210850224L;

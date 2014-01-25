@@ -5,6 +5,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.log4j.xml.DOMConfigurator;
 
+import zdarzeniowka.db.DBUtil;
+import zdarzeniowka.gui.GUI;
+import zdarzeniowka.gui.LoadingFrame;
+
 public class Starter {
 	public static void main (String[] args) {    
 		try {

@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import javax.swing.JTable;
 

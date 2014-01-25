@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,6 +23,9 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 
 import org.apache.log4j.Logger;
+
+import zdarzeniowka.db.DBUser;
+import zdarzeniowka.db.DBUserDevice;
 
 public class JRoomFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -8038078091109185534L;

@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.Dimension;
 import java.awt.Font;

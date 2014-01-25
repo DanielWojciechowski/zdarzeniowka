@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,6 +10,11 @@ import java.awt.Insets;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import zdarzeniowka.db.DBNetworkDevice;
+import zdarzeniowka.db.DBUser;
+import zdarzeniowka.db.DBUserDevice;
+import zdarzeniowka.db.DBUtil;
 
 public class JResultFrame extends JFrame{
 	private static final long serialVersionUID = -7670041249218891721L;

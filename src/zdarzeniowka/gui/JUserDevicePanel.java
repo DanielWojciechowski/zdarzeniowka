@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -6,9 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -16,43 +13,49 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class JNetworkDevicePanel extends JBasicPanel  {
-	private static final long serialVersionUID = 8913270095466798762L;
-	char[] deviceTypes = {'k','p','r','a','i','s'};
 
-	public JNetworkDevicePanel(Font font) {
-		super(font);
-		paint();
-	}
-		
-	public JNetworkDevicePanel(Font font, boolean editable, JResultFrame rframe){
+public class JUserDevicePanel extends JBasicPanel{
+	private static final long serialVersionUID = 9083184852370768151L;
+	char[] deviceTypes = {'k','p','r','a','i','s'};
+	
+	public JUserDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);
 		paint();
 		editabling(editable, 2);
 	}
-
-	private void paint(){
+	
+	public JUserDevicePanel(Font font, boolean editable, JRoomFrame frame){
+		super(font, editable, frame);
+		paint();
+		editabling(editable, 2);
+	}
+	
+	public JUserDevicePanel(Font font) {
+		super(font);
+		paint();
+	}
+	
+	public void paint(){
 		this.setLayout(new GridBagLayout());
-		Insets insets2 = new Insets(0,28, 10,0);
-		labels = new JLabel[6];
-		textFields = new JTextField[3];
+		labels = new JLabel[7];
+		textFields = new JTextField[4];
 		textArea = new JTextArea();
-	    textArea.setLineWrap(true);
+        textArea.setLineWrap(true);
+        textArea.setEditable(editable);
         textArea.setFont(normal);
-	    textArea.setEditable(editable);
-	    scrollPane = new JScrollPane(textArea);
-	    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-	    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-	    scrollPane.setPreferredSize(new Dimension(338, 130));
-		String[] stringLabel = {"Adres MAC:", "Adres IP:", "Konfiguracja:", "Id urzadzenia:", "Typ:", "Uwagi:"},
-				configuration = {"Zatwierdzona", "Niezatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP", "Inne", "Serwer"};
+        scrollPane = new JScrollPane(textArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(new Dimension(338, 130));
+		Insets insets2 = new Insets(0,17,10,0);
 		
-		
+		String[] stringLabel = {"Adres MAC:", "Adres IP:","Konfiguracja:", "Id urzadzenia:", "Typ:", "Id użytkownika:", "Uwagi:"},
+				configuration = {"Zatwierdzona", "Niezatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP", "Inne"};
 		cb = new JComboBox[2];
 		cb[0] = new JComboBox<String>(configuration);
 		cb[1] = new JComboBox<String>(type);
-		for(int i = 0; i < 6; i++){
-			if (i < 3){
+		for(int i = 0; i < 7; i++){
+			if (i < 4){
 				if (i < 2){
 					textFields[i] = new JTextField(28);	
 					cb[i].setPrototypeDisplayValue("Such wow w");
@@ -67,9 +70,9 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 			labels[i].setFont(normal);		
 		}
 		for (int i = 0; i < 2; i++){
-	    	ctop.insets = insets0;
+        	ctop.insets = insets0;
 			ctop.gridwidth = 1;
-	    	ctop.anchor = GridBagConstraints.LINE_END;
+        	ctop.anchor = GridBagConstraints.LINE_END;
 			ctop.gridx = 0;
 			ctop.gridy = i;
 			topPanel.add(labels[i], ctop);
@@ -89,9 +92,9 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		cbot.gridx = 1;
 		cbot.ipadx = 4;
 		botPanel.add(cb[0], cbot);	
-		cbot.ipadx = 0;
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 2;
+		cbot.ipadx = 0;
 		cbot.insets = insets2;
 		botPanel.add(labels[3], cbot);
 		cbot.anchor = GridBagConstraints.LINE_START;
@@ -107,19 +110,26 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		botPanel.add(labels[4], cbot);
 		cbot.insets = insets1;
 		cbot.anchor = GridBagConstraints.LINE_START;
-		cbot.gridwidth = 3;
 		cbot.gridx = 1;
 		cbot.ipadx = 4;
 		botPanel.add(cb[1], cbot);	
 		cbot.ipadx = 0;
+		cbot.anchor = GridBagConstraints.LINE_END;
+		cbot.gridx = 2;
+		cbot.insets = insets2;
+		botPanel.add(labels[5], cbot);
+		cbot.anchor = GridBagConstraints.LINE_START;
+		cbot.gridx = 3;
+		cbot.insets = insets1;
+		botPanel.add(textFields[3], cbot);
 		
-		cbot.insets = new Insets(20,0,0,0);
+		cbot.insets = new Insets(20, 0, 0, 0);
 		cbot.anchor = GridBagConstraints.LINE_END;
 		cbot.gridx = 0;
 		cbot.gridy = 4;
-		cbot.gridwidth = 1;
-		botPanel.add(labels[5], cbot);
-		cbot.insets = new Insets(20,20,0,0);
+		cbot.ipady = 0;
+		botPanel.add(labels[6], cbot);
+		cbot.insets = new Insets(20, 20, 0, 0);
 		cbot.anchor = GridBagConstraints.LINE_START;
 		cbot.gridx = 1;
 		cbot.gridwidth = 3;
@@ -135,16 +145,25 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		if (buttonPanel != null){
 			cpane.gridy = 2;
 			this.add(buttonPanel, cpane);
-		}	
+		}
 	}
 	
-	public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){
+	public int getUserId(){
+		return Integer.parseInt(textFields[3].getText());
+	}
+	
+	public int getDeviceId(){
+		return Integer.parseInt(textFields[2].getText());
+	}
+	
+	public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, String otherInfo){
 		textFields[0].setText(mac);
 		textFields[1].setText(ip);
 		textFields[2].setText(String.valueOf(idDevice));
+		textFields[3].setText(String.valueOf(idUser));
 		if(configuration)
-			cb[0].setSelectedIndex(1);
-		else cb[0].setSelectedIndex(0);
+			cb[0].setSelectedIndex(0);
+		else cb[0].setSelectedIndex(1);
 		switch (type){
 			case 'k': //komp
 				cb[1].setSelectedIndex(0);
@@ -160,22 +179,14 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 				break;
 			case 'i': //inne
 				cb[1].setSelectedIndex(4);
-			case 's': //serwer
-				cb[1].setSelectedIndex(5);
 		}
 		textArea.setText(otherInfo);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		cont.contJNetDevPanelAL(e, this);
+		cont.contJUserDevPanelAL(e, this);
 	}
-	
-	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-	    List<T> r = new ArrayList<T>(c.size());
-	    for(Object o: c)
-	      r.add(clazz.cast(o));
-	    return r;
-	}
+
 
 }

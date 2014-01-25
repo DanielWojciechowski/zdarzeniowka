@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -22,6 +22,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
+
+import zdarzeniowka.db.DBNetworkDevice;
+import zdarzeniowka.db.DBUser;
+import zdarzeniowka.db.DBUserDevice;
+import zdarzeniowka.db.DBUtil;
+import zdarzeniowka.gen.Generator;
 
 public class Controller{
 	private DBUtil dbUtil = new DBUtil();

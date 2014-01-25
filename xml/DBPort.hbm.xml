@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-    <class name="zdarzeniowka.DBPort" table="port">
+    <class name="zdarzeniowka.db.DBPort" table="port">
 
         <id name="idPort" type="int" column="idPort">
             <generator class="native" />
@@ -15,7 +15,7 @@
 		
 		<set name="histories" cascade="all">
 			<key column="idHistory"/>
-			<one-to-many class="zdarzeniowka.DBHistory"/>
+			<one-to-many class="zdarzeniowka.db.DBHistory"/>
 		</set>
     </class>
 </hibernate-mapping>

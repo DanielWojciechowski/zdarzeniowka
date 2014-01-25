@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.db;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-    <class name="zdarzeniowka.DBHistory" table="history">
+    <class name="zdarzeniowka.db.DBHistory" table="history">
 
         <id name="idHistory" type="int" column="idHistory">
             <generator class="native" />

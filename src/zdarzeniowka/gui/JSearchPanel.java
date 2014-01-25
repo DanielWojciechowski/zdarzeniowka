@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -22,6 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+
+import zdarzeniowka.db.DBNetworkDevice;
+import zdarzeniowka.db.DBUser;
+import zdarzeniowka.db.DBUserDevice;
 
 public class JSearchPanel extends JPanel implements ItemListener, ActionListener{
 

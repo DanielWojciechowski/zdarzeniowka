@@ -1,20 +1,30 @@
-package zdarzeniowka;
+package zdarzeniowka.db;
 
-public class DBUserDevice{
+import java.util.Set;
+
+public class DBNetworkDevice{
 	private int idDevice;
 	private String mac;
 	private String ip;
 	private boolean configuration;
 	private char type;
 	private String otherInfo;
+	private Set<DBPort> ports;
 	
-	public DBUserDevice() {}
-	public DBUserDevice(String mac, String ip, boolean configuration, char type, String otherInfo) {
+	public DBNetworkDevice() {}
+	public DBNetworkDevice(String mac, String ip, boolean configuration, char type, String otherInfo) {
 		this.mac = mac;
 		this.ip = ip;
 		this.configuration = configuration;
 		this.type = type;
 		this.otherInfo = otherInfo;
+	}
+
+	public Set<DBPort> getPorts() {
+		return ports;
+	}
+	public void setPorts(Set<DBPort> ports) {
+		this.ports = ports;
 	}
 	public int getIdDevice() {
 		return idDevice;

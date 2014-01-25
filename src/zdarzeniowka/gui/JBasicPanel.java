@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +18,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
+
+import zdarzeniowka.db.DBPort;
+import zdarzeniowka.db.DBUtil;
 
 public abstract class JBasicPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 5020407406483635930L;

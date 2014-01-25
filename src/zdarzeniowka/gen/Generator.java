@@ -1,10 +1,13 @@
-package zdarzeniowka;
+package zdarzeniowka.gen;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+
+import zdarzeniowka.db.DBUtil;
+import zdarzeniowka.gui.JChart;
 
 public class Generator implements Runnable {
 	private final static int TIME = 1;

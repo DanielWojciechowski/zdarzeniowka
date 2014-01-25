@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package zdarzeniowka;
+package zdarzeniowka.gui;
 
 import javax.swing.*;
 import java.awt.*;

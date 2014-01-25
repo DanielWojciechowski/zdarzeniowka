@@ -1,4 +1,4 @@
-package zdarzeniowka;
+package zdarzeniowka.db;
 
 import java.util.Set;
 
