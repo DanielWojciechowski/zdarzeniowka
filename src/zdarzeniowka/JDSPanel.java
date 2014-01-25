@@ -30,6 +30,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 	private Font normal;
 	private DBUtil dbUtil = new DBUtil();
 	private int[] countTab ;
+	private Controller cont = new Controller();
 	
 	public JDSPanel(Font font){
 		paint(font);
@@ -190,25 +191,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		final Object source = e.getSource();
-		if (source instanceof JRoomButton){
-			String buttonText = ((JRoomButton) source).getText();
-			List<DBUser> userList = null;
-			SwingWorker<List<DBUser>, Void> worker = new SwingWorker<List<DBUser>, Void>(){
-	            @Override
-	            protected List<DBUser> doInBackground() throws Exception {
-	            	List<DBUser> list = castList(DBUser.class, dbUtil.findUserOrDevice("DBUser", "roomNo",((JRoomButton) source).getText()));
-					return list;
-	            }
-			};
-			worker.execute();
-			try {
-				userList = worker.get();
-			} catch (InterruptedException | ExecutionException e1) {
-				e1.printStackTrace();
-			}
-			showRoomFrame(buttonText, userList);
-		}
+		cont.contDSPanelAL(e, this);
 	}
 	
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {

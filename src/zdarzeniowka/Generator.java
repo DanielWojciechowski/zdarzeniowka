@@ -82,7 +82,6 @@ public class Generator implements Runnable {
 					}).start();
 					log.info("TIMER: "+timer);
 					timer = 0;
-					
 				}
 				try {
 					Thread.sleep(TIME*1000);

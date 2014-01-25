@@ -1,9 +1,7 @@
 package zdarzeniowka;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -40,7 +38,7 @@ public class JReportPanel extends JPanel implements ActionListener {
 	private JChart chart;
 	private JButton saveButton;
 	private GridBagConstraints c, ctop, cchart, cbot;
-	private String[] comboBox0 = {"Zużycie sieci ogółem", "Zużycie sieci wg użytkowników"}, comboBox1 = {"Jakies dane", "Jakies dane"};
+	private String[] comboBox0 = {"Zużycie sieci ogółem", "Zużycie sieci wg użytkowników"};
     private JComboBox<String> cb;
     private JSpinner[] spinner;
     private JLabel[] label;
@@ -51,14 +49,16 @@ public class JReportPanel extends JPanel implements ActionListener {
 	private Logger log = Logger.getLogger(JReportPanel.class);  
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-    public JReportPanel(Font font){
+    public JReportPanel(final Font font){
             super();
-            paint(font);
+            //paint(font);
             
             SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 		        @Override
 		        protected Void doInBackground() throws Exception {
-		 
+		            latestDate = dbUtil.getEarliestDate();
+		            earliestDate = dbUtil.getLatestDate();
+		            paint(font);
                 List<Integer> tab = dbUtil.getAllUsersIds();
                     Generator g = new Generator(tab, chart);
                     g.run();
@@ -111,8 +111,8 @@ public class JReportPanel extends JPanel implements ActionListener {
     	t = new JXTransformer(label[6]);
         t.rotate(Math.toRadians(90)); 
 
-        latestDate = dbUtil.getEarliestDate();
-        earliestDate = dbUtil.getLatestDate();
+      /*  latestDate = dbUtil.getEarliestDate();
+        earliestDate = dbUtil.getLatestDate();*/
         
 		SpinnerModel model0 = new SpinnerDateModel(
 		        latestDate,

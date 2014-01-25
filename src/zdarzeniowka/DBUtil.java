@@ -379,7 +379,7 @@ public class DBUtil {
 		try{
         	trans = session.beginTransaction();
         	Query q = session.createQuery("select roomNo, count(idUser) from DBUser group by roomNo");
-        	resultList = (List<Object[]>) q.list();
+        	resultList = castList(Object[].class, q.list());
         	trans.commit();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
@@ -397,7 +397,7 @@ public class DBUtil {
 		try{
         	trans = session.beginTransaction();
         	Query q = session.createQuery("select idUser from DBUser");
-        	resultList = q.list();
+        	resultList = castList(Integer.class, q.list());
         	trans.commit();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
@@ -430,20 +430,6 @@ public class DBUtil {
         	session.close();
         }
 		log.info("Zaaktualizowano transfer");
-	}
-	
-
-	/**
-	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
-	 * @param clazz typ na jaki ma być rzutowana lista
-	 * @param c lista dowolnego typu
-	 * @return funkcja zwraca listę ze zrzutowanymi elementami
-	 */
-	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-	    List<T> r = new ArrayList<T>(c.size());
-	    for(Object o: c)
-	      r.add(clazz.cast(o));
-	    return r;
 	}	
 	
 	/**
@@ -505,7 +491,7 @@ public class DBUtil {
 	    	SQLQuery q = session.createSQLQuery(qs);
 	    	q.setParameter("date1", date1);
 	    	q.setParameter("date2", date2);
-	    	resultList = (List<Object[]>) q.list();
+	    	resultList = castList(Object[].class, q.list());
 	    	trans.commit();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
@@ -530,7 +516,7 @@ public class DBUtil {
 	    	SQLQuery q = session.createSQLQuery(qs);
 	    	q.setParameter("date1", date1);
 	    	q.setParameter("date2", date2);
-	    	resultList = (List<Object[]>) q.list();
+	    	resultList = castList(Object[].class, q.list());
 	    	trans.commit();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
@@ -540,5 +526,18 @@ public class DBUtil {
         }
 		log.info("Report2 wykonano "+resultList.size());
 		return resultList;
+	}
+	
+	/**
+	 * funkcja rzutująca listę dowolnego typu na listę zadanego typu
+	 * @param clazz typ na jaki ma być rzutowana lista
+	 * @param c lista dowolnego typu
+	 * @return funkcja zwraca listę ze zrzutowanymi elementami
+	 */
+	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+	    List<T> r = new ArrayList<T>(c.size());
+	    for(Object o: c)
+	      r.add(clazz.cast(o));
+	    return r;
 	}
 }

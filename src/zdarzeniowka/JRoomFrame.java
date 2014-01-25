@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,29 +20,32 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
 
 public class JRoomFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -8038078091109185534L;
-	private JTabbedPane tabbedUserPane, tabbedDevicePane;
+	JTabbedPane tabbedUserPane;
+	JTabbedPane tabbedDevicePane;
 	private byte[] device;
 	private JPanel[] upane, dpane;
-	private JPanel cardUser, cardDevice;
+	JPanel cardUser;
+	JPanel cardDevice;
 	private JScrollPane[] scrollpane;
 	private JUserPanel[] userPanel;
 	private List<JUserDevicePanel> userDevicePanel;
 	private List<DBUser> userList;
-	private JButton showDeviceButton, showUserButton;
+	JButton showDeviceButton;
+	JButton showUserButton;
 	private GridBagConstraints c, cpane, csrane;
 	private Font normal;	
 	private JDSPanel dsPanel; 
 	private Logger  log = Logger.getLogger(JRoomFrame.class);
+	private Controller cont = new Controller();
 	
 	public JRoomFrame(Font font, String text){
 		super(text);
-		List<DBUser> userList = new LinkedList<DBUser>();
+		this.userList = new LinkedList<DBUser>();
 		initiate(font);
 	}
 	
@@ -151,13 +153,15 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		for (int i = 0; i < userList.size(); i++){
 			if (id == userList.get(i).getIdUser()){
 				this.userList.remove(i);
-				this.remove(cardUser);
 				initiate(normal);
-				this.revalidate();
 			}	
 		}
 		if (userList.size() == 0)
 			this.dispose();
+		else {
+			this.setContentPane(cardUser);
+		}
+		this.revalidate();
 	}
 	
 	public void moveUsers(int id){
@@ -199,23 +203,6 @@ public class JRoomFrame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton source = (JButton)e.getSource();
-		
-		if (source == showDeviceButton){
-			int index = tabbedUserPane.getSelectedIndex();
-			this.remove(cardUser);
-			tabbedDevicePane.setSelectedIndex(index);
-			this.setContentPane(cardDevice);
-			this.invalidate();
-			this.validate();
-		}
-		else if (source == showUserButton) {
-			int index = tabbedDevicePane.getSelectedIndex();
-			this.remove(cardDevice);
-			tabbedUserPane.setSelectedIndex(index);
-			this.setContentPane(cardUser);
-			this.invalidate();
-			this.validate();
-		}
+		cont.contJRoomFrameAL(e, this);
 	}
 }

@@ -5,17 +5,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.util.concurrent.ExecutionException;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.SwingWorker;
 
 public class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
-	private int oldRoomNo = -1;
+	int oldRoomNo = -1;
 	
 	public JUserPanel(Font font){
 		super(font);	
@@ -119,95 +115,6 @@ public class JUserPanel extends JBasicPanel {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		JButton source = (JButton) e.getSource();
-			if (source == editButton){
-				oldRoomNo = Integer.parseInt(this.textFields[4].getText());
-				this.editabling(true, 3);
-			}
-			if (source == okButton){
-				Object[] options = {"Tak","Nie",};
-				if(checkForm(0)){
-					int n = JOptionPane.showOptionDialog(
-						    this,
-						    "Czy na pewno chcesz potwierdzić?",
-						    "Potwierdź zmiany.",
-						    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
-		                    options[1]);
-					if (n == 0) {
-						this.editabling(false, 3);
-						
-						SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
-				            @Override
-				            protected Boolean doInBackground() throws Exception {
-				    			dbUtil = new DBUtil();
-					    			JTextField[] tf = textFields;
-					    			return dbUtil.updateUser(tf[0].getText(), tf[1].getText(), tf[2].getText(), Integer.parseInt(tf[4].getText()), Integer.parseInt(tf[5].getText()), Integer.parseInt(tf[6].getText()), Integer.parseInt(tf[3].getText()));
-				    		}
-				            
-				            @Override
-				            protected void done() {
-				            	Boolean result = null;
-				            	try {
-				            		result = this.get();
-								} catch (InterruptedException | ExecutionException e1) {
-									log.error("Błąd SWING Workera");
-									e1.printStackTrace();
-								}	
-				            	if (result == null){
-				            		JOptionPane.showMessageDialog(topPanel, "Aktualizacja danych nie powiodła się!", "Błąd aktualizacji", 
-				        					JOptionPane.ERROR_MESSAGE);
-				        			log.error("Błąd aktualizacji");
-				            	}
-				            }
-				       };
-				       	worker.execute();
-					    int roomNo = Integer.parseInt(this.textFields[4].getText());
-
-			       		log.info("Stary numer " + oldRoomNo + "nowy numer " + roomNo);
-				       	if ((oldRoomNo != roomNo) && (frame != null)){
-				       		for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
-				       			if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == roomNo){
-					       			dsPanel.increaseCountTabAt(roomNo);
-									dsPanel.getRoomButton().get(i).increaseUsersInRoom();
-						       		dsPanel.getRoomButton().get(i).repaint();
-				       			}
-				       			else if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == oldRoomNo){
-				       				dsPanel.decreaseCountTabAt(oldRoomNo);
-									dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
-						       		dsPanel.getRoomButton().get(i).repaint();
-				       			}
-				       		}
-				       		frame.refreshUsers(Integer.parseInt(this.getUserId()));
-				       		frame.repaint();
-				       	}
-					}
-				}
-			}	
-			else if(source == deleteButton){
-				int id = Integer.parseInt(textFields[3].getText());
-				log.info(this.getClass());
-				boolean removed = remove((Object)this);
-	    		String roomNo = this.textFields[4].getText();
-	    		log.info(roomNo);
-	    		if (removed){
-	    			for (int i = 0; i < dsPanel.getRoomButton().size(); i++){
-		    			if (Integer.parseInt(dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
-		    				dsPanel.decreaseCountTabAt(Integer.parseInt(roomNo));
-		    				dsPanel.getRoomButton().get(i).decreaseUsersInRoom();
-		    			}
-		    		}
-		    		if (frame != null){
-		    			frame.refreshUsers(id);
-		    			frame.revalidate();
-		    		}
-		    		else if (rframe != null){
-		    			rframe.deleteFromResultTable();
-		    			rframe.dispose();
-		    		}
-		  
-		    		
-				}
-
-	    	}
-		}
+		cont.contJUserPanelAL(e, this);
+	}
 }

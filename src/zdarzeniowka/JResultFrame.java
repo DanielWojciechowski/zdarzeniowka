@@ -10,21 +10,17 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import org.hibernate.cfg.annotations.reflection.XMLContext.Default;
-
 public class JResultFrame extends JFrame{
 	private static final long serialVersionUID = -7670041249218891721L;
 	private JBasicPanel result;
 	private JScrollPane scrollPane;
 	private GridBagConstraints c;
 	private DBUtil util;
-	private JDSPanel dsPanel;
 	private JMyTable resultTable; 
 	
 	public JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
 		super(txt);
 		this.resultTable = resultTable;
-		this.dsPanel = dsPanel;
 		result = new JUserPanel(font, false, dsPanel, this);
 		result.setForm(user.getFirstName(), user.getLastName(), user.getEmail(), user.getIdUser(), user.getRoomNo(), user.getAlbumNo(), user.getPort());
 		initiate(false);

@@ -74,9 +74,9 @@ public class JChart extends JComponent{
 	    g.setColor(color2);	 
 	    avg = sum/(ipx.length);
 
-	    log.info("AVG "+avg);
+	    log.debug("AVG "+avg);
 	    g.setColor(color1);
-	    log.info("IPX size " + ipx.length + "ipy size " + ipy.length);
+	    log.debug("IPX size " + ipx.length + "ipy size " + ipy.length);
 	    g.drawPolyline(ipx, ipy, ipx.length);	  
 	    g.drawString("Transfer = " +py.get(0)+ "MB/s", width - 123, 15);
 	    g.setColor(color2);

@@ -68,18 +68,6 @@ public class JRoomButton extends JButton{
 			}
 
 		}
-		
-		
-		/*
-		int value = usersInRoom;
-		for (int i = 0; i < value; i++){
-			if (i == 2){
-				icon[i].paintIcon(this, g, width-15, height-13-i*17);
-			}
-			else if (i == 0 || i == 1) {
-				icon[i].paintIcon(this, g, width-15, height-14-i*17);;
-			}		
-		}*/
 	}
 	
 	public void increaseUsersInRoom(){
