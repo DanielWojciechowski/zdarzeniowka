@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -104,29 +108,33 @@ public class JReportPanel extends JPanel implements ActionListener {
     	t = new JXTransformer(label[6]);
         t.rotate(Math.toRadians(-90)); 
         
-        //dbutil = new DBUtil();
-        Date latestDate = new Date(0);//dbutil.getLatestDate();
-        Date earliestDate = new Date(System.currentTimeMillis());//dbutil.getEarliestDate();
-        SpinnerModel model0 = new SpinnerDateModel(
-        		latestDate,
-                latestDate, //start
-                earliestDate, //end
-                Calendar.DAY_OF_MONTH
-        ); 
-        SpinnerModel model1 = new SpinnerDateModel(
-                earliestDate,
-                latestDate, //start
-                earliestDate, //end
-                Calendar.DAY_OF_MONTH
-        ); 
         spinner = new JSpinner[2];
-        spinner[0] = new JSpinner(model0);
-        spinner[1] = new JSpinner(model1);
-        spinner[0].setFont(normal);
-        spinner[1].setFont(normal);
-        spinner[0].setPreferredSize(new Dimension(130,22));
-        spinner[1].setPreferredSize(new Dimension(130,22));
-        
+
+        Date latestDate = new Date(5000000);
+        Date earliestDate =new Date(System.currentTimeMillis());
+        	
+		SpinnerModel model0 = new SpinnerDateModel(
+		        latestDate,
+		        latestDate, //start
+		        earliestDate, //end
+		        Calendar.DAY_OF_MONTH
+		); 
+		SpinnerModel model1 = new SpinnerDateModel(
+		        earliestDate,
+		        latestDate, //start
+		        earliestDate, //end
+		        Calendar.DAY_OF_MONTH
+		);
+		spinner[0] = new JSpinner(model0);
+		spinner[1] = new JSpinner(model1);
+
+	    spinner[0].setFont(normal);
+	    spinner[1].setFont(normal);
+	    spinner[0].setPreferredSize(new Dimension(130,22));
+	    spinner[1].setPreferredSize(new Dimension(130,22));
+	    spinner[0].setEditor(new JSpinner.DateEditor(spinner[0], "dd.MM.yyyy"));
+	    spinner[1].setEditor(new JSpinner.DateEditor(spinner[1], "dd.MM.yyyy"));
+
         csp.anchor = GridBagConstraints.LINE_END;
         csp.insets = insets0;
         crPane.add(label[0], csp);
