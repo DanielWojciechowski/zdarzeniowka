@@ -11,6 +11,7 @@ import java.awt.Insets;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 
 public class JResultFrame extends JFrame{
@@ -20,6 +21,7 @@ public class JResultFrame extends JFrame{
 	private GridBagConstraints c;
 	private DBUtil util;
 	private JMyTable resultTable; 
+	private JViewport viewport = new JViewport();
 	
 	public JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
 		super(txt);
@@ -56,7 +58,7 @@ public class JResultFrame extends JFrame{
 			this.add(result, c);	
 		}
 		else{
-			scrollPane = new JScrollPane(result);	
+			scrollPane = new JScrollPane(result);
 			scrollPane.setPreferredSize(d);
 			scrollPane.setMinimumSize(d);
 			scrollPane.setMaximumSize(d);
@@ -73,10 +75,6 @@ public class JResultFrame extends JFrame{
 		this.getContentPane().setBackground(bg);
 		if (scrollPane != null){
 			scrollPane.getViewport().setBackground(bg);
-			Component[] bp = scrollPane.getViewport().getComponents();
-		    for (int i = 0; i < scrollPane.getComponentCount(); i++){
-		    	bp[i].setBackground(bg);
-		    }
 		}
 		result.setComponentsBackground(bg);	
 

@@ -252,6 +252,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	public void showResultFrame(DBUserDevice userDevice){
 		String frameLabel = "Urządzenie użytkownika, id:"+String.valueOf(userDevice.getIdDevice());
 		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, userDevice, resultTable);
+		resultFrame.setComponentsBackground(this.getBackground());
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);
@@ -263,6 +264,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	public void showResultFrame(DBNetworkDevice networkDevice){
 		String frameLabel = "Urządzenie sieciowe, id:"+String.valueOf(networkDevice.getIdDevice());
 		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, networkDevice, resultTable);
+		resultFrame.setComponentsBackground(this.getBackground());
 		resultFrame.setVisible(true);
 		resultFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		resultFrame.setLocation(400, 200);
