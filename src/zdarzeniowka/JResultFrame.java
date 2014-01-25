@@ -1,17 +1,14 @@
 package zdarzeniowka;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 
 public class JResultFrame extends JFrame{
@@ -21,7 +18,6 @@ public class JResultFrame extends JFrame{
 	private GridBagConstraints c;
 	private DBUtil util;
 	private JMyTable resultTable; 
-	private JViewport viewport = new JViewport();
 	
 	public JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
 		super(txt);
