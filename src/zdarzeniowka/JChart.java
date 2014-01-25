@@ -66,10 +66,9 @@ public class JChart extends JComponent{
 	    ipx = convertIntegers(px);
 	    g.setColor(color2);	 
 	    avg = sum/(ipx.length);
-	    log.info("AVG "+avg);
+	    log.debug("AVG "+avg);
 	    g.drawLine(0, height-avg*SCALE, width-1, height-avg*SCALE);
 	    g.setColor(color1);
-	    log.info("IPX size " + ipx.length + "ipy size " + ipy.length);
 	    g.drawPolyline(ipx, ipy, ipx.length);	    
    	
 	  }

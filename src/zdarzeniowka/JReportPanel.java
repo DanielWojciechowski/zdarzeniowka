@@ -10,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +17,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -46,14 +42,13 @@ public class JReportPanel extends JPanel implements ActionListener {
     private JLabel[] label;
 	private JXTransformer t;
 	private Insets insets1, insets0;
-	private DBUtil dbutil = null;
+    DBUtil dbUtil = new DBUtil();
 
     public JReportPanel(Font font){
             super();
             paint(font);
             
             SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
-                    DBUtil dbUtil = new DBUtil();
         @Override
         protected Void doInBackground() throws Exception {
                 List<Integer> tab = dbUtil.getAllUsersIds();

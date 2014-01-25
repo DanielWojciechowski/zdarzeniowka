@@ -45,7 +45,7 @@ public class Generator implements Runnable {
 		while(true){
 			while(timer<DB_REFRESH_TIME){
 				activeUsers = r.nextInt(dataUse.length+1);
-				log.info("Active "+activeUsers);
+				log.debug("Active "+activeUsers);
 				for(int i = 0; i<activeUsers; i++){
 					boolean ok = true;
 					while(ok){
@@ -61,12 +61,11 @@ public class Generator implements Runnable {
 					dataUse[usr][1] = (double)dataUse[usr][1] + randomValue;
 					if(limit>max)
 						limit = max;
-					//log.info(usr + " " +randomValue);
 				}
 				timer+=TIME;
-				log.info("TIME: "+timer+ " Suma: " + (int)Math.round(MAX_BANDWITH-max));
+				log.debug("TIME: "+timer+ " Suma: " + (int)Math.round(MAX_BANDWITH-max));
 				chart.setY1((int)Math.round(MAX_BANDWITH-max), TIME);
-				log.info("=====================");
+				log.debug("=====================");
 				max = MAX_BANDWITH;
 				limit=LIMIT;
 				selectedUsers.removeAll(selectedUsers);
