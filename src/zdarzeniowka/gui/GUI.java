@@ -81,7 +81,7 @@ public class GUI implements ActionListener{
 		frame.setLayout(new GridBagLayout());
 	}
 	
-	public void addComponents(){
+	private void addComponents(){
 		
 		initiate();
 		GridBagConstraints c = new GridBagConstraints();
@@ -91,6 +91,7 @@ public class GUI implements ActionListener{
 				label2 = new JLabel("Version 1.1 stable");
 		
 		label.setFont(header);
+		label2.setFont(italic);
 		topPane.setLayout(new GridBagLayout());
 		topPane.setOpaque(false);
 		c.anchor = GridBagConstraints.LINE_START;
@@ -134,7 +135,7 @@ public class GUI implements ActionListener{
 		frame.setVisible(true);		
 	}
 	
-	public static String getPath(){
+	static String getPath(){
 		return path;
 	}
 

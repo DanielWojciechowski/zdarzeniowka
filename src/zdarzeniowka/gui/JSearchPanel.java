@@ -27,40 +27,37 @@ import zdarzeniowka.db.DBNetworkDevice;
 import zdarzeniowka.db.DBUser;
 import zdarzeniowka.db.DBUserDevice;
 
-public class JSearchPanel extends JPanel implements ItemListener, ActionListener{
-
+class JSearchPanel extends JPanel implements ItemListener, ActionListener{
 	private static final long serialVersionUID = 4379112746462083318L;
 	private final String OPTION1 = "Wyszukaj uzytkownika", OPTION2 = "Wyszukaj sprzet uzytkownika", 
 			OPTION3 = "Wyszukaj sprzet sieciowy";
-	JPanel cardSearchPanel;
 	private JPanel resultPane;
-	private JPanel buttonPanel;;
-
+	private JPanel buttonPanel;
 	private Font normal;
-	static JMyTable resultTable;
 	private JScrollPane scrollPane;
 	private JPanel[] searchPanel, searchPane;
     private JLabel[] label, label2;
     private JLabel result;
-    JTextField[] textField;
-    JButton[] searchButton;
-    JButton deleteButton;
-	JButton showButton;
-	private GridBagConstraints c = new GridBagConstraints(), cbutton = new GridBagConstraints(), 
+    private GridBagConstraints c = new GridBagConstraints(), cbutton = new GridBagConstraints(), 
 			cpane = new GridBagConstraints(), csearch = new GridBagConstraints(), 
 			cresult = new GridBagConstraints();
 	private Insets insets1, insets0;
-    JComboBox<String>[] cb;
-	String[] comboBoxItems = {OPTION1, OPTION2, OPTION3};
 	private String[] comboBox1 = {"Imię", "Nazwisko", "Numer pokoju", "Numer albumu"};
 	private String[] comboBox23 = {"Adres MAC", "Adres IP"};
 	private String[] columnNames0 = {"Id", "Imie", "Nazwisko", "Pokój", "Nr Albumu"};
 	private String[] columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
+	static JMyTable resultTable;
+	JPanel cardSearchPanel;
+    JTextField[] textField;
+    JButton[] searchButton;
+    JButton deleteButton;
+	JButton showButton;
+	JComboBox<String>[] cb;
+	String[] comboBoxItems = {OPTION1, OPTION2, OPTION3};
 	DefaultTableModel userModel;
 	DefaultTableModel deviceModel;
 	JDSPanel dsPanel;
 	Controller cont = new Controller();
-	
 	String[] category = {"DBUser", "DBUserDevice", "DBNetworkDevice"};
 	String[] criterium1 = {"firstName","lastName", "roomNo", "albumNo"};
 	String[] criterium2 = {"mac", "ip"};
@@ -68,7 +65,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 	List<DBUserDevice> userDeviceResultList = null;
 	List<DBNetworkDevice> networkDeviceResultList = null;
 	
-	public JSearchPanel(Font font, JDSPanel dsPanel){
+	JSearchPanel(Font font, JDSPanel dsPanel){
 		super();
 		initiate(font);
 		this.dsPanel = dsPanel;
@@ -76,7 +73,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 
 	}
 
-	public void initiate(Font font){
+	private void initiate(Font font){
 		userModel = new DefaultTableModel(columnNames0,0);
     	deviceModel = new DefaultTableModel(columnNames1, 0);
 		resultTable = new JMyTable();
@@ -224,7 +221,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
         cardSearchPanel.add(searchPanel[2], OPTION3);
 	}
 	
-	public void setComponentsBackground(Color bg){
+	void setComponentsBackground(Color bg){
 		this.setBackground(bg);
 		cardSearchPanel.setBackground(bg);
 		resultPane.setBackground(bg);
@@ -235,7 +232,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		}
 	}
 	
-	public void showResultFrame(DBUser user){
+	void showResultFrame(DBUser user){
 		String frameLabel = "Użytkownik, id:"+String.valueOf(user.getIdUser());
 		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, user, dsPanel, resultTable);
 		resultFrame.setComponentsBackground(this.getBackground());
@@ -247,7 +244,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		resultFrame.setVisible(true);
 	}
 	
-	public void showResultFrame(DBUserDevice userDevice){
+	void showResultFrame(DBUserDevice userDevice){
 		String frameLabel = "Urządzenie użytkownika, id:"+String.valueOf(userDevice.getIdDevice());
 		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, userDevice, resultTable);
 		resultFrame.setComponentsBackground(this.getBackground());
@@ -259,7 +256,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 		resultFrame.setVisible(true);
 	}	
 	
-	public void showResultFrame(DBNetworkDevice networkDevice){
+	void showResultFrame(DBNetworkDevice networkDevice){
 		String frameLabel = "Urządzenie sieciowe, id:"+String.valueOf(networkDevice.getIdDevice());
 		JResultFrame resultFrame = new JResultFrame(normal, frameLabel, networkDevice, resultTable);
 		resultFrame.setComponentsBackground(this.getBackground());

@@ -11,28 +11,28 @@ import javax.swing.JTextField;
 
 import zdarzeniowka.db.DBPort;
 
-public class JUserPanel extends JBasicPanel {
+class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
 	int oldRoomNo = -1;
 	
-	public JUserPanel(Font font){
+	JUserPanel(Font font){
 		super(font);	
 		paint();
 	}
 	
-	public JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JRoomFrame frame){
+	JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JRoomFrame frame){
 		super(font, editable, dsPanel, frame);
 		paint();
 		cont.editabling(editable, 3, this);
 	}
 	
-	public JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JResultFrame frame){
+	JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JResultFrame frame){
 		super(font, editable, dsPanel, frame);
 		paint();
 		cont.editabling(editable, 3, this);
 	}
 	
-	public void paint(){
+	private void paint(){
 		this.setLayout(new GridBagLayout());
 		labels = new JLabel[7];
 		textFields = new JTextField[7];
@@ -97,7 +97,7 @@ public class JUserPanel extends JBasicPanel {
 		
 	}
 	
-	public void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, DBPort port){
+	void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, DBPort port){
 		textFields[0].setText(name);
 		textFields[1].setText(lastName);
 		textFields[2].setText(email);
@@ -107,7 +107,7 @@ public class JUserPanel extends JBasicPanel {
 		textFields[6].setText(String.valueOf(port.getPortNo()));	
 	}
 	
-	public String getUserId(){
+	String getUserId(){
 		return textFields[3].getText();
 	}
 	

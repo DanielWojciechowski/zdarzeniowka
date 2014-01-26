@@ -18,7 +18,7 @@ import zdarzeniowka.db.DBUser;
 import zdarzeniowka.db.DBUserDevice;
 import zdarzeniowka.db.DBUtil;
 
-public class JResultFrame extends JFrame{
+class JResultFrame extends JFrame{
 	private static final long serialVersionUID = -7670041249218891721L;
 	private JBasicPanel result;
 	private JScrollPane scrollPane;
@@ -26,7 +26,7 @@ public class JResultFrame extends JFrame{
 	private DBUtil util;
 	JMyTable resultTable; 
 	
-	public JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
+	JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
 		super(txt);
 		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		this.resultTable = resultTable;
@@ -35,7 +35,7 @@ public class JResultFrame extends JFrame{
 		initiate(false);
 	}
 	
-	public JResultFrame(Font font, String txt, DBUserDevice userDevice, JMyTable resultTable){
+	JResultFrame(Font font, String txt, DBUserDevice userDevice, JMyTable resultTable){
 		super(txt);
 		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		this.resultTable = resultTable;
@@ -45,7 +45,7 @@ public class JResultFrame extends JFrame{
 		initiate(true);
 	}
 	
-	public JResultFrame(Font font, String txt, DBNetworkDevice networkDevice, JMyTable resultTable){
+	JResultFrame(Font font, String txt, DBNetworkDevice networkDevice, JMyTable resultTable){
 		super(txt);
 		this.resultTable = resultTable;
 		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
@@ -73,11 +73,11 @@ public class JResultFrame extends JFrame{
 		}
 	}
 	
-	public JBasicPanel getResult(){
+	JBasicPanel getResult(){
 		return result;
 	}
 	
-	public void setComponentsBackground(Color bg){
+	void setComponentsBackground(Color bg){
 		this.getContentPane().setBackground(bg);
 		if (scrollPane != null){
 			scrollPane.getViewport().setBackground(bg);

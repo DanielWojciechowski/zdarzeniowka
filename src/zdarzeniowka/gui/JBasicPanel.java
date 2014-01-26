@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 import zdarzeniowka.db.DBPort;
 import zdarzeniowka.db.DBUtil;
 
-public abstract class JBasicPanel extends JPanel implements ActionListener{
+abstract class JBasicPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 5020407406483635930L;
 	protected JPanel topPanel, botPanel, buttonPanel;
 	protected JScrollPane scrollPane;
@@ -40,12 +40,12 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 	DBUtil dbUtil = new DBUtil();
 	Controller cont = new Controller();
 	
-	public JBasicPanel(Font font) {
+	JBasicPanel(Font font) {
 		super();
 		initiate(font);
 	}
 	
-	public JBasicPanel(Font font, boolean whatever, JDSPanel dsPanel, JRoomFrame frame){
+	JBasicPanel(Font font, boolean whatever, JDSPanel dsPanel, JRoomFrame frame){
 		super();
 		initiate(font);
 		addButtons();
@@ -53,7 +53,7 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		this.frame = frame;	
 	}
 	
-	public JBasicPanel(Font font, boolean whatever, JDSPanel dsPanel, JResultFrame rframe){
+	JBasicPanel(Font font, boolean whatever, JDSPanel dsPanel, JResultFrame rframe){
 		super();
 		initiate(font);
 		addButtons();
@@ -61,35 +61,25 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		this.rframe = rframe;	
 	}
 	
-	public JBasicPanel(Font font, boolean whatever, JResultFrame rframe){
+	JBasicPanel(Font font, boolean whatever, JResultFrame rframe){
 		super();
 		this.rframe = rframe;	
 		initiate(font);
 		addButtons();
 	}
 
-	public JBasicPanel(Font font, boolean whatever, JRoomFrame frame){
+	JBasicPanel(Font font, boolean whatever, JRoomFrame frame){
 		super();
 		this.frame = frame;	
 		initiate(font);
 		addButtons();
 	}
 
-	public JBasicPanel(Font font, boolean whatever){
+	JBasicPanel(Font font, boolean whatever){
 		super();
 		initiate(font);
 		addButtons();
 	}
-	
-	
-	 public void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, 
-			 DBPort port) {}
-
-	 public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, 
-			 String otherInfo){}
-
-	
-	public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){}
 	
 	private void initiate(Font font){
 		normal = font;
@@ -129,7 +119,17 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		buttonPanel.add(deleteButton, cbutton);
 	}
 	
-	public void setComponentsBackground(Color bg){
+	 void setForm(String name, String lastName, String email, int userId, int roomNo, int albumNo, 
+			 DBPort port) {}
+
+	 void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, 
+			 String otherInfo){}
+
+	
+	void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){}
+	
+
+	void setComponentsBackground(Color bg){
 		this.setBackground(bg);
 		topPanel.setBackground(bg);
 		botPanel.setBackground(bg);
@@ -138,11 +138,11 @@ public abstract class JBasicPanel extends JPanel implements ActionListener{
 		}
 	}
 	
-	public void setTextField(int index, String text){
+	void setTextField(int index, String text){
 		textFields[index].setText(text);		
 	}
 
-	public String getRoomNo(){
+	String getRoomNo(){
 		return null;
 	}
 }

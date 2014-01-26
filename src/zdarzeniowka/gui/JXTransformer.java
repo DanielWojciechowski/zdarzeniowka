@@ -29,16 +29,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * Container which can transform its children, for example:<br>
- * <pre>
- * JButton button = new JButton("Hello");
- * JXTransformer t = new JXTransformer(button);
- * t.rotate(Math.PI/2);</pre> 
- * 
- * <strong>Note:</strong>
- * This component was designed to transform simple components 
- * like JButton, JLabel etc.   
- * 
  * @author Alexander Potochkin
  * 
  * https://swinghelper.dev.java.net/
@@ -212,9 +202,6 @@ public class JXTransformer extends JPanel {
     }
 
     private class MagicGlassPane extends JPanel {
-        /**
-		 * 
-		 */
 		private static final long serialVersionUID = -450923132403557340L;
 		private Component mouseEnteredComponent;
         private Component mouseDraggedComponent;
@@ -439,9 +426,7 @@ public class JXTransformer extends JPanel {
         }
     }
 
-    /**
-     * Never returns null
-     */
+
     public AffineTransform getTransform() {
         return new AffineTransform(at);
     }

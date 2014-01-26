@@ -12,38 +12,37 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
-import javax.swing.border.EtchedBorder;
 
 
-public class JReportPanel extends JPanel implements ActionListener {
+class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
 	private JPanel  topPane, chartPane, botPane;
-	JChart chart;
-	JButton saveButton;
 	private GridBagConstraints c, ctop, cchart, cbot;
 	private String[] comboBox0 = {"Zużycie sieci ogółem", "Zużycie sieci wg użytkowników"};
-    JComboBox<String> cb;
-    JSpinner[] spinner;
-    private JLabel[] label;
+	private JLabel[] label;
 	private JXTransformer t;
 	private Insets insets1, insets0;
+	private Color color;
+	private Controller cont = new Controller();
+	
+	JChart chart;
+	JButton saveButton;
+    JComboBox<String> cb;
+    JSpinner[] spinner;
 	Date latestDate;
 	Date earliestDate;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	private Color color;
-	private Controller cont = new Controller();
+	
 
-    public JReportPanel(final Font font){
+    JReportPanel(final Font font){
             super();
             cont.contJReportPanelStartGen(this, font);            
     }
@@ -54,7 +53,6 @@ public class JReportPanel extends JPanel implements ActionListener {
 		topPane = new JPanel();
 		chartPane = new JPanel();
 		chart = new JChart(450, 240);
-		
 		saveButton = new JButton("Zapisz do pliku");
 		c = new GridBagConstraints();
 		ctop = new GridBagConstraints();
@@ -91,7 +89,6 @@ public class JReportPanel extends JPanel implements ActionListener {
     	t = new JXTransformer(label[6]);
         t.rotate(Math.toRadians(90)); 
         this.setComponentsBackground(color);
-        
 		SpinnerModel model0 = new SpinnerDateModel(
 		        latestDate,
 		        new Date(latestDate.getTime() - 86400000), //start
@@ -113,7 +110,6 @@ public class JReportPanel extends JPanel implements ActionListener {
 	    spinner[1].setFont(normal);
 	    spinner[0].setPreferredSize(new Dimension(130,22));
 	    spinner[1].setPreferredSize(new Dimension(130,22));
-
         ctop.anchor = GridBagConstraints.LINE_END;
         ctop.insets = insets0;
         topPane.add(label[0], ctop);
@@ -124,7 +120,6 @@ public class JReportPanel extends JPanel implements ActionListener {
         topPane.add(label[1], ctop);
         ctop.gridx = 3;
         topPane.add(spinner[1], ctop);
-        
         ctop.insets = insets0;
         ctop.gridy = 1;
         ctop.gridx = 0;
@@ -141,8 +136,6 @@ public class JReportPanel extends JPanel implements ActionListener {
         ctop.gridwidth = 0;
         ctop.insets = new Insets(10, 10, 0, 0);
         topPane.add(saveButton, ctop);
-        //crPane.setBorder(BorderFactory.createLineBorder(Color.black));
-        
         cchart.insets = new Insets(30, 0, 0, 5);
         cchart.anchor = GridBagConstraints.FIRST_LINE_END;
         chartPane.add(label[3], cchart);
@@ -157,8 +150,6 @@ public class JReportPanel extends JPanel implements ActionListener {
         chartPane.add(label[4], cchart);
         cchart.gridx = 3;
         chartPane.add(label[5], cchart);
-        
-       
         cbot.anchor = GridBagConstraints.LINE_END;
         cbot.gridwidth = 1;
         cbot.insets = new Insets(0, 0, 0, 0);
@@ -171,11 +162,6 @@ public class JReportPanel extends JPanel implements ActionListener {
         cbot.gridwidth = 0;
         cbot.gridy = 2;
         botPane.add(label[7], cbot);
-        
-        JSeparator separator = new JSeparator(JSeparator.HORIZONTAL);
-        separator.setPreferredSize(new Dimension(600,1));
-        separator.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-        
         c.insets = new Insets(10,0,0,0);
         c.anchor = GridBagConstraints.CENTER;
         this.add(topPane, c);
@@ -183,7 +169,8 @@ public class JReportPanel extends JPanel implements ActionListener {
         c.insets = new Insets(20,0,0,0);
         this.add(botPane, c);
 	}
-	public void setComponentsBackground(Color bg){
+	
+	void setComponentsBackground(Color bg){
 		this.setBackground(bg);
 		topPane.setBackground(bg); 
 		chartPane.setBackground(bg); 
@@ -191,7 +178,7 @@ public class JReportPanel extends JPanel implements ActionListener {
 		t.setBackground(bg);
 	}
 	
-	public void setColor(Color c){
+	void setColor(Color c){
 		this.color = c;
 	}
 	

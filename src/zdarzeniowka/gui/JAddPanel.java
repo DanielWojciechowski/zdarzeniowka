@@ -15,33 +15,33 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
-public class JAddPanel extends JPanel implements ItemListener, ActionListener{
+class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	
 	private static final long serialVersionUID = -2513979177576640749L;
 	private JPanel[] addingPanel, buttonPanel;
+	private GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
+			c = new GridBagConstraints();
+	private final String OPTION1 = "Dodaj użytkownika", OPTION2 = "Dodaj sprzęt użytkownika", 
+			OPTION3 = "Dodaj sprzęt sieciowy";
+	private Font normal;
+	private Controller cont = new Controller();
+	
+	char[] deviceTypes = {'k','p','r','a','i','s'};
 	JBasicPanel[] panel;	
 	JPanel cardAddingPanel;
 	JComboBox<String> addingCB;
-	private GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),
-			c = new GridBagConstraints();
 	JButton[] confirmButton = new JButton[3];
 	JButton[] clearButton = new JButton[3];
-	private final String OPTION1 = "Dodaj użytkownika", OPTION2 = "Dodaj sprzęt użytkownika", 
-			OPTION3 = "Dodaj sprzęt sieciowy";
 	String comboBoxItems[] = {OPTION1, OPTION2, OPTION3}; 
-	private Font normal;
 	JDSPanel dsPanel;
 	
-	char[] deviceTypes = {'k','p','r','a','i','s'};
-	private Controller cont = new Controller();
-	
-	public JAddPanel(Font font, JDSPanel dsPanel){
+	JAddPanel(Font font, JDSPanel dsPanel){
 		super();
 		this.dsPanel = dsPanel;
 		paint(font);		
 	}
 
-	public void paint(Font font){
+	private void paint(Font font){
 		addingPanel = new JPanel[3];
 		buttonPanel = new JPanel[3];
 		panel = new JBasicPanel[3];	
@@ -121,7 +121,7 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
         cardAddingPanel.add(addingPanel[2], OPTION3);	
 	}
 	
-	public void setComponentsBackground(Color bg){
+	void setComponentsBackground(Color bg){
 		this.setBackground(bg);
 		for (int i = 0; i < 3; i++){
 			panel[i].setComponentsBackground(bg);

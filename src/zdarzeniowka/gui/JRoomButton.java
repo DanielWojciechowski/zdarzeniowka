@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class JRoomButton extends JButton{
+class JRoomButton extends JButton{
 	private static final long serialVersionUID = 7475937080439185047L;
 	private String txt;
 	private int width, height, usersInRoom;
@@ -22,18 +22,8 @@ public class JRoomButton extends JButton{
 	private JLabel label;
 	private GridBagConstraints c;
 	private ImageIcon[] icon;
-	
 
-	public JRoomButton(String txt, Font font){ 
-		super(imageIcon);
-		super.setHorizontalAlignment(SwingConstants.CENTER );
-		super.setVerticalAlignment(SwingConstants.CENTER );
-		super.setBorder(BorderFactory.createEmptyBorder());
-		super.setContentAreaFilled(false);
-		initiate(txt, font, 3);
-	}
-	
-	public JRoomButton(String txt, Font font, int users){ 
+	JRoomButton(String txt, Font font, int users){ 
 		super(imageIcon);
 		super.setHorizontalAlignment(SwingConstants.CENTER );
 		super.setVerticalAlignment(SwingConstants.CENTER );
@@ -42,14 +32,14 @@ public class JRoomButton extends JButton{
         super.setOpaque(false);
 		initiate(txt, font, users);
 	}
-	public void initiate(String txt, Font font, int value){
+	
+	private void initiate(String txt, Font font, int value){
 		super.setMinimumSize(new Dimension(90, 50));
 		super.setPreferredSize(new Dimension(90, 50));
 		super.setMaximumSize(new Dimension(90, 50));
 		super.setRolloverIcon(imageIcon);
 		this.setFont(font);
-		this.txt = txt;
-		
+		this.txt = txt;	
 		usersInRoom = value;
 		color = new Color[3];
 		label = new JLabel(txt);
@@ -60,7 +50,6 @@ public class JRoomButton extends JButton{
 		this.add(label,c);
 		icon = new ImageIcon[3];
 		icon = setIcons();
-		
 	}
 	
 	@Override
@@ -80,36 +69,35 @@ public class JRoomButton extends JButton{
 		}
 	}
 	
-	public void increaseUsersInRoom(){
+	void increaseUsersInRoom(){
 		this.usersInRoom++;
 	}
 	
-	public void decreaseUsersInRoom(){
+	void decreaseUsersInRoom(){
 		this.usersInRoom--;
 	}
 	
-	public int getUsersInRoom(){
+	int getUsersInRoom(){
 		return this.usersInRoom;
 	}
 	
-	public ImageIcon[] setIcons(){
+	ImageIcon[] setIcons(){
 		for (int i = 0; i < 3; i++){
 			icon[i] = new ImageIcon("icons/available.png");
 		}
 		return icon;
 	}
 	
-	public Color[] setColor(){
+	Color[] setColor(){
 		for (int i = 0; i < 3; i++){
 			color[i] = new Color(0f,1f,0f, 0.9f);
 		}
 		return color;
 	}
 	
+	@Override
 	public String getText(){
 		return txt;
 	}
-
-	
 }
 

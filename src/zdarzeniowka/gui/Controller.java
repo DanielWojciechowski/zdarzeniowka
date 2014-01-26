@@ -7,7 +7,9 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,12 +43,12 @@ import zdarzeniowka.db.DBUserDevice;
 import zdarzeniowka.db.DBUtil;
 import zdarzeniowka.gen.Generator;
 
-public class Controller{
+class Controller{
 	private DBUtil dbUtil = new DBUtil();
 	private Logger log = Logger.getLogger(Controller.class);
 	
 	
-	public void contDSPanelAL(ActionEvent e, final JDSPanel ds) {
+	void contDSPanelAL(ActionEvent e, final JDSPanel ds) {
 		final Object source = e.getSource();
 		if (source instanceof JRoomButton){
 			final String buttonText = ((JRoomButton) source).getText();
@@ -68,7 +71,7 @@ public class Controller{
 		}
 	}
 	
-	public void contJAddPanelISC(ItemEvent e, JAddPanel addPanel) {
+	void contJAddPanelISC(ItemEvent e, JAddPanel addPanel) {
 		if(e.getStateChange() == ItemEvent.DESELECTED){
 			String item = (String) e.getItem();
 			if(item == addPanel.comboBoxItems[0])
@@ -85,7 +88,7 @@ public class Controller{
 	        cl.show(addPanel.cardAddingPanel, (String)e.getItem());
 		}
 	}
-	public void contJAddPanelAL(ActionEvent e, final JAddPanel addPanel) {
+	void contJAddPanelAL(ActionEvent e, final JAddPanel addPanel) {
 		Object source = e.getSource();
 		final int tmp = addPanel.addingCB.getSelectedIndex();
 		if (source == addPanel.confirmButton[tmp]){
@@ -159,7 +162,7 @@ public class Controller{
 		}
 	}
 	
-	public void contJSearchPanelAL(ActionEvent e, final JSearchPanel searchPanel) {
+	void contJSearchPanelAL(ActionEvent e, final JSearchPanel searchPanel) {
 		Object source = e.getSource();
 		final int tmp = searchPanel.cb[0].getSelectedIndex();
 		if (source == searchPanel.searchButton[tmp]){
@@ -295,7 +298,7 @@ public class Controller{
 		
 	}
 	
-	public void contJSearchPanelISC(ItemEvent e, JSearchPanel searchPanel) {
+	void contJSearchPanelISC(ItemEvent e, JSearchPanel searchPanel) {
 		if(e.getStateChange() == ItemEvent.DESELECTED){
 			String item = (String) e.getItem();
 			if(item == searchPanel.comboBoxItems[0])
@@ -318,7 +321,7 @@ public class Controller{
 		}
 	}	
 	
-	public void contJNetDevPanelAL(ActionEvent e, final JNetworkDevicePanel netDevPanel) {
+	void contJNetDevPanelAL(ActionEvent e, final JNetworkDevicePanel netDevPanel) {
 		JButton source = (JButton)e.getSource();
 		if (source == netDevPanel.editButton){
 			editabling(true, 2, netDevPanel);
@@ -376,7 +379,7 @@ public class Controller{
 		
 	}
 	
-	public void contJRoomFrameAL(ActionEvent e, JRoomFrame roomFrame) {
+	void contJRoomFrameAL(ActionEvent e, JRoomFrame roomFrame) {
 		JButton source = (JButton)e.getSource();
 		Color c = roomFrame.color;
 		if (source == roomFrame.showDeviceButton){
@@ -399,7 +402,7 @@ public class Controller{
 		}
 	}
 	
-	public void contJUserDevPanelAL(ActionEvent e, final JUserDevicePanel usrDevPanel) {
+	void contJUserDevPanelAL(ActionEvent e, final JUserDevicePanel usrDevPanel) {
 		JButton source = (JButton)e.getSource();
 		if (source == usrDevPanel.editButton){
 			editabling(true, 2, usrDevPanel);
@@ -464,7 +467,7 @@ public class Controller{
 		
 	}
 	
-	public void contJUserPanelAL(ActionEvent e, final JUserPanel usrPanel) {
+	void contJUserPanelAL(ActionEvent e, final JUserPanel usrPanel) {
 		JButton source = (JButton) e.getSource();
 		if (source == usrPanel.editButton){
 			usrPanel.oldRoomNo = Integer.parseInt(usrPanel.textFields[4].getText());
@@ -555,7 +558,7 @@ public class Controller{
 	   	}
 	}
 	
-	public boolean remove(final Object obj){
+	boolean remove(final Object obj){
 		boolean removed = false;
 		log.info("start DELETING");
 		Object[] options = {"Tak","Nie",};
@@ -605,7 +608,7 @@ public class Controller{
 		return removed;
 	}
 	
-	public void contJReportPanelAL(ActionEvent e, final JReportPanel repPanel) {
+	void contJReportPanelAL(ActionEvent e, final JReportPanel repPanel) {
 		JButton source = (JButton) e.getSource();
 		Date start = (Date) repPanel.spinner[0].getValue();
 		Date end = (Date) repPanel.spinner[1].getValue();
@@ -679,7 +682,7 @@ public class Controller{
 		}
 	}
 	
-	public void contJReportPanelStartGen(final JReportPanel repPanel, final Font font){
+	void contJReportPanelStartGen(final JReportPanel repPanel, final Font font){
 		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 	        @Override
 	        protected Void doInBackground() throws Exception {
@@ -695,7 +698,7 @@ public class Controller{
         worker.execute();
 	}
 	
-	public int getObjIndex(Object obj){
+	int getObjIndex(Object obj){
 		int index = 0;
 		if(obj.getClass() == JUserPanel.class)
 			index = Integer.parseInt(((JUserPanel)obj).textFields[3].getText());
@@ -706,7 +709,7 @@ public class Controller{
 		return index;
 	}
 	
-	public String getObjCategory(Object obj){
+	String getObjCategory(Object obj){
 		String cat = null;
 		if(obj.getClass() == JUserPanel.class)
 			cat = "DBUser";
@@ -717,7 +720,7 @@ public class Controller{
 		return cat;
 	}
 	
-	public boolean checkForm(int n, JBasicPanel panel){
+	boolean checkForm(int n, JBasicPanel panel){
 		LinkedList<Boolean> checker = new LinkedList<Boolean>();
 		if(n == 0){
 			checker.add(panel.textFields[0].getText().matches("[a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ]+"));
@@ -771,7 +774,7 @@ public class Controller{
 		}
 	}
 	
-	public void clearForm(int n, JBasicPanel panel){
+	void clearForm(int n, JBasicPanel panel){
 		for(int i=0; i<panel.textFields.length; i++)
 			panel.textFields[i].setText("");
 		if(n == 1 || n == 2){
@@ -781,7 +784,7 @@ public class Controller{
 		}
 	}
 	
-	public void editabling(boolean value, int id, JBasicPanel panel){
+	void editabling(boolean value, int id, JBasicPanel panel){
 		panel.editable = value;
 		for (int i = 0; i < panel.textFields.length; i++){
 			if (i != id){
@@ -800,12 +803,12 @@ public class Controller{
 		panel.okButton.setEnabled(panel.editable);
 	}
 	
-	public void deleteFromResultTable(JResultFrame resFrame){
+	void deleteFromResultTable(JResultFrame resFrame){
 		DefaultTableModel tableModel = (DefaultTableModel) resFrame.resultTable.getModel();
 		tableModel.removeRow(resFrame.resultTable.getSelectedRow());
 	}
 	
-	public void refreshDevices(JUserDevicePanel userDevicePanel, JRoomFrame roomFrame){
+	void refreshDevices(JUserDevicePanel userDevicePanel, JRoomFrame roomFrame){
 		Color c = roomFrame.color;
         int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
         DBUser user = null;
@@ -828,7 +831,7 @@ public class Controller{
                                         roomFrame.revalidate();
                                         roomFrame.getContentPane().repaint();
                                         roomFrame.repaint();
-                                        roomFrame.initiate(roomFrame.font);
+                                        roomFrame.initiate(roomFrame.normal);
                                 }
                         }
                         numberOfDevices--;
@@ -848,7 +851,7 @@ public class Controller{
         
 	}
 	
-	public void refreshUsers(int id, JRoomFrame roomFrame){
+	void refreshUsers(int id, JRoomFrame roomFrame){
 		Color c = roomFrame.color;
 		 for (int i = 0; i < roomFrame.userList.size(); i++){
              if (id == roomFrame.userList.get(i).getIdUser()){
@@ -872,24 +875,35 @@ public class Controller{
 		searchPanel.cb[n+1].setSelectedIndex(0);
 }
 	
-	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+	static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
 	    List<T> r = new ArrayList<T>(c.size());
 	    for(Object o: c)
 	      r.add(clazz.cast(o));
 	    return r;
 	}
 	
-	public void controlGUI(ActionEvent e, JButton but, Font font, String path){
-		JFrame infoFrame = new JFrame("O programie");
-		Dimension d = new Dimension(500,300);
-		JTextArea textArea = new JTextArea("Mehehe");
+	void controlGUI(ActionEvent e, JButton but, Font font, String path){
+		JTextArea textArea = new JTextArea();
 		textArea.setFont(font);
+		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
+		try
+        {
+            FileReader reader = new FileReader("file/info.txt");
+            BufferedReader br = new BufferedReader(reader);
+            textArea.read( br, null );
+            br.close();
+            textArea.requestFocus();
+        }
+        catch(Exception e2) { System.out.println(e2); }
+	
+		JFrame infoFrame = new JFrame("O programie");
+		Dimension d = new Dimension(300,170);
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		infoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(path));
 		infoFrame.getContentPane().setBackground(Color.white);
 		infoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		infoFrame.setLocation(350, 200);
+		infoFrame.setLocation(550, 200);
 		infoFrame.setMinimumSize(d);
 		infoFrame.setMaximumSize(d);
 		infoFrame.setPreferredSize(d);

@@ -22,36 +22,32 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 
-import org.apache.log4j.Logger;
-
 import zdarzeniowka.db.DBUser;
 import zdarzeniowka.db.DBUserDevice;
 
-public class JRoomFrame extends JFrame implements ActionListener {
+class JRoomFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -8038078091109185534L;
-	JTabbedPane tabbedUserPane;
-	JTabbedPane tabbedDevicePane;
 	private byte[] device;
-	private JPanel[] upane, dpane;
-	JPanel cardUser;
-	JPanel cardDevice;
+	private JPanel[] upane, dpane;	
 	private JScrollPane[] scrollpane;
 	private JUserPanel[] userPanel;
 	private List<JUserDevicePanel> userDevicePanel;
+	private GridBagConstraints c, cpane, csrane;
+	private JDSPanel dsPanel; 
+	private Controller cont = new Controller();
+	JTabbedPane tabbedUserPane;
+	JTabbedPane tabbedDevicePane;
+	JPanel cardUser;
+	JPanel cardDevice;
 	List<DBUser> userList;
 	JButton showDeviceButton;
 	JButton showUserButton;
-	private GridBagConstraints c, cpane, csrane;
 	Font normal;	
-	private JDSPanel dsPanel; 
-	private Logger  log = Logger.getLogger(JRoomFrame.class);
-	private Controller cont = new Controller();
 	Color color;
-	Font font; 
 	
-	public JRoomFrame(Font font, String text, List<DBUser> userList, JDSPanel dsPanel){
+	JRoomFrame(Font font, String text, List<DBUser> userList, JDSPanel dsPanel){
 		super(text);
-		this.font = font;
+		this.normal = font;
 		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		super.setContentPane(new JLabel(new ImageIcon("background/room.png")));
 		this.dsPanel = dsPanel;
@@ -59,7 +55,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
             throw new IllegalArgumentException("Too many users in room!");
         }
 		this.userList = userList;
-		initiate(this.font);
+		initiate(this.normal);
 	}
 
 	@Override
@@ -79,7 +75,6 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		device = new byte[userList.size()];
 		userPanel = new JUserPanel[userList.size()];
 		scrollpane = new JScrollPane[userList.size()];
-		normal = font;
 		tabbedUserPane = new JTabbedPane();
 		tabbedUserPane.setFont(normal);
 		tabbedDevicePane = new JTabbedPane();
@@ -157,7 +152,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		this.getContentPane().add(cardUser);	
 	}
 	
-	public void setComponentsBackground(Color bg){
+	void setComponentsBackground(Color bg){
 		color = bg;
 		cardUser.setOpaque(false);
 		cardDevice.setOpaque(false);

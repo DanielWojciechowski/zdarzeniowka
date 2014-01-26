@@ -14,28 +14,28 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
-public class JUserDevicePanel extends JBasicPanel{
+class JUserDevicePanel extends JBasicPanel{
 	private static final long serialVersionUID = 9083184852370768151L;
 	char[] deviceTypes = {'k','p','r','a','i','s'};
 	
-	public JUserDevicePanel(Font font, boolean editable, JResultFrame rframe){
+	JUserDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);
 		paint();
 		cont.editabling(editable, 2, this);
 	}
 	
-	public JUserDevicePanel(Font font, boolean editable, JRoomFrame frame){
+	JUserDevicePanel(Font font, boolean editable, JRoomFrame frame){
 		super(font, editable, frame);
 		paint();
 		cont.editabling(editable, 2, this);
 	}
 	
-	public JUserDevicePanel(Font font) {
+	JUserDevicePanel(Font font) {
 		super(font);
 		paint();
 	}
 	
-	public void paint(){
+	private void paint(){
 		this.setLayout(new GridBagLayout());
 		labels = new JLabel[7];
 		textFields = new JTextField[4];
@@ -148,15 +148,15 @@ public class JUserDevicePanel extends JBasicPanel{
 		}
 	}
 	
-	public int getUserId(){
+	int getUserId(){
 		return Integer.parseInt(textFields[3].getText());
 	}
 	
-	public int getDeviceId(){
+	int getDeviceId(){
 		return Integer.parseInt(textFields[2].getText());
 	}
 	
-	public void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, String otherInfo){
+	void setForm(String mac, String ip, int idDevice, int idUser, boolean configuration, char type, String otherInfo){
 		textFields[0].setText(mac);
 		textFields[1].setText(ip);
 		textFields[2].setText(String.valueOf(idDevice));

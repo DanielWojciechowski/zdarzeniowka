@@ -14,16 +14,9 @@ public class Generator implements Runnable {
 	private final static int DB_REFRESH_TIME = 60;
 	private final static int MAX_BANDWITH = 20*TIME;
 	private final static int LIMIT = 2*TIME;
-	Object[][] dataUse, du2;
 	private JChart chart;
-	
 	private Logger  log = Logger.getLogger(Generator.class);
-	
-	/*public static void main (String[] args) {  
-		int[] tab = {1,2,3,4,5,6,7,8,9,10};
-		Generator g = new Generator(tab, new JChart(0, 0));
-		g.run();
-	}*/
+	Object[][] dataUse, du2;
 	
 	public Generator(List<Integer> userTable, JChart chart){
 		dataUse = new Object[userTable.size()][2];

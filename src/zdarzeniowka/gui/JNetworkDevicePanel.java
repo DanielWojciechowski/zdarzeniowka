@@ -13,16 +13,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class JNetworkDevicePanel extends JBasicPanel  {
+class JNetworkDevicePanel extends JBasicPanel  {
 	private static final long serialVersionUID = 8913270095466798762L;
 	char[] deviceTypes = {'k','p','r','a','i','s'};
 
-	public JNetworkDevicePanel(Font font) {
+	JNetworkDevicePanel(Font font) {
 		super(font);
 		paint();
 	}
 		
-	public JNetworkDevicePanel(Font font, boolean editable, JResultFrame rframe){
+	JNetworkDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);
 		paint();
 		cont.editabling(editable, 2, this);
@@ -43,8 +43,6 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 	    scrollPane.setPreferredSize(new Dimension(338, 130));
 		String[] stringLabel = {"Adres MAC:", "Adres IP:", "Konfiguracja:", "Id urzadzenia:", "Typ:", "Uwagi:"},
 				configuration = {"Zatwierdzona", "Niezatwierdzona"}, type = {"Komputer", "Switch", "Router", "AP", "Inne", "Serwer"};
-		
-		
 		cb = new JComboBox[2];
 		cb[0] = new JComboBox<String>(configuration);
 		cb[1] = new JComboBox<String>(type);
@@ -135,7 +133,7 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 		}	
 	}
 	
-	public void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){
+	void setForm(String mac, String ip, int idDevice, boolean configuration, char type, String otherInfo){
 		textFields[0].setText(mac);
 		textFields[1].setText(ip);
 		textFields[2].setText(String.valueOf(idDevice));

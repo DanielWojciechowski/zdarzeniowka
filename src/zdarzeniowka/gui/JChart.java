@@ -13,13 +13,13 @@ import org.apache.log4j.Logger;
 
 public class JChart extends JComponent{
 	private static final long serialVersionUID = -5878170992402917036L;
+	private final static int SCALE = 10;
 	private Color color1, color2, background, line;
 	private Logger  log = Logger.getLogger(JChart.class);
 	private ArrayList<Integer> px = new ArrayList<Integer>();
 	private ArrayList<Integer> py = new ArrayList<Integer>();
 	private int sum = 0, avg = 0;
 	private int height, width;
-	private final static int SCALE = 10;
 	
 	public JChart(int height, int width){
 		super();
@@ -86,7 +86,7 @@ public class JChart extends JComponent{
    	
 	  }
 	
-	public static int[] convertIntegers(List<Integer> integers){
+	private static int[] convertIntegers(List<Integer> integers){
 	    int[] ret = new int[integers.size()];
 	    Iterator<Integer> iterator = integers.iterator();
 	    for (int i = 0; i < ret.length; i++){
@@ -94,7 +94,8 @@ public class JChart extends JComponent{
 	    }
 	    return ret;
 	}
-	public int[] heightChanger(int[] tab, int height){
+	
+	private int[] heightChanger(int[] tab, int height){
 		for(int i = 0; i < tab.length; i++)
 			tab[i] = height - tab[i]*SCALE;
 		return tab;

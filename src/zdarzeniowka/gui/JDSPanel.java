@@ -23,7 +23,7 @@ import javax.swing.border.TitledBorder;
 import zdarzeniowka.db.DBUser;
 import zdarzeniowka.db.DBUtil;
 
-public class JDSPanel extends JPanel implements ActionListener {
+class JDSPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 5329098283210850224L;
 	private JPanel dsPanel0, dsPanel1, dsPanel2 = new JPanel();
 	private GridBagConstraints c;
@@ -35,12 +35,12 @@ public class JDSPanel extends JPanel implements ActionListener {
 	private int[] countTab ;
 	private Controller cont = new Controller();
 	
-	public JDSPanel(Font font){
+	JDSPanel(Font font){
 		super();
 		paint(font);
 	}
 	
-	public void paint(Font font){
+	private void paint(Font font){
 		List<Object[]> countList = new LinkedList<Object[]>();
 		SwingWorker<List<Object[]>, Void> worker = new SwingWorker<List<Object[]>, Void>(){
 
@@ -184,7 +184,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 	}
 	
 
-	public void showRoomFrame(String buttonText, List<DBUser> userList){
+	void showRoomFrame(String buttonText, List<DBUser> userList){
 		JRoomFrame roomFrame = new JRoomFrame(normal, "Pokój nr " + buttonText, userList, this);
 		roomFrame.setComponentsBackground(this.getBackground());
 		roomFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -193,28 +193,23 @@ public class JDSPanel extends JPanel implements ActionListener {
 		roomFrame.pack();
 		roomFrame.setVisible(true);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		cont.contDSPanelAL(e, this);
-	}
 	
-	public void setComponentsBackground(Color bg){
+	void setComponentsBackground(Color bg){
 		this.setBackground(bg);
 		dsPanel0.setBackground(bg);
 		dsPanel1.setBackground(bg);
 		dsPanel2.setBackground(bg);
 	}
 
-	public List<JRoomButton> getRoomButton(){
+	List<JRoomButton> getRoomButton(){
 		return this.roomButton;
 	}
 	
-	public int getCountTabAt(int index){
+	int getCountTabAt(int index){
 		return countTab[index];
 	}
 	
-	public void increaseCountTabAt(int index){
+	void increaseCountTabAt(int index){
 		if(index > 0 && index <=12)
 			countTab[index-1]++;
 		else if(index > 100 && index <=112)
@@ -223,7 +218,7 @@ public class JDSPanel extends JPanel implements ActionListener {
 			countTab[index-177]++;
      }
 	
-	public void decreaseCountTabAt(int index){
+	void decreaseCountTabAt(int index){
 		if(index > 0 && index <=12)
 			countTab[index-1]--;
 		else if(index > 100 && index <=112)
@@ -231,4 +226,10 @@ public class JDSPanel extends JPanel implements ActionListener {
 		else if(index > 200 && index <=212)
 			countTab[index-177]--;
      }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		cont.contDSPanelAL(e, this);
+	}
+	
 }

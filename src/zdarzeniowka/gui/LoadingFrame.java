@@ -64,8 +64,6 @@ public class LoadingFrame extends JFrame{
 		this.add(progressBar, c);
 		c.gridy = 2;
 		c.ipadx = 0;
-		
-		
 		this.pack();
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,6 +82,7 @@ public class LoadingFrame extends JFrame{
         timer.setRepeats(false);
         timer.start();
 	}
+	
 	public void setCond(){
 		cond = false;
 	}
