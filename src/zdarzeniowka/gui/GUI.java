@@ -87,25 +87,24 @@ public class GUI implements ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel topPane = new JPanel();
-		JLabel label = new JLabel("System ewidencyjny i symulator sieci akademickiej."), 
-				label2 = new JLabel("Version 1. beta");
-		label.setForeground(Color.white);
+		JLabel label = new JLabel("System ewidencyjny sieci komputerowej w DS"), 
+				label2 = new JLabel("Version 1.1 stable");
+		
 		label.setFont(header);
-		label2.setFont(italic);
 		topPane.setLayout(new GridBagLayout());
 		topPane.setOpaque(false);
-		//topPane.setBackground(SystemColor.cyan);
 		c.anchor = GridBagConstraints.LINE_START;
 		c.insets = new Insets(2, 3, 0, 0);
 		topPane.add(label, c);
 		c.gridx = 1;
-		c.insets = new Insets(7, 205, 0, 0);
+		c.insets = new Insets(7, 255, 0, 0);
 		topPane.add(button, c);
 		c.gridx = 0;
 		c.gridy = 1;
-		c.insets = new Insets(0, 0, 0, 0);
+		c.insets = new Insets(0, 3, 0, 0);
 		topPane.add(label2,c);
 		c.gridy = 0;
+		c.insets = new Insets(0, 0, 0, 0);
 		frame.add(topPane, c);
 		
 		tabbedPane.addTab("Plan DS", ds, dsPanel,"Wyświetl widok akademika.");	

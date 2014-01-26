@@ -29,7 +29,7 @@ public class JChart extends JComponent{
 		color1 = Color.red;
 		color2 = Color.blue;
 		background = new Color(0,0,0,5);
-		line = new Color(128, 128, 128, 100);
+		line = new Color(128, 128, 128, 70);
 		px.add(0);
 		py.add(0);
 	}

@@ -33,7 +33,7 @@ public class LoadingFrame extends JFrame{
 	public LoadingFrame(){
 		super("AC&DW");
 		super.setIconImage(Toolkit.getDefaultToolkit().getImage("icons/db.png"));
-		super.setContentPane(new JLabel(new ImageIcon("background/1.jpg")));
+		super.setContentPane(new JLabel(new ImageIcon("background/1.png")));
 		File fontFile1 = new File("font/OpenSans-Regular.ttf");
 		try {
 			Font fontH = Font.createFont(Font.TRUETYPE_FONT, fontFile1);

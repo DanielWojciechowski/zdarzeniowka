@@ -37,9 +37,8 @@ public class JRoomButton extends JButton{
 		super(imageIcon);
 		super.setHorizontalAlignment(SwingConstants.CENTER );
 		super.setVerticalAlignment(SwingConstants.CENTER );
-		super.setBorder(BorderFactory.createEmptyBorder());
+		super.setBorder(BorderFactory.createLineBorder(Color.black));
 		super.setContentAreaFilled(false);
-		super.setFocusPainted(false); 
         super.setOpaque(false);
 		initiate(txt, font, users);
 	}
