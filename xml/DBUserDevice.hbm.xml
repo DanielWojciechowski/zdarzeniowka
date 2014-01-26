@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-    <class name="zdarzeniowka.DBUserDevice" table="userdevice">
+    <class name="zdarzeniowka.db.DBUserDevice" table="userdevice">
 
         <id name="idDevice" type="int" column="idDevice">
             <generator class="native" />

@@ -7,8 +7,16 @@
       <param name="ConversionPattern" value="[%p] %c - %m - Data wpisu: %d %n"/>
     </layout>
   </appender>
+    <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="file" value="logs/info"/>
+    <param name="DatePattern" value="'_'yyyy-MM-dd'.log'" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="[%p] %c - %m - Data wpisu: %d %n"/>
+    </layout>
+  </appender>
   <root>
     <priority value ="info" />
     <appender-ref ref="console" />
+    <appender-ref ref="file" />
   </root>
 </log4j:configuration>
