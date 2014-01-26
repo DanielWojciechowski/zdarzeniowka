@@ -10,7 +10,14 @@ import java.util.List;
 import javax.swing.JComponent;
 
 import org.apache.log4j.Logger;
-
+/**
+ * Komponent grafczny, który przedstawia wykres zużycia transferu danych.
+ * Przedstawia średnie zużycie transfru oraz zużycie w danym momencie.
+ * 
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 public class JChart extends JComponent{
 	private static final long serialVersionUID = -5878170992402917036L;
 	private final static int SCALE = 10;

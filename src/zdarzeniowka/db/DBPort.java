@@ -2,7 +2,12 @@ package zdarzeniowka.db;
 
 import java.util.Set;
 
-
+/**
+ * Klasa przedstawiająca tabelę Port z bazy danych.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ *
+ */
 public class DBPort {
 	private int idPort;
 	private int portNo;

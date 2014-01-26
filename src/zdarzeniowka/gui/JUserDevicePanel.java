@@ -1,5 +1,13 @@
 package zdarzeniowka.gui;
-
+/**
+ * 
+ * Klasa rozszerzająca JBasicPanel.
+ * Przedstawia podstawowy panel sprzętu użytkownika.
+ * Może być wykorzystywana na rózne sposoby - zarówno do dodawania, wyświetlania i edytownia.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -17,6 +25,7 @@ import javax.swing.JTextField;
 class JUserDevicePanel extends JBasicPanel{
 	private static final long serialVersionUID = 9083184852370768151L;
 	char[] deviceTypes = {'k','p','r','a','i','s'};
+	int oldIdUser = -1;
 	
 	JUserDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);

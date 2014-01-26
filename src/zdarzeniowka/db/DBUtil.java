@@ -17,7 +17,8 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  * Klasa obsługi bazy danych
- * @author Daniel
+ * @author Daniel Wojciechowski
+ * @author Anna Cierniewska
  *
  */
 public class DBUtil {

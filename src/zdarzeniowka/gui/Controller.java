@@ -1,5 +1,11 @@
 package zdarzeniowka.gui;
-
+/**
+ * 
+ * Klasa obsługująca eventy w GUI.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -405,6 +411,7 @@ class Controller{
 	void contJUserDevPanelAL(ActionEvent e, final JUserDevicePanel usrDevPanel) {
 		JButton source = (JButton)e.getSource();
 		if (source == usrDevPanel.editButton){
+			usrDevPanel.oldIdUser = usrDevPanel.getUserId();
 			editabling(true, 2, usrDevPanel);
 		}
 		if (source == usrDevPanel.okButton){
@@ -446,7 +453,14 @@ class Controller{
 			            	}
 			            }
 			       };
-			       	worker.execute();
+			       worker.execute();
+			       if ((usrDevPanel.getUserId() != usrDevPanel.oldIdUser)&&(usrDevPanel.frame != null)){
+			       		log.info("old id " + usrDevPanel.oldIdUser + "new id "+usrDevPanel.getUserId());
+						refreshDevices(usrDevPanel, usrDevPanel.frame, usrDevPanel.oldIdUser);
+			    		usrDevPanel.frame.revalidate();
+			    		usrDevPanel.frame.getContentPane().repaint();
+
+			       	}
 				}
 			}
 		}
@@ -815,6 +829,48 @@ class Controller{
         for (int i = 0; i < roomFrame.userList.size(); i++){
                 user = roomFrame.userList.get(i);
                 if (user.getIdUser() == userId){
+                        List<DBUserDevice> devices = new ArrayList<DBUserDevice>();
+                        devices.addAll(user.getDevices());
+                        numberOfDevices = devices.size();
+                        for (int j = 0; j < devices.size(); j++){
+                                if (devices.get(j).getIdDevice() == userDevicePanel.getDeviceId()){
+                                        devices.remove(j);
+                                        log.info(devices.size());
+                                        Set<DBUserDevice> dbd = new HashSet<DBUserDevice>(devices);
+                                        user.setDevices(dbd);
+                                        log.info(user.getDevices().size());
+                                        roomFrame.userList.set(i, user);
+                                        roomFrame.getContentPane().remove(roomFrame.cardDevice);
+                                        roomFrame.getContentPane().revalidate();
+                                        roomFrame.revalidate();
+                                        roomFrame.getContentPane().repaint();
+                                        roomFrame.repaint();
+                                        roomFrame.initiate(roomFrame.normal);
+                                }
+                        }
+                        numberOfDevices--;
+                }
+        }
+        if (numberOfDevices == 0){
+                roomFrame.getContentPane().add(roomFrame.cardUser);
+               
+        }
+        else {
+        	roomFrame.getContentPane().remove(roomFrame.cardUser);
+        	roomFrame.getContentPane().revalidate();
+        	roomFrame.revalidate();
+        	roomFrame.getContentPane().add(roomFrame.cardDevice);
+        }
+        roomFrame.setComponentsBackground(c);   
+	}
+	
+	void refreshDevices(JUserDevicePanel userDevicePanel, JRoomFrame roomFrame, int oldUserId){
+		Color c = roomFrame.color;
+        int numberOfDevices = - 1;
+        DBUser user = null;
+        for (int i = 0; i < roomFrame.userList.size(); i++){
+                user = roomFrame.userList.get(i);
+                if (user.getIdUser() == oldUserId){
                         List<DBUserDevice> devices = new ArrayList<DBUserDevice>();
                         devices.addAll(user.getDevices());
                         numberOfDevices = devices.size();

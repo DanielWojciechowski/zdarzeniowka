@@ -19,7 +19,14 @@ import org.apache.log4j.Logger;
 
 import zdarzeniowka.db.DBPort;
 import zdarzeniowka.db.DBUtil;
-
+/**
+ * 
+ * Abstrakcyjna klasa będąca podstawą do budowy widoku panelu sprzętu lub użytkownika.
+ * 
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 abstract class JBasicPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 5020407406483635930L;
 	protected JPanel topPanel, botPanel, buttonPanel;

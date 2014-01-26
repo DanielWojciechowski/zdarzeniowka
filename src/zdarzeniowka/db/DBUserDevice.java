@@ -1,5 +1,10 @@
 package zdarzeniowka.db;
-
+/**
+ * Klasa przedstawiająca tabelę UserDevice z bazy danych.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ *
+ */
 public class DBUserDevice{
 	private int idDevice;
 	private String mac;

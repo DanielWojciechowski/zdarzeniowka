@@ -1,7 +1,12 @@
 package zdarzeniowka.db;
 
 import java.util.Set;
-
+/**
+ * Klasa przedstawiająca tabelę NetworkDevice z bazy danych.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ *
+ */
 public class DBNetworkDevice{
 	private int idDevice;
 	private String mac;

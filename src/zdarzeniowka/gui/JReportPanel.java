@@ -20,7 +20,13 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 
-
+/**
+ * 
+ * Panel przedstawiający wykres zużycia transferu oraz widok służacy do generowania raportów.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 class JReportPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -6125026078942430487L;
 	private Font normal;
@@ -32,7 +38,6 @@ class JReportPanel extends JPanel implements ActionListener {
 	private Insets insets1, insets0;
 	private Color color;
 	private Controller cont = new Controller();
-	
 	JChart chart;
 	JButton saveButton;
     JComboBox<String> cb;

@@ -1,5 +1,11 @@
 package zdarzeniowka.gui;
-
+/**
+ * 
+ * Panel przedstawiający widoki dodawania użytkowników i sprzętów.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -16,7 +22,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 class JAddPanel extends JPanel implements ItemListener, ActionListener{
-	
 	private static final long serialVersionUID = -2513979177576640749L;
 	private JPanel[] addingPanel, buttonPanel;
 	private GridBagConstraints capane = new GridBagConstraints(), cbutton = new GridBagConstraints(),

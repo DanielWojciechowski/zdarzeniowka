@@ -10,7 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import zdarzeniowka.db.DBPort;
-
+/**
+ * 
+ * Klasa rozszerzająca JBasicPanel.
+ * Przedstawia podstawowy panel użytkownika.
+ * Może być wykorzystywana na rózne sposoby - zarówno do dodawania, wyświetlania i edytownia.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 class JUserPanel extends JBasicPanel {
 	private static final long serialVersionUID = 4882792304628772453L;
 	int oldRoomNo = -1;

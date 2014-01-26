@@ -5,7 +5,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-
+/**
+ * Klasa służąca do konfiguracji i ustawienia połączenia z bazą danych.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ *
+ */
 public class SessionFactoryUtil {
     private static final SessionFactory sessionFactory;
 

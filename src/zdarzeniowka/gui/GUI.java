@@ -23,6 +23,15 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
+/**
+ * Klasa wyświetla główne okno programu.
+ * Odpowiada za ustawienia kolorów, fontów, ikon w programie oraz powoływane są 
+ * w niej instancje obiektów składające się na całościowe GUI.
+ * 
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 public class GUI implements ActionListener{
 
 	private JFrame frame;

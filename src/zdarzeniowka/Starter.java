@@ -8,7 +8,14 @@ import org.apache.log4j.xml.DOMConfigurator;
 import zdarzeniowka.db.DBUtil;
 import zdarzeniowka.gui.GUI;
 import zdarzeniowka.gui.LoadingFrame;
-
+/**
+ * 
+ * Klasa startująca aplikacje: otwiera LoadingFrame w czasie ładowania bazy
+ * danych, a następnie otwiera główną część programu.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ *
+ */
 public class Starter {
 	public static void main (String[] args) {    
 		try {

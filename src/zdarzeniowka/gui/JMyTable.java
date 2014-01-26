@@ -1,5 +1,11 @@
 package zdarzeniowka.gui;
-
+/**
+ * 
+ * Tablica, której elementy nie mogą być edytowalne.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 import javax.swing.JTable;
 
 public class JMyTable extends JTable{

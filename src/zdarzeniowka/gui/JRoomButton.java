@@ -12,7 +12,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
+/**
+ * 
+ * Komponent graficzny reprezentujący drzwi do pokoju w schemacie Domu Studenckiego.
+ * Umieszczone są na nim ikonki reprezentujące liczbę mieszkańców.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 class JRoomButton extends JButton{
 	private static final long serialVersionUID = 7475937080439185047L;
 	private String txt;

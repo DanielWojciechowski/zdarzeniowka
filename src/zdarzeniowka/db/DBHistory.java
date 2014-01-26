@@ -1,7 +1,12 @@
 package zdarzeniowka.db;
 
 import java.sql.Date;
-
+/**
+ * Klasa przedstawiająca tabelę History z bazy danych.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ *
+ */
 public class DBHistory {
 	private int idHistory;
 	private Date date;

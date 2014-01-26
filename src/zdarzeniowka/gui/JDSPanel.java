@@ -1,5 +1,12 @@
 package zdarzeniowka.gui;
-
+/**
+ * 
+ * Panel przedstawiający schemat Domu Studenckiego.
+ * Przedstawia 
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;

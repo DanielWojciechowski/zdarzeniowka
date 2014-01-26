@@ -24,7 +24,15 @@ import javax.swing.JTabbedPane;
 
 import zdarzeniowka.db.DBUser;
 import zdarzeniowka.db.DBUserDevice;
-
+/**
+ * 
+ * Okno, w którym znajduje się panel wybranego profilu pokoju, a w nim
+ * widok profile użytkowników oraz widok ich sprzętów.
+ * Klasa umożliwia wybór widoku.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 class JRoomFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -8038078091109185534L;
 	private byte[] device;

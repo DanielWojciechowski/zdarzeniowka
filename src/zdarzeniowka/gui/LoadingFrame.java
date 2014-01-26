@@ -19,7 +19,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-
+/**
+ * 
+ * Okno pojawiające się na starcie programu w czasie ładowania się
+ * bazy danych.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 public class LoadingFrame extends JFrame{
 	private static final long serialVersionUID = 6749328366168616302L;
 	private JProgressBar progressBar;

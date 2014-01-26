@@ -17,7 +17,14 @@ import zdarzeniowka.db.DBNetworkDevice;
 import zdarzeniowka.db.DBUser;
 import zdarzeniowka.db.DBUserDevice;
 import zdarzeniowka.db.DBUtil;
-
+/**
+ * 
+ * Okno, w którym znajduje się panel wyświetlonego i wyszukanego wcześniej profilu - użytkownika,
+ * sprzętu sieciowego lub sprzętu użytkownika.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ * 
+ */
 class JResultFrame extends JFrame{
 	private static final long serialVersionUID = -7670041249218891721L;
 	private JBasicPanel result;

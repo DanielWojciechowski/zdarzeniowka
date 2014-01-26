@@ -1,5 +1,9 @@
 package zdarzeniowka.gen;
-
+/**
+ * Klasa generująca zuzycie transferu oraz uaktualniająca wyniki na JChart z JReportPanel.
+ * @author Anna Cierniewska
+ * @author Daniel Wojciechowski
+ */
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
