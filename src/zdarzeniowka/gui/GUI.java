@@ -96,10 +96,10 @@ public class GUI implements ActionListener{
 		topPane.setOpaque(false);
 		//topPane.setBackground(SystemColor.cyan);
 		c.anchor = GridBagConstraints.LINE_START;
-		c.insets = new Insets(0, 3, 0, 0);
+		c.insets = new Insets(2, 3, 0, 0);
 		topPane.add(label, c);
 		c.gridx = 1;
-		c.insets = new Insets(5, 205, 0, 0);
+		c.insets = new Insets(7, 205, 0, 0);
 		topPane.add(button, c);
 		c.gridx = 0;
 		c.gridy = 1;
@@ -115,23 +115,21 @@ public class GUI implements ActionListener{
 		
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridy = 1;
-		c.insets = new Insets(10, 0, 0, 0);
+		c.insets = new Insets(5, 0, 0, 0);
 		frame.add(tabbedPane, c);
 	}
 	
 	public void showGUI(){
 		Dimension d = new Dimension(720, 630);
 		frame = new JFrame("AC&DW"); 
-		frame.setContentPane(new JLabel(new ImageIcon("background/2.jpg")));
+		frame.setContentPane(new JLabel(new ImageIcon("background/2.png")));
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(path));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(d); 
 		frame.setPreferredSize(d); 
 		frame.setMaximumSize(d); 
 		frame.setLocation(300, 60);
-		
 		addComponents();
-		
 		frame.pack();
 		frame.setResizable(false);
 		frame.setVisible(true);		

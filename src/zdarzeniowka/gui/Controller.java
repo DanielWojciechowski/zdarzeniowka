@@ -20,9 +20,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -376,22 +378,24 @@ public class Controller{
 	
 	public void contJRoomFrameAL(ActionEvent e, JRoomFrame roomFrame) {
 		JButton source = (JButton)e.getSource();
-		
+		Color c = roomFrame.color;
 		if (source == roomFrame.showDeviceButton){
 			int index = roomFrame.tabbedUserPane.getSelectedIndex();
-			roomFrame.remove(roomFrame.cardUser);
+			roomFrame.getContentPane().remove(roomFrame.cardUser);
 			roomFrame.tabbedDevicePane.setSelectedIndex(index);
-			roomFrame.setContentPane(roomFrame.cardDevice);
-			roomFrame.invalidate();
-			roomFrame.validate();
+			roomFrame.getContentPane().add(roomFrame.cardDevice);
+			roomFrame.revalidate();
+			roomFrame.setComponentsBackground(c);
+			roomFrame.getContentPane().repaint();
 		}
 		else if (source == roomFrame.showUserButton) {
 			int index = roomFrame.tabbedDevicePane.getSelectedIndex();
-			roomFrame.remove(roomFrame.cardDevice);
+			roomFrame.getContentPane().remove(roomFrame.cardDevice);
 			roomFrame.tabbedUserPane.setSelectedIndex(index);
-			roomFrame.setContentPane(roomFrame.cardUser);
-			roomFrame.invalidate();
-			roomFrame.validate();
+			roomFrame.getContentPane().add(roomFrame.cardUser);
+			roomFrame.revalidate();
+			roomFrame.setComponentsBackground(c);
+			roomFrame.getContentPane().repaint();
 		}
 	}
 	
@@ -453,7 +457,8 @@ public class Controller{
     		}
 			else if (usrDevPanel.frame != null){
 				refreshDevices(d, usrDevPanel.frame);
-				usrDevPanel.frame.revalidate();
+    			usrDevPanel.frame.revalidate();
+    			usrDevPanel.frame.getContentPane().repaint();
     		}
 		}
 		
@@ -518,7 +523,8 @@ public class Controller{
 			       			}
 			       		}
 			       		refreshUsers(Integer.parseInt(usrPanel.getUserId()), usrPanel.frame);
-			       		usrPanel.frame.repaint();
+		    			usrPanel.frame.revalidate();
+		    			usrPanel.frame.getContentPane().repaint();
 			       	}
 				}
 			}
@@ -539,6 +545,7 @@ public class Controller{
 	    		if (usrPanel.frame != null){
 	    			refreshUsers(id, usrPanel.frame);
 	    			usrPanel.frame.revalidate();
+	    			usrPanel.frame.getContentPane().repaint();
 	    		}
 	    		else if (usrPanel.rframe != null){
 	    			deleteFromResultTable(usrPanel.rframe);
@@ -799,50 +806,65 @@ public class Controller{
 	}
 	
 	public void refreshDevices(JUserDevicePanel userDevicePanel, JRoomFrame roomFrame){
-		int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
-		DBUser user = null;
-		for (int i = 0; i < roomFrame.userList.size(); i++){
-			user = roomFrame.userList.get(i);
-			if (user.getIdUser() == userId){
-				List<DBUserDevice> devices = new ArrayList<DBUserDevice>();
-				devices.addAll(user.getDevices());
-				numberOfDevices = devices.size();
-				for (int j = 0; j < devices.size(); j++){
-					if (devices.get(j).getIdDevice() == userDevicePanel.getDeviceId()){
-						devices.remove(j);
-						log.info(devices.size());
-						Set<DBUserDevice> dbd = new HashSet<DBUserDevice>(devices);
-						user.setDevices(dbd);
-						log.info(user.getDevices().size());
-						roomFrame.userList.set(i, user);
-						roomFrame.initiate(roomFrame.normal);
-					}
-				}
-				numberOfDevices--;
-			}
-		}
-		if (numberOfDevices == 0){
-			roomFrame.setContentPane(roomFrame.cardUser);
-		}
-		else {
-			roomFrame.setContentPane(roomFrame.cardDevice);
-		}
-		roomFrame.revalidate();
+		Color c = roomFrame.color;
+        int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
+        DBUser user = null;
+        for (int i = 0; i < roomFrame.userList.size(); i++){
+                user = roomFrame.userList.get(i);
+                if (user.getIdUser() == userId){
+                        List<DBUserDevice> devices = new ArrayList<DBUserDevice>();
+                        devices.addAll(user.getDevices());
+                        numberOfDevices = devices.size();
+                        for (int j = 0; j < devices.size(); j++){
+                                if (devices.get(j).getIdDevice() == userDevicePanel.getDeviceId()){
+                                        devices.remove(j);
+                                        log.info(devices.size());
+                                        Set<DBUserDevice> dbd = new HashSet<DBUserDevice>(devices);
+                                        user.setDevices(dbd);
+                                        log.info(user.getDevices().size());
+                                        roomFrame.userList.set(i, user);
+                                        roomFrame.getContentPane().remove(roomFrame.cardDevice);
+                                        roomFrame.getContentPane().revalidate();
+                                        roomFrame.revalidate();
+                                        roomFrame.getContentPane().repaint();
+                                        roomFrame.repaint();
+                                        roomFrame.initiate(roomFrame.font);
+                                }
+                        }
+                        numberOfDevices--;
+                }
+        }
+        if (numberOfDevices == 0){
+                roomFrame.getContentPane().add(roomFrame.cardUser);
+               
+        }
+        else {
+        	roomFrame.getContentPane().remove(roomFrame.cardUser);
+        	roomFrame.getContentPane().revalidate();
+        	roomFrame.revalidate();
+        	roomFrame.getContentPane().add(roomFrame.cardDevice);
+        }
+        roomFrame.setComponentsBackground(c);
+        
 	}
 	
 	public void refreshUsers(int id, JRoomFrame roomFrame){
-		for (int i = 0; i < roomFrame.userList.size(); i++){
-				if (id == roomFrame.userList.get(i).getIdUser()){
-					roomFrame.userList.remove(i);			
-					roomFrame.initiate(roomFrame.normal);
-				}	
-			}
-		if (roomFrame.userList.size() == 0)
-			roomFrame.dispose();
-		else {
-			roomFrame.setContentPane(roomFrame.cardUser);
-		}
-		roomFrame.revalidate();
+		Color c = roomFrame.color;
+		 for (int i = 0; i < roomFrame.userList.size(); i++){
+             if (id == roomFrame.userList.get(i).getIdUser()){
+                     roomFrame.userList.remove(i);
+                     roomFrame.getContentPane().remove(roomFrame);
+                     roomFrame.getContentPane().revalidate();
+                     roomFrame.revalidate();
+                     roomFrame.getContentPane().repaint();
+                     roomFrame.repaint();
+                     roomFrame.initiate(roomFrame.normal);
+                     roomFrame.setComponentsBackground(c);
+                     
+         }        
+     }
+     if (roomFrame.userList.size() == 0)
+             roomFrame.dispose();
 	}
 	
 	void clearForm(int n, JSearchPanel searchPanel){

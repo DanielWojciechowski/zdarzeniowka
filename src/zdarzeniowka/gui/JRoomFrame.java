@@ -13,8 +13,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -44,16 +46,26 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private JDSPanel dsPanel; 
 	private Logger  log = Logger.getLogger(JRoomFrame.class);
 	private Controller cont = new Controller();
+	Color color;
+	Font font; 
 	
 	public JRoomFrame(Font font, String text, List<DBUser> userList, JDSPanel dsPanel){
 		super(text);
+		this.font = font;
 		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
+		super.setContentPane(new JLabel(new ImageIcon("background/room.png")));
 		this.dsPanel = dsPanel;
 		if(userList.size() <= 0 || userList.size() > 3) {
             throw new IllegalArgumentException("Too many users in room!");
         }
 		this.userList = userList;
-		initiate(font);
+		initiate(this.font);
+	}
+
+	@Override
+	public void repaint(){
+		super.setContentPane(new JLabel(new ImageIcon("background/room.png")));
+		super.repaint();
 	}
 	
 	void initiate(Font font){
@@ -142,10 +154,13 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		c.insets = new Insets(0,0,0,0);
 		cardUser.add(tabbedUserPane,c);
 		cardDevice.add(tabbedDevicePane,c);
-		this.add(cardUser);		
+		this.getContentPane().add(cardUser);	
 	}
 	
 	public void setComponentsBackground(Color bg){
+		color = bg;
+		cardUser.setOpaque(false);
+		cardDevice.setOpaque(false);
         for (int i = 0; i < userList.size(); i++){
                 upane[i].setBackground(bg);
                 dpane[i].setBackground(bg);
