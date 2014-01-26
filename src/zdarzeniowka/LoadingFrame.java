@@ -1,33 +1,40 @@
 package zdarzeniowka;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 public class LoadingFrame extends JFrame{
 	private static final long serialVersionUID = 6749328366168616302L;
 	private JProgressBar progressBar;
 	private JLabel label1;
-	private Dimension d = new Dimension(300,95);
+	private Dimension d = new Dimension(330,95);
 	private GridBagConstraints c;
 	private Font font;
 	private boolean cond = true;
+	private ImageIcon ic = new ImageIcon("icons/db.png");
 	
 	public LoadingFrame(){
 		super("AC&DW");
+		super.setIconImage(Toolkit.getDefaultToolkit().getImage("icons/db.png"));
+		super.setContentPane(new JLabel(new ImageIcon("background/1.jpg")));
 		File fontFile1 = new File("font/OpenSans-Regular.ttf");
 		try {
 			Font fontH = Font.createFont(Font.TRUETYPE_FONT, fontFile1);
@@ -41,18 +48,20 @@ public class LoadingFrame extends JFrame{
 		this.setMaximumSize(d);
 		this.setMinimumSize(d);
 		this.setLayout(new GridBagLayout());
-		this.setLocation(520, 300);
+		this.setLocation(500, 300);
 		c = new GridBagConstraints();
-		progressBar = new JProgressBar(40, 290);
+		progressBar = new JProgressBar(0, 100);
+		progressBar.setMinimumSize(new Dimension(290, 10));
 		progressBar.setIndeterminate(true);
-		label1 = new JLabel("Łączenie z bazą danych!");
+		
+		label1 = new JLabel("Łączenie z bazą danych!", ic, SwingConstants.CENTER);
 		label1.setFont(font);
 		c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(10, 10, 0, 10);
 		this.add(label1, c);
 		c.gridy = 1;
 		c.ipady = 5;
-		c.insets = new Insets(5, 10, 10, 10);
+		c.insets = new Insets(10, 10, 10, 10);
 		this.add(progressBar, c);
 		c.gridy = 2;
 		c.ipadx = 0;

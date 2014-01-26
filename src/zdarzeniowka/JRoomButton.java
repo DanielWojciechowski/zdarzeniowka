@@ -7,9 +7,11 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class JRoomButton extends JButton{
 	private static final long serialVersionUID = 7475937080439185047L;
@@ -24,11 +26,21 @@ public class JRoomButton extends JButton{
 
 	public JRoomButton(String txt, Font font){ 
 		super(imageIcon);
+		super.setHorizontalAlignment(SwingConstants.CENTER );
+		super.setVerticalAlignment(SwingConstants.CENTER );
+		super.setBorder(BorderFactory.createEmptyBorder());
+		super.setContentAreaFilled(false);
 		initiate(txt, font, 3);
 	}
 	
 	public JRoomButton(String txt, Font font, int users){ 
 		super(imageIcon);
+		super.setHorizontalAlignment(SwingConstants.CENTER );
+		super.setVerticalAlignment(SwingConstants.CENTER );
+		super.setBorder(BorderFactory.createEmptyBorder());
+		super.setContentAreaFilled(false);
+		super.setFocusPainted(false); 
+        super.setOpaque(false);
 		initiate(txt, font, users);
 	}
 	
@@ -36,7 +48,7 @@ public class JRoomButton extends JButton{
 		super.setMinimumSize(new Dimension(90, 50));
 		super.setPreferredSize(new Dimension(90, 50));
 		super.setMaximumSize(new Dimension(90, 50));
-		super.setRolloverIcon(imageIcon);
+		super.setRolloverEnabled(true);
 		this.setFont(font);
 		this.txt = txt;
 		
@@ -56,8 +68,8 @@ public class JRoomButton extends JButton{
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		this.width = getWidth(); 
-		this.height = getHeight(); 
+		this.width = this.getWidth();
+		this.height = this.getHeight();
 		if (usersInRoom > 0) {
 			icon[0].paintIcon(this, g, width-15, height-14);
 			if (usersInRoom > 1){

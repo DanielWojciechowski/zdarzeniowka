@@ -8,15 +8,22 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
-public class GUI{
+public class GUI implements ActionListener{
 
 	private JFrame frame;
 	private static JAddPanel addPanel;
@@ -25,6 +32,10 @@ public class GUI{
 	private static JReportPanel reportPanel;
 	private static JTabbedPane tabbedPane;
 	private Font header, normal, italic;
+	private Icon add, search, report, ds;
+	private static String path = "icons/cat.png";
+	private JButton button;
+	private Controller cont = new Controller();
 	
 	private void initiate(){
 		File fontFile1 = new File("font/OpenSans-Regular.ttf"),
@@ -41,14 +52,26 @@ public class GUI{
 		} catch (IOException e) {	
 			e.printStackTrace();
 		}
+			
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(normal);
 		dsPanel = new JDSPanel(normal);
 		addPanel= new JAddPanel(normal, dsPanel);
 		searchPanel = new JSearchPanel(normal, dsPanel);
 		reportPanel = new JReportPanel(normal);
-
 		
+		ds = new ImageIcon("icons/ds.png");
+		add = new ImageIcon("icons/add.png");
+		search = new ImageIcon("icons/search.png");
+		report = new ImageIcon("icons/chart.png");
+		
+		button = new JButton(new ImageIcon("icons/ask.png"));
+		button.setHorizontalAlignment(SwingConstants.CENTER );
+		button.setVerticalAlignment(SwingConstants.CENTER );
+		button.setBorder(BorderFactory.createEmptyBorder());
+		button.setContentAreaFilled(false);
+		button.setFocusPainted(false); 
+		button.addActionListener(this);
 		
 		dsPanel.setComponentsBackground(Color.white);
 		addPanel.setComponentsBackground(Color.white);
@@ -64,25 +87,31 @@ public class GUI{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel topPane = new JPanel();
-		JLabel label = new JLabel("System ewidencyjny i symulator sieci akademickiej.");
-		JLabel label2 = new JLabel("Version 1. beta");
+		JLabel label = new JLabel("System ewidencyjny i symulator sieci akademickiej."), 
+				label2 = new JLabel("Version 1. beta");
+		label.setForeground(Color.white);
 		label.setFont(header);
 		label2.setFont(italic);
 		topPane.setLayout(new GridBagLayout());
+		topPane.setOpaque(false);
 		//topPane.setBackground(SystemColor.cyan);
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.anchor = GridBagConstraints.LINE_START;
 		c.insets = new Insets(0, 3, 0, 0);
 		topPane.add(label, c);
+		c.gridx = 1;
+		c.insets = new Insets(5, 205, 0, 0);
+		topPane.add(button, c);
+		c.gridx = 0;
 		c.gridy = 1;
+		c.insets = new Insets(0, 0, 0, 0);
 		topPane.add(label2,c);
 		c.gridy = 0;
 		frame.add(topPane, c);
 		
-		tabbedPane.add("Plan DS", dsPanel);	
-		//tabbedPane.setIconAt(0, icon);
-		tabbedPane.add("Dodaj", addPanel);
-		tabbedPane.add("Wyszukaj", searchPanel);
-		tabbedPane.add("Raporty", reportPanel);
+		tabbedPane.addTab("Plan DS", ds, dsPanel,"Wyświetl widok akademika.");	
+		tabbedPane.addTab("Dodaj", add, addPanel, "Dodaj użytkownika lub sprzęt.");
+		tabbedPane.addTab("Wyszukaj", search, searchPanel, "Wyszukaj użytkownika lub sprzęt.");
+		tabbedPane.addTab("Raporty", report, reportPanel, "Monitoruj sieć i wegeneruj raport.");
 		
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridy = 1;
@@ -91,16 +120,29 @@ public class GUI{
 	}
 	
 	public void showGUI(){
+		Dimension d = new Dimension(720, 630);
 		frame = new JFrame("AC&DW"); 
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("icons/cat.png"));
+		frame.setContentPane(new JLabel(new ImageIcon("background/2.jpg")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(path));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMinimumSize((new Dimension(555, 485))); 
-		frame.setLocation(250, 50);
+		frame.setMinimumSize(d); 
+		frame.setPreferredSize(d); 
+		frame.setMaximumSize(d); 
+		frame.setLocation(300, 60);
 		
 		addComponents();
 		
 		frame.pack();
 		frame.setResizable(false);
 		frame.setVisible(true);		
+	}
+	
+	public static String getPath(){
+		return path;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		cont.controlGUI(e, button, normal, path);	
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -44,15 +45,9 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private Logger  log = Logger.getLogger(JRoomFrame.class);
 	private Controller cont = new Controller();
 	
-	public JRoomFrame(Font font, String text){
-		super(text);
-		this.userList = new LinkedList<DBUser>();
-		initiate(font);
-	}
-	
 	public JRoomFrame(Font font, String text, List<DBUser> userList, JDSPanel dsPanel){
 		super(text);
-
+		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		this.dsPanel = dsPanel;
 		if(userList.size() <= 0 || userList.size() > 3) {
             throw new IllegalArgumentException("Too many users in room!");

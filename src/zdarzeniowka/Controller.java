@@ -1,7 +1,10 @@
 package zdarzeniowka;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -18,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
@@ -680,6 +685,28 @@ public class Controller{
 	    for(Object o: c)
 	      r.add(clazz.cast(o));
 	    return r;
+	}
+	
+	public void controlGUI(ActionEvent e, JButton but, Font font, String path){
+		JFrame infoFrame = new JFrame("O programie");
+		Dimension d = new Dimension(500,300);
+		JTextArea textArea = new JTextArea("Mehehe");
+		textArea.setFont(font);
+		textArea.setEditable(false);
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		infoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(path));
+		infoFrame.getContentPane().setBackground(Color.white);
+		infoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		infoFrame.setLocation(350, 200);
+		infoFrame.setMinimumSize(d);
+		infoFrame.setMaximumSize(d);
+		infoFrame.setPreferredSize(d);
+		infoFrame.add(scrollPane);	
+		
+		infoFrame.pack();
+		
+		infoFrame.setResizable(false);
+		infoFrame.setVisible(true);
 	}
 
 }

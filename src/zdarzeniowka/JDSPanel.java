@@ -79,8 +79,6 @@ public class JDSPanel extends JPanel implements ActionListener {
 		c = new GridBagConstraints();
 		c.gridx=0;
 		c.gridy=0;
-		//c.ipadx=60;
-		//c.ipady=20;
 		c.fill = GridBagConstraints.BOTH;
 		cInsets1 = new Insets(0,0,30,10);
 		cInsets2 = new Insets(0,0,10,10);
@@ -148,7 +146,6 @@ public class JDSPanel extends JPanel implements ActionListener {
 		}
 		c.gridx = 0;
 		c.gridy = 0;
-		c.ipady=0;
 		c.insets = cInsets3;
 		this.add(dsPanel0,c);
 		c.gridy = 1;

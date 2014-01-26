@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -21,6 +22,7 @@ public class JResultFrame extends JFrame{
 	
 	public JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
 		super(txt);
+		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		this.resultTable = resultTable;
 		result = new JUserPanel(font, false, dsPanel, this);
 		result.setForm(user.getFirstName(), user.getLastName(), user.getEmail(), user.getIdUser(), user.getRoomNo(), user.getAlbumNo(), user.getPort());
@@ -29,6 +31,7 @@ public class JResultFrame extends JFrame{
 	
 	public JResultFrame(Font font, String txt, DBUserDevice userDevice, JMyTable resultTable){
 		super(txt);
+		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		this.resultTable = resultTable;
 		util = new DBUtil();
 		result = new JUserDevicePanel(font, false, this);
@@ -38,6 +41,7 @@ public class JResultFrame extends JFrame{
 	
 	public JResultFrame(Font font, String txt, DBNetworkDevice networkDevice, JMyTable resultTable){
 		super(txt);
+		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		this.resultTable = resultTable;
 		result = new JNetworkDevicePanel(font, false, this);
 		result.setForm(networkDevice.getMac(), networkDevice.getIp(), networkDevice.getIdDevice(), networkDevice.isConfiguration(), networkDevice.getType(), networkDevice.getOtherInfo());
