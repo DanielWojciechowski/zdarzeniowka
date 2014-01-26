@@ -21,13 +21,13 @@ public class JUserDevicePanel extends JBasicPanel{
 	public JUserDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);
 		paint();
-		editabling(editable, 2);
+		cont.editabling(editable, 2, this);
 	}
 	
 	public JUserDevicePanel(Font font, boolean editable, JRoomFrame frame){
 		super(font, editable, frame);
 		paint();
-		editabling(editable, 2);
+		cont.editabling(editable, 2, this);
 	}
 	
 	public JUserDevicePanel(Font font) {

@@ -6,9 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -28,7 +25,7 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 	public JNetworkDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);
 		paint();
-		editabling(editable, 2);
+		cont.editabling(editable, 2, this);
 	}
 
 	private void paint(){
@@ -170,12 +167,4 @@ public class JNetworkDevicePanel extends JBasicPanel  {
 	public void actionPerformed(ActionEvent e) {
 		cont.contJNetDevPanelAL(e, this);
 	}
-	
-	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-	    List<T> r = new ArrayList<T>(c.size());
-	    for(Object o: c)
-	      r.add(clazz.cast(o));
-	    return r;
-	}
-
 }

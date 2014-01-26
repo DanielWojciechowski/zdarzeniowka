@@ -51,11 +51,11 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			cresult = new GridBagConstraints();
 	private Insets insets1, insets0;
     JComboBox<String>[] cb;
-	private String[] comboBoxItems = {OPTION1, OPTION2, OPTION3}, 
-			comboBox1 = {"Imię", "Nazwisko", "Numer pokoju", "Numer albumu"}, 
-			comboBox23 = {"Adres MAC", "Adres IP"}, 
-			columnNames0 = {"Id", "Imie", "Nazwisko", "Pokój", "Nr Albumu"}, 
-			columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
+	String[] comboBoxItems = {OPTION1, OPTION2, OPTION3};
+	private String[] comboBox1 = {"Imię", "Nazwisko", "Numer pokoju", "Numer albumu"};
+	private String[] comboBox23 = {"Adres MAC", "Adres IP"};
+	private String[] columnNames0 = {"Id", "Imie", "Nazwisko", "Pokój", "Nr Albumu"};
+	private String[] columnNames1 = {"Id", "Adres IP", "Adres MAC", "Typ"};
 	DefaultTableModel userModel;
 	DefaultTableModel deviceModel;
 	JDSPanel dsPanel;
@@ -233,12 +233,6 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 			searchPanel[i].setBackground(bg);
 			searchPane[i].setBackground(bg);
 		}
-		
-	}
-		
-	private void clearForm(int n){
-			textField[n].setText("");
-			cb[n+1].setSelectedIndex(0);
 	}
 	
 	public void showResultFrame(DBUser user){
@@ -279,26 +273,7 @@ public class JSearchPanel extends JPanel implements ItemListener, ActionListener
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		if(e.getStateChange() == ItemEvent.DESELECTED){
-			String item = (String) e.getItem();
-			if(item == comboBoxItems[0])
-				clearForm(0);
-			else if(item == comboBoxItems[1])
-				clearForm(1);
-			else if(item == comboBoxItems[2])
-				clearForm(2);
-		}
-		CardLayout cl = (CardLayout)(cardSearchPanel.getLayout());
-        cl.show(cardSearchPanel, (String)e.getItem());
-        int tmp = cb[0].getSelectedIndex();
-		if (tmp == 1 || tmp == 2){
-			resultTable.setModel(deviceModel);
-			userModel.setRowCount(0);
-		}
-		else if(tmp == 0) {
-			resultTable.setModel(userModel);
-			deviceModel.setRowCount(0);
-		}
+		cont.contJSearchPanelISC(e, this);
 	}	
 
 	@Override

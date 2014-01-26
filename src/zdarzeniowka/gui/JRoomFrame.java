@@ -8,12 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,11 +35,11 @@ public class JRoomFrame extends JFrame implements ActionListener {
 	private JScrollPane[] scrollpane;
 	private JUserPanel[] userPanel;
 	private List<JUserDevicePanel> userDevicePanel;
-	private List<DBUser> userList;
+	List<DBUser> userList;
 	JButton showDeviceButton;
 	JButton showUserButton;
 	private GridBagConstraints c, cpane, csrane;
-	private Font normal;	
+	Font normal;	
 	private JDSPanel dsPanel; 
 	private Logger  log = Logger.getLogger(JRoomFrame.class);
 	private Controller cont = new Controller();
@@ -64,7 +61,7 @@ public class JRoomFrame extends JFrame implements ActionListener {
 		initiate(font);
 	}
 	
-	private void initiate(Font font){
+	void initiate(Font font){
 		this.setLayout(new GridBagLayout());
 		Dimension d;
 		userDevicePanel = new LinkedList<JUserDevicePanel>();
@@ -164,58 +161,6 @@ public class JRoomFrame extends JFrame implements ActionListener {
         }
 	}
 	
-	public void refreshUsers(int id){
-		for (int i = 0; i < userList.size(); i++){
-				if (id == userList.get(i).getIdUser()){
-					this.userList.remove(i);			
-					initiate(normal);
-				}	
-			}
-		if (userList.size() == 0)
-			this.dispose();
-		else {
-			this.setContentPane(cardUser);
-		}
-		this.revalidate();
-	}
-	
-	public void moveUsers(int id){
-
-	}
-	
-	public void refreshDevices(JUserDevicePanel userDevicePanel){
-		int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
-		DBUser user = null;
-		for (int i = 0; i < userList.size(); i++){
-			user = userList.get(i);
-			if (user.getIdUser() == userId){
-				List<DBUserDevice> devices = new ArrayList<DBUserDevice>();
-				devices.addAll(user.getDevices());
-				numberOfDevices = devices.size();
-				for (int j = 0; j < devices.size(); j++){
-					if (devices.get(j).getIdDevice() == userDevicePanel.getDeviceId()){
-						devices.remove(j);
-						log.info(devices.size());
-						Set<DBUserDevice> dbd = new HashSet<DBUserDevice>(devices);
-						user.setDevices(dbd);
-						log.info(user.getDevices().size());
-						userList.set(i, user);
-						initiate(normal);
-					}
-				}
-				numberOfDevices--;
-			}
-		}
-		if (numberOfDevices == 0){
-			this.setContentPane(cardUser);
-		}
-		else {
-			this.setContentPane(cardDevice);
-		}
-		this.revalidate();
-			
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		cont.contJRoomFrameAL(e, this);

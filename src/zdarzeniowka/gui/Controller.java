@@ -10,16 +10,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 
@@ -61,11 +64,11 @@ public class Controller{
 		if(e.getStateChange() == ItemEvent.DESELECTED){
 			String item = (String) e.getItem();
 			if(item == addPanel.comboBoxItems[0])
-				((JBasicPanel) addPanel.panel[0]).clearForm(0);
+				clearForm(0,(JBasicPanel) addPanel.panel[0]);
 			else if(item == addPanel.comboBoxItems[1])
-				((JBasicPanel) addPanel.panel[1]).clearForm(1);
+				clearForm(1,(JBasicPanel) addPanel.panel[1]);
 			else if(item == addPanel.comboBoxItems[2])
-				((JBasicPanel) addPanel.panel[2]).clearForm(2);
+				clearForm(2,(JBasicPanel) addPanel.panel[2]);
 		}
 		
 		Object source = e.getSource();
@@ -78,29 +81,33 @@ public class Controller{
 		Object source = e.getSource();
 		final int tmp = addPanel.addingCB.getSelectedIndex();
 		if (source == addPanel.confirmButton[tmp]){
-			if(((JBasicPanel) addPanel.panel[tmp]).checkForm(tmp)){
+			
 				SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>(){
 		            @Override
 		            protected Integer doInBackground() throws Exception {
 		    			dbUtil = new DBUtil();
-		    			if(tmp == 0){
-			    			JTextField[] tf = ((JUserPanel)addPanel.panel[tmp]).textFields;
-			    			return dbUtil.addUser(tf[0].getText(), tf[1].getText(), tf[2].getText(), Integer.parseInt(tf[4].getText()), Integer.parseInt(tf[5].getText()), Integer.parseInt(tf[6].getText()));
+		    			if(checkForm(tmp, (JBasicPanel)addPanel.panel[tmp])){
+			    			if(tmp == 0){
+				    			JTextField[] tf = ((JUserPanel)addPanel.panel[tmp]).textFields;
+				    			return dbUtil.addUser(tf[0].getText(), tf[1].getText(), tf[2].getText(), Integer.parseInt(tf[4].getText()), Integer.parseInt(tf[5].getText()), Integer.parseInt(tf[6].getText()));
+			    			}
+			    			else if(tmp == 1){
+				    			JTextField[] tf = ((JUserDevicePanel)addPanel.panel[tmp]).textFields;
+				    			boolean conf = (((JUserDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex() == 0);
+				    			int typeInd = ((JUserDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex();
+				    			String s = ((JUserDevicePanel)addPanel.panel[tmp]).textArea.getText();
+				    			return dbUtil.addUserDevice(tf[0].getText(), tf[1].getText(), addPanel.deviceTypes[typeInd], conf, s, Integer.parseInt(tf[3].getText()));
+			    			}
+			    			else if(tmp == 2){
+				    			JTextField[] tf = ((JNetworkDevicePanel)addPanel.panel[tmp]).textFields;
+				    			boolean conf = (((JNetworkDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex() == 0);
+				    			int typeInd = ((JNetworkDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex();  			
+				    			String s = ((JNetworkDevicePanel)addPanel.panel[tmp]).textArea.getText();
+				    			return dbUtil.addNetworkDevice(tf[0].getText(), tf[1].getText(), addPanel.deviceTypes[typeInd], conf, s);
+			    			}
 		    			}
-		    			else if(tmp == 1){
-			    			JTextField[] tf = ((JUserDevicePanel)addPanel.panel[tmp]).textFields;
-			    			boolean conf = (((JUserDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex() == 0);
-			    			int typeInd = ((JUserDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex();
-			    			String s = ((JUserDevicePanel)addPanel.panel[tmp]).textArea.getText();
-			    			return dbUtil.addUserDevice(tf[0].getText(), tf[1].getText(), addPanel.deviceTypes[typeInd], conf, s, Integer.parseInt(tf[3].getText()));
-		    			}
-		    			else if(tmp == 2){
-			    			JTextField[] tf = ((JNetworkDevicePanel)addPanel.panel[tmp]).textFields;
-			    			boolean conf = (((JNetworkDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex() == 0);
-			    			int typeInd = ((JNetworkDevicePanel)addPanel.panel[tmp]).cb[0].getSelectedIndex();  			
-			    			String s = ((JNetworkDevicePanel)addPanel.panel[tmp]).textArea.getText();
-			    			return dbUtil.addNetworkDevice(tf[0].getText(), tf[1].getText(), addPanel.deviceTypes[typeInd], conf, s);
-		    			}
+		    			else 
+		    				return -1;
 						return null;
 		    		}
 		            @Override
@@ -112,7 +119,7 @@ public class Controller{
 							log.error("Błąd SWING Workera");
 							e1.printStackTrace();
 						}
-		            	if (id != null){
+		            	if (id != null && id > 0){
 		            		if(tmp == 0){
 			            		((JUserPanel)addPanel.panel[tmp]).textFields[3].setText(String.valueOf(id));
 			            		String roomNo = addPanel.panel[0].getRoomNo();
@@ -128,7 +135,7 @@ public class Controller{
 			            	else if(tmp == 2)
 			            		((JNetworkDevicePanel)addPanel.panel[tmp]).textFields[2].setText(String.valueOf(id));		            	
 		            	}
-		            	else{
+		            	else if(id == null){
 		            		JOptionPane.showMessageDialog(addPanel.cardAddingPanel, "Dodawanie nie powiodło się! Sprawdź poprawność danych.", 
 		            				"Błąd dodawania", JOptionPane.ERROR_MESSAGE);
 		        			log.error("Błąd dodawania");
@@ -136,31 +143,11 @@ public class Controller{
 		            }
 		       };
 		       	worker.execute();
-/*
-		       	boolean tmp2 = false;
-		       	try {
-		       		if (worker.get() != null){
-		       			tmp2 = true;
-		       		}
-					
-				} catch (InterruptedException | ExecutionException e1) {
-					e1.printStackTrace();
-				}
-		       	if (tmp == 0 && tmp2){
-					String roomNo = addPanel.panel[0].getRoomNo();
-					for (int i = 0; i < addPanel.dsPanel.getRoomButton().size(); i++){
-						if (Integer.parseInt(addPanel.dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
-							addPanel.dsPanel.increaseCountTabAt(Integer.parseInt(roomNo));
-							addPanel.dsPanel.getRoomButton().get(i).increaseUsersInRoom();
-						}
-					}
-				}*/
-			}
-			else{}
+			//}
 		}
 		else if(source == addPanel.clearButton[tmp]){
 			log.info("Naciśnięto przycisk Wyczyść!");
-			((JBasicPanel) addPanel.panel[tmp]).clearForm(tmp);
+			clearForm(tmp,(JBasicPanel) addPanel.panel[tmp]);
 		}
 	}
 	
@@ -300,14 +287,37 @@ public class Controller{
 		
 	}
 	
+	public void contJSearchPanelISC(ItemEvent e, JSearchPanel searchPanel) {
+		if(e.getStateChange() == ItemEvent.DESELECTED){
+			String item = (String) e.getItem();
+			if(item == searchPanel.comboBoxItems[0])
+				clearForm(0, searchPanel);
+			else if(item == searchPanel.comboBoxItems[1])
+				clearForm(1, searchPanel);
+			else if(item == searchPanel.comboBoxItems[2])
+				clearForm(2, searchPanel);
+		}
+		CardLayout cl = (CardLayout)(searchPanel.cardSearchPanel.getLayout());
+        cl.show(searchPanel.cardSearchPanel, (String)e.getItem());
+        int tmp = searchPanel.cb[0].getSelectedIndex();
+		if (tmp == 1 || tmp == 2){
+			JSearchPanel.resultTable.setModel(searchPanel.deviceModel);
+			searchPanel.userModel.setRowCount(0);
+		}
+		else if(tmp == 0) {
+			JSearchPanel.resultTable.setModel(searchPanel.userModel);
+			searchPanel.deviceModel.setRowCount(0);
+		}
+	}	
+	
 	public void contJNetDevPanelAL(ActionEvent e, final JNetworkDevicePanel netDevPanel) {
 		JButton source = (JButton)e.getSource();
 		if (source == netDevPanel.editButton){
-			netDevPanel.editabling(true, 2);
+			editabling(true, 2, netDevPanel);
 		}
 		else if (source == netDevPanel.okButton){
 			Object[] options = {"Tak","Nie",};
-			if(netDevPanel.checkForm(2)){
+			if(checkForm(2, netDevPanel)){
 				int n = JOptionPane.showOptionDialog(
 						netDevPanel,
 					    "Czy na pewno chcesz potwierdzić?",
@@ -315,7 +325,7 @@ public class Controller{
 					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
 	                    options[1]);
 				if (n == 0) {
-					netDevPanel.editabling(false, 2);
+					editabling(false, 2, netDevPanel);
 					
 					SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
 			            @Override
@@ -351,7 +361,7 @@ public class Controller{
 		else if (source == netDevPanel.deleteButton){
 			remove((Object)netDevPanel);
 			if (netDevPanel.rframe != null){
-				netDevPanel.rframe.deleteFromResultTable();
+				deleteFromResultTable(netDevPanel.rframe);
 				netDevPanel.rframe.dispose();
     		}
 		}
@@ -382,11 +392,11 @@ public class Controller{
 	public void contJUserDevPanelAL(ActionEvent e, final JUserDevicePanel usrDevPanel) {
 		JButton source = (JButton)e.getSource();
 		if (source == usrDevPanel.editButton){
-			usrDevPanel.editabling(true, 2);
+			editabling(true, 2, usrDevPanel);
 		}
 		if (source == usrDevPanel.okButton){
 			Object[] options = {"Tak","Nie",};
-			if(usrDevPanel.checkForm(1)){
+			if(checkForm(1, usrDevPanel)){
 				int n = JOptionPane.showOptionDialog(
 						usrDevPanel,
 					    "Czy na pewno chcesz potwierdzić?",
@@ -394,7 +404,7 @@ public class Controller{
 					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
 	                    options[1]);
 				if (n == 0) {
-					usrDevPanel.editabling(false, 2);
+					editabling(false, 2, usrDevPanel);
 					
 					SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
 			            @Override
@@ -432,11 +442,11 @@ public class Controller{
 			JUserDevicePanel d = usrDevPanel;
 			remove((Object)usrDevPanel);
 			if (usrDevPanel.rframe != null){
-				usrDevPanel.rframe.deleteFromResultTable();
+				deleteFromResultTable(usrDevPanel.rframe);
 				usrDevPanel.rframe.dispose();
     		}
 			else if (usrDevPanel.frame != null){
-				usrDevPanel.frame.refreshDevices(d);
+				refreshDevices(d, usrDevPanel.frame);
 				usrDevPanel.frame.revalidate();
     		}
 		}
@@ -447,11 +457,11 @@ public class Controller{
 		JButton source = (JButton) e.getSource();
 		if (source == usrPanel.editButton){
 			usrPanel.oldRoomNo = Integer.parseInt(usrPanel.textFields[4].getText());
-			usrPanel.editabling(true, 3);
+			editabling(true, 3, usrPanel);
 		}
 		if (source == usrPanel.okButton){
 			Object[] options = {"Tak","Nie",};
-			if(usrPanel.checkForm(0)){
+			if(checkForm(0, usrPanel)){
 				int n = JOptionPane.showOptionDialog(
 						usrPanel,
 					    "Czy na pewno chcesz potwierdzić?",
@@ -459,7 +469,7 @@ public class Controller{
 					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
 	                    options[1]);
 				if (n == 0) {
-					usrPanel.editabling(false, 3);
+					editabling(false, 3, usrPanel);
 		
 					SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
 			            @Override
@@ -501,7 +511,7 @@ public class Controller{
 			       				usrPanel.dsPanel.getRoomButton().get(i).repaint();
 			       			}
 			       		}
-			       		usrPanel.frame.refreshUsers(Integer.parseInt(usrPanel.getUserId()));
+			       		refreshUsers(Integer.parseInt(usrPanel.getUserId()), usrPanel.frame);
 			       		usrPanel.frame.repaint();
 			       	}
 				}
@@ -521,11 +531,11 @@ public class Controller{
 	    			}
 	    		}
 	    		if (usrPanel.frame != null){
-	    			usrPanel.frame.refreshUsers(id);
+	    			refreshUsers(id, usrPanel.frame);
 	    			usrPanel.frame.revalidate();
 	    		}
 	    		else if (usrPanel.rframe != null){
-	    			usrPanel.rframe.deleteFromResultTable();
+	    			deleteFromResultTable(usrPanel.rframe);
 	    			usrPanel.rframe.dispose();
 	    		}
 			}
@@ -582,7 +592,7 @@ public class Controller{
 		return removed;
 	}
 	
-	public void contJReportPanelAL(ActionEvent e, JReportPanel repPanel) {
+	public void contJReportPanelAL(ActionEvent e, final JReportPanel repPanel) {
 		JButton source = (JButton) e.getSource();
 		Date start = (Date) repPanel.spinner[0].getValue();
 		Date end = (Date) repPanel.spinner[1].getValue();
@@ -596,49 +606,62 @@ public class Controller{
 		log.info(end.toString() + " " + start.toString() + " "+ data);
 		if (source == repPanel.saveButton){
 			JFileChooser fileChooser = new JFileChooser();
-			if (fileChooser.showSaveDialog(repPanel) == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-            	String fileName = file.getPath();
-				if(!fileName.endsWith(".txt")) {	
-					file = new File(fileName + ".txt");
+			boolean flag = true;
+			while(flag){
+				if (fileChooser.showSaveDialog(repPanel) == JFileChooser.APPROVE_OPTION) {
+	                File file = fileChooser.getSelectedFile();
+		    		Object[] options = {"Tak","Nie",};
+		    		int result = JOptionPane.showOptionDialog(repPanel, "Plik już istnieje, nadpisać?", 
+		    				"Plik już istnieje", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
+	                        options[1]);
+		    		if(result == 0){
+		    			flag = false;
+		            	String fileName = file.getPath();
+						if(!fileName.endsWith(".txt")) {	
+							file = new File(fileName + ".txt");
+						}
+		                final char choice = data;
+		                FileWriter out = null;
+		                try {
+		                	out = new FileWriter(file);
+						} catch (IOException e2) {
+							e2.printStackTrace();
+						}
+		          
+		                final FileWriter save = out;
+		                final String d1 = repPanel.sdf.format(start);
+						final String d2 = repPanel.sdf.format(end.getTime() + 86400000);
+						log.info("Formated date " +d1 +" "+ d2);
+		                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+		        		    @Override
+		        		    protected Void doInBackground() throws Exception {
+		        		    	List<Object[]> resultList = null;
+		        		    	if(choice == '0'){
+		        		    		resultList = dbUtil.report1(d1, d2);
+		        		    		save.write("Data:\t\t| Transfer:" + System.getProperty("line.separator"));
+		            		    	save.write("________________|__________" + System.getProperty("line.separator"));
+		        		    	}
+		        		    	else if(choice == '1'){
+		        		    		resultList = dbUtil.report2(d1, d2);
+		        		    		save.write("Użytk:\t| Transfer:" + System.getProperty("line.separator"));
+		            		    	save.write("________|___________" + System.getProperty("line.separator"));
+		        		    	}
+		
+		        		    	for(Object[] counter: resultList){
+		        		    		save.write(counter[0]+"\t| "+Math.floor(((Double)counter[1]*100))/100 + System.getProperty("line.separator"));
+		        		    	}
+		        		    	
+		        		    	save.close();
+		        		    	JOptionPane.showMessageDialog(repPanel, "Zapisano raport do pliku", "Zapisano!",
+			            			    JOptionPane.INFORMATION_MESSAGE);
+		        		    	return null;
+		        		    }
+		                };
+		                    worker.execute();
+		    		}
 				}
-                final char choice = data;
-                FileWriter out = null;
-                try {
-                	out = new FileWriter(file);
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
-          
-                final FileWriter save = out;
-                final String d1 = repPanel.sdf.format(start);
-				final String d2 = repPanel.sdf.format(end.getTime() + 86400000);
-				log.info("Formated date " +d1 +" "+ d2);
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
-        		    @Override
-        		    protected Void doInBackground() throws Exception {
-        		    	List<Object[]> resultList = null;
-        		    	if(choice == '0'){
-        		    		resultList = dbUtil.report1(d1, d2);
-        		    		save.write("Data:\t\t| Transfer:" + System.getProperty("line.separator"));
-            		    	save.write("________________|__________" + System.getProperty("line.separator"));
-        		    	}
-        		    	else if(choice == '1'){
-        		    		resultList = dbUtil.report2(d1, d2);
-        		    		save.write("Użytk:\t| Transfer:" + System.getProperty("line.separator"));
-            		    	save.write("________|___________" + System.getProperty("line.separator"));
-        		    	}
-
-        		    	for(Object[] counter: resultList){
-        		    		save.write(counter[0]+"\t| "+Math.floor(((Double)counter[1]*100))/100 + System.getProperty("line.separator"));
-        		    	}
-        		    	
-        		    	save.close();
-        		    	JOptionPane.showMessageDialog(new JFrame(), "Zapisano do pliku.");
-        		    	return null;
-        		    }
-                };
-                    worker.execute();
+				else
+					flag = false;
 			}
 		}
 	}
@@ -680,6 +703,146 @@ public class Controller{
 			cat = "DBNetworkDevice";
 		return cat;
 	}
+	
+	public boolean checkForm(int n, JBasicPanel panel){
+		LinkedList<Boolean> checker = new LinkedList<Boolean>();
+		if(n == 0){
+			checker.add(panel.textFields[0].getText().matches("[a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ]+"));
+			checker.add(panel.textFields[1].getText().matches("[a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ]+"));
+			checker.add(panel.textFields[2].getText().matches("^([_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,}))?$"));
+			int tmp = 0;
+			try{
+				tmp = Integer.parseInt(panel.textFields[4].getText());
+			}catch(java.lang.NumberFormatException e){
+				checker.add(false);
+			}
+			checker.add(((tmp>0 && tmp<=12) || (tmp>100 && tmp<=112) || (tmp>200 && tmp<=212)) && (dbUtil.countUsersInRoom(tmp)<3));
+			tmp = 0;
+			try{
+				tmp = Integer.parseInt(panel.textFields[5].getText());
+			}catch(java.lang.NumberFormatException e){
+				checker.add(false);
+			}
+			checker.add(tmp>=10000 && tmp<=99999);
+			tmp = 0;
+			try{
+				tmp = Integer.parseInt(panel.textFields[6].getText());
+			}catch(java.lang.NumberFormatException e){
+				checker.add(false);
+			}
+			checker.add(tmp>0 && tmp<=108);
+		} 
+		else if(n == 1 || n == 2){
+			checker.add(panel.textFields[0].getText().matches("^(([0-9A-F]{2}[:-]){5}([0-9A-F]{2}))?$"));
+			checker.add(panel.textFields[1].getText().matches("^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))?$"));
+			if(n == 1){
+				int tmp = 0;
+				try{
+					tmp = Integer.parseInt(panel.textFields[3].getText());
+				}catch(java.lang.NumberFormatException e){
+					checker.add(false);
+				}
+				checker.add(tmp>0);
+			}
+		}
+		
+		if(checker.contains(false)){
+			JOptionPane.showMessageDialog(panel, "Podane dane są nieprawidłowe!", "Błąd danych", 
+					JOptionPane.ERROR_MESSAGE);
+			log.error("Błąd danych");
+			return false;
+		}
+		else{
+			log.error("Dodawanie w toku");
+			return true;
+		}
+	}
+	
+	public void clearForm(int n, JBasicPanel panel){
+		for(int i=0; i<panel.textFields.length; i++)
+			panel.textFields[i].setText("");
+		if(n == 1 || n == 2){
+			panel.textArea.setText("");
+			for(int i=0; i<panel.cb.length; i++)
+				panel.cb[i].setSelectedIndex(0);
+		}
+	}
+	
+	public void editabling(boolean value, int id, JBasicPanel panel){
+		panel.editable = value;
+		for (int i = 0; i < panel.textFields.length; i++){
+			if (i != id){
+				panel.textFields[i].setEditable(panel.editable);
+			}
+			
+		}
+		if (panel.cb != null){
+			for (int i = 0; i < panel.cb.length; i++){
+				panel.cb[i].setEnabled(panel.editable);
+			}
+			
+		}
+		if (panel.textArea != null)
+			panel.textArea.setEditable(panel.editable);
+		panel.okButton.setEnabled(panel.editable);
+	}
+	
+	public void deleteFromResultTable(JResultFrame resFrame){
+		DefaultTableModel tableModel = (DefaultTableModel) resFrame.resultTable.getModel();
+		tableModel.removeRow(resFrame.resultTable.getSelectedRow());
+	}
+	
+	public void refreshDevices(JUserDevicePanel userDevicePanel, JRoomFrame roomFrame){
+		int numberOfDevices = - 1, userId = userDevicePanel.getUserId();
+		DBUser user = null;
+		for (int i = 0; i < roomFrame.userList.size(); i++){
+			user = roomFrame.userList.get(i);
+			if (user.getIdUser() == userId){
+				List<DBUserDevice> devices = new ArrayList<DBUserDevice>();
+				devices.addAll(user.getDevices());
+				numberOfDevices = devices.size();
+				for (int j = 0; j < devices.size(); j++){
+					if (devices.get(j).getIdDevice() == userDevicePanel.getDeviceId()){
+						devices.remove(j);
+						log.info(devices.size());
+						Set<DBUserDevice> dbd = new HashSet<DBUserDevice>(devices);
+						user.setDevices(dbd);
+						log.info(user.getDevices().size());
+						roomFrame.userList.set(i, user);
+						roomFrame.initiate(roomFrame.normal);
+					}
+				}
+				numberOfDevices--;
+			}
+		}
+		if (numberOfDevices == 0){
+			roomFrame.setContentPane(roomFrame.cardUser);
+		}
+		else {
+			roomFrame.setContentPane(roomFrame.cardDevice);
+		}
+		roomFrame.revalidate();
+	}
+	
+	public void refreshUsers(int id, JRoomFrame roomFrame){
+		for (int i = 0; i < roomFrame.userList.size(); i++){
+				if (id == roomFrame.userList.get(i).getIdUser()){
+					roomFrame.userList.remove(i);			
+					roomFrame.initiate(roomFrame.normal);
+				}	
+			}
+		if (roomFrame.userList.size() == 0)
+			roomFrame.dispose();
+		else {
+			roomFrame.setContentPane(roomFrame.cardUser);
+		}
+		roomFrame.revalidate();
+	}
+	
+	void clearForm(int n, JSearchPanel searchPanel){
+		searchPanel.textField[n].setText("");
+		searchPanel.cb[n+1].setSelectedIndex(0);
+}
 	
 	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
 	    List<T> r = new ArrayList<T>(c.size());

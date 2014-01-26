@@ -23,13 +23,13 @@ public class JUserPanel extends JBasicPanel {
 	public JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JRoomFrame frame){
 		super(font, editable, dsPanel, frame);
 		paint();
-		editabling(editable, 3);
+		cont.editabling(editable, 3, this);
 	}
 	
 	public JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JResultFrame frame){
 		super(font, editable, dsPanel, frame);
 		paint();
-		editabling(editable, 3);
+		cont.editabling(editable, 3, this);
 	}
 	
 	public void paint(){

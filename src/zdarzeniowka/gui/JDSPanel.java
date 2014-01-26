@@ -8,7 +8,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -206,13 +205,6 @@ public class JDSPanel extends JPanel implements ActionListener {
 		dsPanel1.setBackground(bg);
 		dsPanel2.setBackground(bg);
 	}
-	
-	public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-	    List<T> r = new ArrayList<T>(c.size());
-	    for(Object o: c)
-	      r.add(clazz.cast(o));
-	    return r;
-	}	
 
 	public List<JRoomButton> getRoomButton(){
 		return this.roomButton;

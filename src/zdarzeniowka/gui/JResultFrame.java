@@ -9,7 +9,6 @@ import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
 
 import zdarzeniowka.db.DBNetworkDevice;
 import zdarzeniowka.db.DBUser;
@@ -22,7 +21,7 @@ public class JResultFrame extends JFrame{
 	private JScrollPane scrollPane;
 	private GridBagConstraints c;
 	private DBUtil util;
-	private JMyTable resultTable; 
+	JMyTable resultTable; 
 	
 	public JResultFrame(Font font, String txt, DBUser user, JDSPanel dsPanel, JMyTable resultTable){
 		super(txt);
@@ -80,11 +79,4 @@ public class JResultFrame extends JFrame{
 		result.setComponentsBackground(bg);	
 
 	}
-	
-	public void deleteFromResultTable(){
-		DefaultTableModel tableModel = (DefaultTableModel) this.resultTable.getModel();
-		tableModel.removeRow(this.resultTable.getSelectedRow());
-	}
-	
-
 }

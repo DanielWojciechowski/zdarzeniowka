@@ -120,10 +120,6 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
         cardAddingPanel.add(addingPanel[1], OPTION2);
         cardAddingPanel.add(addingPanel[2], OPTION3);	
 	}
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		cont.contJAddPanelISC(e, this);
-	}
 	
 	public void setComponentsBackground(Color bg){
 		this.setBackground(bg);
@@ -132,6 +128,11 @@ public class JAddPanel extends JPanel implements ItemListener, ActionListener{
 			addingPanel[i].setBackground(bg);
 			buttonPanel[i].setBackground(bg);
 		}
+	}
+	
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		cont.contJAddPanelISC(e, this);
 	}
 	
 	@Override
