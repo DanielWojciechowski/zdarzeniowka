@@ -17,7 +17,6 @@ import javax.swing.SwingConstants;
  * Komponent graficzny reprezentujący drzwi do pokoju w schemacie Domu Studenckiego.
  * Umieszczone są na nim ikonki reprezentujące liczbę mieszkańców.
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 class JRoomButton extends JButton{

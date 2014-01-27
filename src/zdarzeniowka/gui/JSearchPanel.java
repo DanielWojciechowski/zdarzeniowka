@@ -4,7 +4,6 @@ package zdarzeniowka.gui;
  * Panel przedstawiający widoki wyszukiwania użytkowników i sprzętów.
  * Wyszkane dane prezentowane są do tabeli.
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 import java.awt.CardLayout;

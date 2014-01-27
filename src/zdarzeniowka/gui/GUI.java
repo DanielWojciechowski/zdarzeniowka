@@ -29,7 +29,6 @@ import javax.swing.SwingConstants;
  * w niej instancje obiektów składające się na całościowe GUI.
  * 
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 public class GUI implements ActionListener{

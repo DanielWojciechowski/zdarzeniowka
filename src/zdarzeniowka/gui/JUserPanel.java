@@ -16,7 +16,6 @@ import zdarzeniowka.db.DBPort;
  * Przedstawia podstawowy panel użytkownika.
  * Może być wykorzystywana na rózne sposoby - zarówno do dodawania, wyświetlania i edytownia.
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 class JUserPanel extends JBasicPanel {

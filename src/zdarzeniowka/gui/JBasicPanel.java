@@ -24,7 +24,6 @@ import zdarzeniowka.db.DBUtil;
  * Abstrakcyjna klasa będąca podstawą do budowy widoku panelu sprzętu lub użytkownika.
  * 
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 abstract class JBasicPanel extends JPanel implements ActionListener{

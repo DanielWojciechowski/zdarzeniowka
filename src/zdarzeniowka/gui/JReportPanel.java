@@ -24,7 +24,6 @@ import javax.swing.SpinnerModel;
  * 
  * Panel przedstawiający wykres zużycia transferu oraz widok służacy do generowania raportów.
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 class JReportPanel extends JPanel implements ActionListener {

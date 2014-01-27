@@ -3,7 +3,6 @@ package zdarzeniowka.db;
 import java.sql.Date;
 /**
  * Klasa przedstawiająca tabelę History z bazy danych.
- * @author Anna Cierniewska
  * @author Daniel Wojciechowski
  *
  */

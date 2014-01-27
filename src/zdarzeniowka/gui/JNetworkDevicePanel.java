@@ -5,7 +5,6 @@ package zdarzeniowka.gui;
  * Przedstawia podstawowy panel sprzetu sieciowego.
  * Może być wykorzystywana na rózne sposoby - zarówno do dodawania, wyświetlania i edytownia.
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 import java.awt.Dimension;

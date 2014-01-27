@@ -30,7 +30,6 @@ import zdarzeniowka.db.DBUserDevice;
  * widok profile użytkowników oraz widok ich sprzętów.
  * Klasa umożliwia wybór widoku.
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 class JRoomFrame extends JFrame implements ActionListener {

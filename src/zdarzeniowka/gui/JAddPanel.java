@@ -3,7 +3,6 @@ package zdarzeniowka.gui;
  * 
  * Panel przedstawiający widoki dodawania użytkowników i sprzętów.
  * @author Anna Cierniewska
- * @author Daniel Wojciechowski
  * 
  */
 import java.awt.CardLayout;

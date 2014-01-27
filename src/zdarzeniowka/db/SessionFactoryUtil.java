@@ -7,7 +7,6 @@ import org.hibernate.service.ServiceRegistry;
 
 /**
  * Klasa służąca do konfiguracji i ustawienia połączenia z bazą danych.
- * @author Anna Cierniewska
  * @author Daniel Wojciechowski
  *
  */

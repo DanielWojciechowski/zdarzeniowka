@@ -4,7 +4,6 @@ import java.util.Set;
 
 /**
  * Klasa przedstawiająca tabelę Port z bazy danych.
- * @author Anna Cierniewska
  * @author Daniel Wojciechowski
  *
  */

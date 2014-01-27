@@ -3,7 +3,6 @@ package zdarzeniowka.db;
 import java.util.Set;
 /**
  * Klasa przedstawiająca tabelę User z bazy danych.
- * @author Anna Cierniewska
  * @author Daniel Wojciechowski
  *
  */
