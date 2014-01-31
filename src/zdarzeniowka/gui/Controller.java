@@ -47,6 +47,7 @@ import zdarzeniowka.db.DBUtil;
 import zdarzeniowka.gen.Generator;
 
 class Controller{
+	private static GUI gui = new GUI();
 	private DBUtil dbUtil = new DBUtil();
 	private Logger log = Logger.getLogger(Controller.class);
 	
@@ -54,6 +55,7 @@ class Controller{
 	void contDSPanelAL(ActionEvent e, final JDSPanel ds) {
 		final Object source = e.getSource();
 		if (source instanceof JRoomButton){
+    		gui.setInfo("Otwieranie pokoju");
 			final String buttonText = ((JRoomButton) source).getText();
 			SwingWorker<List<DBUser>, Void> worker = new SwingWorker<List<DBUser>, Void>(){
 	            @Override
@@ -65,6 +67,7 @@ class Controller{
 	            protected void done() {
 	            	try {
 						ds.showRoomFrame(buttonText, get());
+	            		gui.setInfo("");
 					} catch (InterruptedException | ExecutionException e) {
 						e.printStackTrace();
 					}
@@ -131,6 +134,7 @@ class Controller{
 							id = this.get();
 						} catch (InterruptedException | ExecutionException e1) {
 							log.error("Błąd SWING Workera");
+							gui.setInfo(" ");
 							e1.printStackTrace();
 						}
 		            	if (id != null && id > 0){
@@ -153,11 +157,12 @@ class Controller{
 		            		JOptionPane.showMessageDialog(addPanel.cardAddingPanel, "Dodawanie nie powiodło się! Sprawdź poprawność danych.", 
 		            				"Błąd dodawania", JOptionPane.ERROR_MESSAGE);
 		        			log.error("Błąd dodawania");
+		        			gui.setInfo(" ");
 		            	}
 		            }
 		       };
-		       	worker.execute();
-			//}
+		       gui.setInfo(" Dodawanie profilu ");
+		       worker.execute();
 		}
 		else if(source == addPanel.clearButton[tmp]){
 			log.info("Naciśnięto przycisk Wyczyść!");

@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
@@ -32,8 +33,10 @@ import javax.swing.SwingConstants;
  * 
  */
 public class GUI implements ActionListener{
-
+	private static final Color COLOR = Color.white; 
 	private JFrame frame;
+	private JPanel botPanel;
+	private static JLabel infoLabel;
 	private static JAddPanel addPanel;
 	private static JSearchPanel searchPanel;
 	private static JDSPanel dsPanel;
@@ -43,6 +46,7 @@ public class GUI implements ActionListener{
 	private Icon add, search, report, ds;
 	private static String path = "icons/cat.png";
 	private JButton button;
+	private JSeparator sep;
 	private Controller cont = new Controller();
 	
 	private void initiate(){
@@ -81,11 +85,24 @@ public class GUI implements ActionListener{
 		button.setFocusPainted(false); 
 		button.addActionListener(this);
 		
-		dsPanel.setComponentsBackground(Color.white);
-		addPanel.setComponentsBackground(Color.white);
-		searchPanel.setComponentsBackground(Color.white);
-		reportPanel.setColor(Color.white);
+		dsPanel.setComponentsBackground(COLOR);
+		addPanel.setComponentsBackground(COLOR);
+		searchPanel.setComponentsBackground(COLOR);
+		reportPanel.setColor(COLOR);
 		
+		infoLabel = new JLabel(" ");
+		infoLabel.setFont(normal);
+		//infoLabel.setBorder(BorderFactory.createLineBorder(Color.pink));
+		GridBagConstraints b = new GridBagConstraints();
+		b.anchor = GridBagConstraints.CENTER;
+		Dimension d = new Dimension(720, 30);
+		botPanel = new JPanel(new GridBagLayout());
+		botPanel.setPreferredSize(d);
+		botPanel.setMinimumSize(d);
+		botPanel.setMaximumSize(d);
+		botPanel.add(infoLabel, b);
+		sep = new JSeparator(SwingConstants.VERTICAL);
+		sep.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		frame.setLayout(new GridBagLayout());
 	}
 	
@@ -123,12 +140,20 @@ public class GUI implements ActionListener{
 		
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridy = 1;
+		c.gridheight = 5;
 		c.insets = new Insets(5, 0, 0, 0);
 		frame.add(tabbedPane, c);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 6;
+		c.gridwidth = 2;
+		frame.add(sep,c);
+		c.insets = new Insets(0, 0, 0, 0);
+		c.gridy = 7;
+		frame.add(botPanel, c);
 	}
 	
 	public void showGUI(){
-		Dimension d = new Dimension(720, 630);
+		Dimension d = new Dimension(720, 642);
 		frame = new JFrame("AC&DW"); 
 		frame.setContentPane(new JLabel(new ImageIcon("background/2.png")));
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(path));
@@ -145,6 +170,10 @@ public class GUI implements ActionListener{
 	
 	static String getPath(){
 		return path;
+	}
+	
+	void setInfo(String txt){
+		infoLabel.setText(txt);
 	}
 
 	@Override
