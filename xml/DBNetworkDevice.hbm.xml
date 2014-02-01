@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-    <class name="zdarzeniowka.db.DBNetworkDevice" table="networkdevice">
+    <class name="pl.edu.wat.wcy.pz.db.DBNetworkDevice" table="networkdevice">
 
         <id name="idDevice" type="int" column="idDevice">
             <generator class="native" />
@@ -19,7 +19,7 @@
 		 	
 		 <set name="ports" cascade="all">
 			<key column="idPort"/>
-			<one-to-many class="zdarzeniowka.db.DBPort"/>
+			<one-to-many class="pl.edu.wat.wcy.pz.db.DBPort"/>
 		</set>	 
          	
     </class>
