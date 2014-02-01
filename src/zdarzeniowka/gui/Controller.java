@@ -55,7 +55,7 @@ class Controller{
 	void contDSPanelAL(ActionEvent e, final JDSPanel ds) {
 		final Object source = e.getSource();
 		if (source instanceof JRoomButton){
-    		gui.setInfo("Otwieranie pokoju");
+    		gui.setInfo("Otwieranie pokoju...");
 			final String buttonText = ((JRoomButton) source).getText();
 			SwingWorker<List<DBUser>, Void> worker = new SwingWorker<List<DBUser>, Void>(){
 	            @Override
@@ -175,7 +175,7 @@ class Controller{
 		Object source = e.getSource();
 		final int tmp = searchPanel.cb[0].getSelectedIndex();
 		if (source == searchPanel.searchButton[tmp]){
-			gui.setInfo("Wyszkiwanie trwa.");
+			gui.setInfo("Trwa wyszukiwanie...");
 			log.info("Wciśnięto przycisk szukaj");
 			final int tmp2 = searchPanel.cb[tmp+1].getSelectedIndex();
 			
@@ -654,10 +654,13 @@ class Controller{
 			while(flag){
 				if (fileChooser.showSaveDialog(repPanel) == JFileChooser.APPROVE_OPTION) {
 	                File file = fileChooser.getSelectedFile();
-		    		Object[] options = {"Tak","Nie",};
-		    		int result = JOptionPane.showOptionDialog(repPanel, "Plik już istnieje, nadpisać?", 
-		    				"Plik już istnieje", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
-	                        options[1]);
+	                int result = 0;
+	                if(file.exists()){
+	                	Object[] options = {"Tak","Nie",};
+	                	result = JOptionPane.showOptionDialog(repPanel, "Plik już istnieje, nadpisać?", 
+	                			"Plik już istnieje", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, null, options,
+	                			options[1]);
+	                }
 		    		if(result == 0){
 		    			flag = false;
 		            	String fileName = file.getPath();
@@ -797,7 +800,7 @@ class Controller{
 			return false;
 		}
 		else{
-			log.error("Dodawanie w toku");
+			log.error("Dodawanie w toku...");
 			return true;
 		}
 	}
