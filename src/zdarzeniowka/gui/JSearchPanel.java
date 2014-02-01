@@ -80,6 +80,7 @@ class JSearchPanel extends JPanel implements ItemListener, ActionListener{
 	}
 
 	private void initiate(Font font){
+		Dimension d = new Dimension(360, 100);
 		userModel = new DefaultTableModel(columnNames0,0);
     	deviceModel = new DefaultTableModel(columnNames1, 0);
 		resultTable = new JMyTable();
@@ -121,9 +122,12 @@ class JSearchPanel extends JPanel implements ItemListener, ActionListener{
         cb[2] = new JComboBox<String>(comboBox23);
         cb[3] = new JComboBox<String>(comboBox23);
         cb[0].addItemListener(this);
-        this.setLayout(new GridBagLayout());
-	    resultTable.setPreferredScrollableViewportSize(new Dimension(360, 130)); 
-	    resultTable.setFillsViewportHeight(true); 
+        scrollPane.setMaximumSize(d);
+        scrollPane.setMinimumSize(d);
+        scrollPane.setPreferredSize(d);
+	    resultTable.setPreferredScrollableViewportSize(d); 
+	    resultTable.setFillsViewportHeight(true);
+	    this.setLayout(new GridBagLayout());
 	}
 	
 	private void paint(){
@@ -217,10 +221,10 @@ class JSearchPanel extends JPanel implements ItemListener, ActionListener{
         this.add(cardSearchPanel, cpane);
         cpane.gridy = 1;
         cpane.anchor = GridBagConstraints.LINE_END;
-        cpane.insets = new Insets(10,0,0,20);
+        cpane.insets = new Insets(10,0,0,0);
     	this.add(resultPane, cpane);
     	cpane.gridy = 2;
-    	cpane.insets = new Insets(0,0,50,20);
+    	cpane.insets = new Insets(0,0,50,0);
         this.add(buttonPanel, cpane);	
         cardSearchPanel.add(searchPanel[0], OPTION1);
         cardSearchPanel.add(searchPanel[1], OPTION2);

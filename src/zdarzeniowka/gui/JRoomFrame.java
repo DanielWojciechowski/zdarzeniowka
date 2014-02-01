@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -59,7 +60,11 @@ class JRoomFrame extends JFrame implements ActionListener {
 		super.setContentPane(new JLabel(new ImageIcon("background/room.png")));
 		this.dsPanel = dsPanel;
 		if(userList.size() <= 0 || userList.size() > 3) {
-            throw new IllegalArgumentException("Too many users in room!");
+			JOptionPane.showMessageDialog(dsPanel,
+    			    "Brak użytkowników w wybranym pokoju.",
+    			    "Nie można otworzyć okna!",
+    			    JOptionPane.ERROR_MESSAGE);
+            throw new IllegalArgumentException("Invalid number of users in room");    
         }
 		this.userList = userList;
 		initiate(this.normal);

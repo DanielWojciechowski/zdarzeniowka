@@ -42,10 +42,10 @@ class JAddPanel extends JPanel implements ItemListener, ActionListener{
 	JAddPanel(Font font, JDSPanel dsPanel){
 		super();
 		this.dsPanel = dsPanel;
-		paint(font);		
+		initiate(font);		
 	}
 
-	private void paint(Font font){
+	private void initiate(Font font){
 		addingPanel = new JPanel[3];
 		buttonPanel = new JPanel[3];
 		panel = new JBasicPanel[3];	

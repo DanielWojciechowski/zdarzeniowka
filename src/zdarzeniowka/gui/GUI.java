@@ -34,17 +34,17 @@ import javax.swing.SwingConstants;
  */
 public class GUI implements ActionListener{
 	private static final Color COLOR = Color.white; 
-	private JFrame frame;
-	private JPanel botPanel;
 	private static JLabel infoLabel;
 	private static JAddPanel addPanel;
 	private static JSearchPanel searchPanel;
 	private static JDSPanel dsPanel;
 	private static JReportPanel reportPanel;
 	private static JTabbedPane tabbedPane;
+	private static String path = "icons/cat.png";
+	private JFrame frame;
+	private JPanel botPanel;
 	private Font header, normal, italic;
 	private Icon add, search, report, ds;
-	private static String path = "icons/cat.png";
 	private JButton button;
 	private JSeparator sep;
 	private Controller cont = new Controller();
@@ -101,8 +101,11 @@ public class GUI implements ActionListener{
 		botPanel.setMinimumSize(d);
 		botPanel.setMaximumSize(d);
 		botPanel.add(infoLabel, b);
+		botPanel.setOpaque(false);
+		
 		sep = new JSeparator(SwingConstants.VERTICAL);
 		sep.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		sep.setOpaque(false);
 		frame.setLayout(new GridBagLayout());
 	}
 	

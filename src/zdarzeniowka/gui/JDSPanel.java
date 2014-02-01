@@ -44,10 +44,10 @@ class JDSPanel extends JPanel implements ActionListener {
 	
 	JDSPanel(Font font){
 		super();
-		paint(font);
+		initiate(font);
 	}
 	
-	private void paint(Font font){
+	private void initiate(Font font){
 		List<Object[]> countList = new LinkedList<Object[]>();
 		SwingWorker<List<Object[]>, Void> worker = new SwingWorker<List<Object[]>, Void>(){
 

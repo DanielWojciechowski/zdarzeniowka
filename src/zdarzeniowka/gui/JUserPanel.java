@@ -24,22 +24,22 @@ class JUserPanel extends JBasicPanel {
 	
 	JUserPanel(Font font){
 		super(font);	
-		paint();
+		initiate();
 	}
 	
 	JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JRoomFrame frame){
 		super(font, editable, dsPanel, frame);
-		paint();
+		initiate();
 		cont.editabling(editable, 3, this);
 	}
 	
 	JUserPanel(Font font, boolean editable, JDSPanel dsPanel, JResultFrame frame){
 		super(font, editable, dsPanel, frame);
-		paint();
+		initiate();
 		cont.editabling(editable, 3, this);
 	}
 	
-	private void paint(){
+	private void initiate(){
 		this.setLayout(new GridBagLayout());
 		labels = new JLabel[7];
 		textFields = new JTextField[7];

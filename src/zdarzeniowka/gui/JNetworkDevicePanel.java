@@ -26,16 +26,16 @@ class JNetworkDevicePanel extends JBasicPanel  {
 
 	JNetworkDevicePanel(Font font) {
 		super(font);
-		paint();
+		initiate();
 	}
 		
 	JNetworkDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);
-		paint();
+		initiate();
 		cont.editabling(editable, 2, this);
 	}
 
-	private void paint(){
+	private void initiate(){
 		this.setLayout(new GridBagLayout());
 		Insets insets2 = new Insets(0,28, 10,0);
 		labels = new JLabel[6];

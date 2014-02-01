@@ -67,10 +67,12 @@ class Controller{
 	            protected void done() {
 	            	try {
 						ds.showRoomFrame(buttonText, get());
-	            		gui.setInfo("");
 					} catch (InterruptedException | ExecutionException e) {
 						e.printStackTrace();
 					}
+	            	finally{
+	            		gui.setInfo(" ");
+	            	}
 	            }
 			};
 			worker.execute();			
@@ -98,7 +100,7 @@ class Controller{
 		Object source = e.getSource();
 		final int tmp = addPanel.addingCB.getSelectedIndex();
 		if (source == addPanel.confirmButton[tmp]){
-			
+			gui.setInfo("Dodawanie profilu");
 				SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>(){
 		            @Override
 		            protected Integer doInBackground() throws Exception {
@@ -157,11 +159,10 @@ class Controller{
 		            		JOptionPane.showMessageDialog(addPanel.cardAddingPanel, "Dodawanie nie powiodło się! Sprawdź poprawność danych.", 
 		            				"Błąd dodawania", JOptionPane.ERROR_MESSAGE);
 		        			log.error("Błąd dodawania");
-		        			gui.setInfo(" ");
 		            	}
+		            	gui.setInfo(" ");
 		            }
 		       };
-		       gui.setInfo(" Dodawanie profilu ");
 		       worker.execute();
 		}
 		else if(source == addPanel.clearButton[tmp]){
@@ -174,6 +175,7 @@ class Controller{
 		Object source = e.getSource();
 		final int tmp = searchPanel.cb[0].getSelectedIndex();
 		if (source == searchPanel.searchButton[tmp]){
+			gui.setInfo("Wyszkiwanie trwa.");
 			log.info("Wciśnięto przycisk szukaj");
 			final int tmp2 = searchPanel.cb[tmp+1].getSelectedIndex();
 			
@@ -194,11 +196,13 @@ class Controller{
 					try {
 						cat = this.get();
 					} catch (InterruptedException | ExecutionException e) {
+						gui.setInfo("Błąd SWING Workera");
 						log.error("Błąd SWING Workera");
 						e.printStackTrace();
 					}
 	            	if(cat == searchPanel.category[0]){
 	            		log.info("Listowanie Userów, liczba wyników: "+ searchPanel.userResultList.size());
+	            		gui.setInfo("Listowanie Userów, liczba wyników: "+ searchPanel.userResultList.size());
 	            		searchPanel.userModel.setRowCount(0);
 	            		for(Iterator<DBUser> iter = searchPanel.userResultList.iterator(); iter.hasNext();){
 	            			DBUser user = iter.next();
@@ -210,6 +214,7 @@ class Controller{
 	            	}
 	            	else if(cat == searchPanel.category[1]){
 	            		log.info("Listowanie Urządzeń Usera, liczba wyników: "+ searchPanel.userDeviceResultList.size());
+	            		gui.setInfo("Listowanie Urządzeń Usera, liczba wyników: "+ searchPanel.userDeviceResultList.size());
 	            		searchPanel.deviceModel.setRowCount(0);
 	            		for(Iterator<DBUserDevice> iter = searchPanel.userDeviceResultList.iterator(); iter.hasNext();){
 	            			DBUserDevice device = iter.next();
@@ -220,6 +225,7 @@ class Controller{
 	            	}
 	            	else if(cat == searchPanel.category[2]){
 	            		log.info("Listowanie Urządzeń Sieciowych, liczba wyników: "+ searchPanel.networkDeviceResultList.size());
+	            		gui.setInfo("Listowanie Urządzeń Sieciowych, liczba wyników: "+ searchPanel.networkDeviceResultList.size());
 	            		searchPanel.deviceModel.setRowCount(0);
 	            		for(Iterator<DBNetworkDevice> iter = searchPanel.networkDeviceResultList.iterator(); iter.hasNext();){
 	            			DBNetworkDevice device = iter.next();
@@ -229,6 +235,7 @@ class Controller{
 	            		}
 	            	}
 	            	JSearchPanel.resultTable.repaint();
+	            	gui.setInfo(" ");
 	            }
 	       };
 	       	worker.execute();
@@ -244,7 +251,7 @@ class Controller{
 				if (n == 0) {
 					final int index = Integer.parseInt((String) JSearchPanel.resultTable.getValueAt(selectedRow, 0));
 					final int cat = searchPanel.cb[0].getSelectedIndex();
-					
+					gui.setInfo("Usuwanie profilu.");
 					SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>(){
 			            @Override
 			            protected Boolean doInBackground() throws Exception {
@@ -257,14 +264,15 @@ class Controller{
 								conf = get();
 							} catch (InterruptedException | ExecutionException e) {
 								log.error("Błąd SWING Workera");
+								gui.setInfo("Błąd SWING Workera");
 								e.printStackTrace();
 							}
 			            	if(conf){
 			            		log.info("Usunięto!");
+			            		gui.setInfo("Usunięto!");
 			            		if(cat == 0) {
 			    					String roomNo = (String) searchPanel.userModel.getValueAt(selectedRow, 3);
 			    					searchPanel.userModel.removeRow(selectedRow);
-			    					log.info(roomNo);
 			    					for (int i = 0; i < searchPanel.dsPanel.getRoomButton().size(); i++){
 			    						if (Integer.parseInt(searchPanel.dsPanel.getRoomButton().get(i).getText()) == Integer.parseInt(roomNo)){
 			    							searchPanel.dsPanel.decreaseCountTabAt(Integer.parseInt(roomNo));
@@ -277,11 +285,13 @@ class Controller{
 			            	}
 			            	else{
 			            		log.error("Usuwanie nie powiodło się");
+			            		gui.setInfo("Usuwanie nie powiodło się");
 			            		JOptionPane.showMessageDialog(searchPanel.cardSearchPanel,
 			            			    "Usuwanie wybranego rekordu nie powiodło się!",
 			            			    "Błąd usuwania",
 			            			    JOptionPane.ERROR_MESSAGE);
 			            	}
+			            	gui.setInfo(" ");
 			            }
 			       };
 			       
@@ -293,6 +303,7 @@ class Controller{
 			log.info("Wciśnięto przycisk wyswietl");
 			final int selectedRow = JSearchPanel.resultTable.getSelectedRow();
 			if(selectedRow != -1){
+				gui.setInfo("Otwieranie okna z wynikami");
 				int row = JSearchPanel.resultTable.getSelectedRow();
 				int cat = searchPanel.cb[0].getSelectedIndex();
 				if(cat == 0)
@@ -301,6 +312,7 @@ class Controller{
 					searchPanel.showResultFrame(searchPanel.userDeviceResultList.get(row));
 				else if(cat == 2)
 					searchPanel.showResultFrame(searchPanel.networkDeviceResultList.get(row));
+				gui.setInfo(" ");
 			}
 		}
 		
@@ -704,7 +716,7 @@ class Controller{
 	        protected Void doInBackground() throws Exception {
 	        	repPanel.latestDate = dbUtil.getEarliestDate();
 	        	repPanel.earliestDate = dbUtil.getLatestDate();
-	        	repPanel.paint(font);
+	        	repPanel.initiate(font);
 	            List<Integer> tab = dbUtil.getAllUsersIds();
                 Generator g = new Generator(tab, repPanel.chart);
                 g.run();

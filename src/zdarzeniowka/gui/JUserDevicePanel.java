@@ -28,22 +28,22 @@ class JUserDevicePanel extends JBasicPanel{
 	
 	JUserDevicePanel(Font font, boolean editable, JResultFrame rframe){
 		super(font, editable, rframe);
-		paint();
+		initiate();
 		cont.editabling(editable, 2, this);
 	}
 	
 	JUserDevicePanel(Font font, boolean editable, JRoomFrame frame){
 		super(font, editable, frame);
-		paint();
+		initiate();
 		cont.editabling(editable, 2, this);
 	}
 	
 	JUserDevicePanel(Font font) {
 		super(font);
-		paint();
+		initiate();
 	}
 	
-	private void paint(){
+	private void initiate(){
 		this.setLayout(new GridBagLayout());
 		labels = new JLabel[7];
 		textFields = new JTextField[4];

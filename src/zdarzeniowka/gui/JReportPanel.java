@@ -51,7 +51,7 @@ class JReportPanel extends JPanel implements ActionListener {
             cont.contJReportPanelStartGen(this, font);            
     }
 	
-	void paint(Font font){
+	void initiate(Font font){
 		normal = font;
 		botPane = new JPanel();
 		topPane = new JPanel();
