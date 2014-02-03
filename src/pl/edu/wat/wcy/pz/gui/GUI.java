@@ -34,7 +34,7 @@ import javax.swing.SwingConstants;
  */
 public class GUI implements ActionListener{
 	private static final Color COLOR = Color.white; 
-	private static JLabel infoLabel;
+	private static JLabel infoLabel, timeLabel;
 	private static JAddPanel addPanel;
 	private static JSearchPanel searchPanel;
 	private static JDSPanel dsPanel;
@@ -92,6 +92,9 @@ public class GUI implements ActionListener{
 		
 		infoLabel = new JLabel(" ");
 		infoLabel.setFont(normal);
+		timeLabel = new JLabel("");
+		timeLabel.setFont(normal);
+		cont.setTimeLabel(timeLabel);
 		//infoLabel.setBorder(BorderFactory.createLineBorder(Color.pink));
 		GridBagConstraints b = new GridBagConstraints();
 		b.anchor = GridBagConstraints.CENTER;
@@ -101,6 +104,9 @@ public class GUI implements ActionListener{
 		botPanel.setMinimumSize(d);
 		botPanel.setMaximumSize(d);
 		botPanel.add(infoLabel, b);
+		b.gridx = 1;
+		b.anchor = GridBagConstraints.LINE_END;
+		botPanel.add(timeLabel, b);
 		botPanel.setOpaque(false);
 		
 		sep = new JSeparator(SwingConstants.VERTICAL);
@@ -110,7 +116,6 @@ public class GUI implements ActionListener{
 	}
 	
 	private void addComponents(){
-		
 		initiate();
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -178,7 +183,7 @@ public class GUI implements ActionListener{
 	void setInfo(String txt){
 		infoLabel.setText(txt);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		cont.controlGUI(e, button, normal, path);	

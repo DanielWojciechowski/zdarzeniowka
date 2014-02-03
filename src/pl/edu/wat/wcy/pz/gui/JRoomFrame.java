@@ -55,9 +55,9 @@ class JRoomFrame extends JFrame implements ActionListener {
 	
 	JRoomFrame(Font font, String text, List<DBUser> userList, JDSPanel dsPanel){
 		super(text);
-		this.normal = font;
 		super.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.getPath()));
 		super.setContentPane(new JLabel(new ImageIcon("background/room.png")));
+		this.normal = font;
 		this.dsPanel = dsPanel;
 		if(userList.size() <= 0 || userList.size() > 3) {
 			JOptionPane.showMessageDialog(dsPanel,
@@ -68,12 +68,6 @@ class JRoomFrame extends JFrame implements ActionListener {
         }
 		this.userList = userList;
 		initiate(this.normal);
-	}
-
-	@Override
-	public void repaint(){
-		super.setContentPane(new JLabel(new ImageIcon("background/room.png")));
-		super.repaint();
 	}
 	
 	void initiate(Font font){
@@ -176,6 +170,12 @@ class JRoomFrame extends JFrame implements ActionListener {
         for (int i = 0; i < userDevicePanel.size(); i++){
                 userDevicePanel.get(i).setComponentsBackground(bg);
         }
+	}
+
+	@Override
+	public void repaint(){
+		super.setContentPane(new JLabel(new ImageIcon("background/room.png")));
+		super.repaint();
 	}
 	
 	@Override

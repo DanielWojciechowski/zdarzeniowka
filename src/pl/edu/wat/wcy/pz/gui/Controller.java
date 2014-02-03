@@ -10,6 +10,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -28,11 +30,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
@@ -471,8 +474,8 @@ class Controller{
 			       if ((usrDevPanel.getUserId() != usrDevPanel.oldIdUser)&&(usrDevPanel.frame != null)){
 			       		log.info("old id " + usrDevPanel.oldIdUser + "new id "+usrDevPanel.getUserId());
 						refreshDevices(usrDevPanel, usrDevPanel.frame, usrDevPanel.oldIdUser);
-			    		usrDevPanel.frame.revalidate();
-			    		usrDevPanel.frame.getContentPane().repaint();
+			    		//usrDevPanel.frame.revalidate();
+			    		//usrDevPanel.frame.getContentPane().repaint();
 
 			       	}
 				}
@@ -488,8 +491,8 @@ class Controller{
     		}
 			else if (usrDevPanel.frame != null){
 				refreshDevices(d, usrDevPanel.frame);
-    			usrDevPanel.frame.revalidate();
-    			usrDevPanel.frame.getContentPane().repaint();
+    			//usrDevPanel.frame.revalidate();
+    			//usrDevPanel.frame.getContentPane().repaint();
     		}
 		}
 		
@@ -554,8 +557,8 @@ class Controller{
 			       			}
 			       		}
 			       		refreshUsers(Integer.parseInt(usrPanel.getUserId()), usrPanel.frame);
-		    			usrPanel.frame.revalidate();
-		    			usrPanel.frame.getContentPane().repaint();
+		    			//usrPanel.frame.revalidate();
+		    			//usrPanel.frame.getContentPane().repaint();
 			       	}
 				}
 			}
@@ -575,8 +578,8 @@ class Controller{
 	    		}
 	    		if (usrPanel.frame != null){
 	    			refreshUsers(id, usrPanel.frame);
-	    			usrPanel.frame.revalidate();
-	    			usrPanel.frame.getContentPane().repaint();
+	    			//usrPanel.frame.revalidate();
+	    			//usrPanel.frame.getContentPane().repaint();
 	    		}
 	    		else if (usrPanel.rframe != null){
 	    			deleteFromResultTable(usrPanel.rframe);
@@ -862,9 +865,10 @@ class Controller{
                                         roomFrame.revalidate();
                                         roomFrame.getContentPane().repaint();
                                         roomFrame.repaint();
-                                        roomFrame.initiate(roomFrame.normal);
+                                       
                                 }
                         }
+                        roomFrame.initiate(roomFrame.normal);
                         numberOfDevices--;
                 }
         }
@@ -960,6 +964,7 @@ class Controller{
 		textArea.setFont(font);
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
+		textArea.setOpaque(false);
 		try
         {
             FileReader reader = new FileReader("file/info.txt");
@@ -969,23 +974,37 @@ class Controller{
             textArea.requestFocus();
         }
         catch(Exception e2) { System.out.println(e2); }
-	
+
 		JFrame infoFrame = new JFrame("O programie");
 		Dimension d = new Dimension(300,170);
-		JScrollPane scrollPane = new JScrollPane(textArea);
+		infoFrame.setContentPane(new JLabel(new ImageIcon("background/2.png")));
 		infoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(path));
-		infoFrame.getContentPane().setBackground(Color.white);
 		infoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		infoFrame.setLocation(550, 200);
 		infoFrame.setMinimumSize(d);
 		infoFrame.setMaximumSize(d);
 		infoFrame.setPreferredSize(d);
-		infoFrame.add(scrollPane);	
-		
+		infoFrame.setLocation(550, 200);
+		infoFrame.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		infoFrame.add(textArea, c);
 		infoFrame.pack();
 		
 		infoFrame.setResizable(false);
 		infoFrame.setVisible(true);
+	}
+	
+	void setTimeLabel(JLabel label){
+		final TimeLookup tl = new TimeLookup(label);
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+            @Override
+            protected Void doInBackground() throws Exception {
+            	tl.run();
+				return null;
+    		}
+       };
+       worker.execute();
+		
 	}
 
 }
