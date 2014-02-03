@@ -413,16 +413,16 @@ public class DBUtil {
 		Session session = factory.openSession();
 		Transaction trans = null;
 		try{
-        	trans = session.beginTransaction();
         	DBUser user;
         	for(int i=0; i<dataUse.length; i++){
+        		trans = session.beginTransaction();
         		int j = (int) dataUse[i][0];
         		user = (DBUser) session.byId(DBUser.class).getReference(j);
         		log.info("du "+dataUse[i][1]);
         		user.getPort().setDataUse((double)(user.getPort().getDataUse()+(double)dataUse[i][1]));
         		session.update(user);
+            	trans.commit();
         	}
-        	trans.commit();
 		}catch(HibernateException ex){
         	if(trans != null) trans.rollback();
         	log.error("Błąd uaktualniania transferu!");
